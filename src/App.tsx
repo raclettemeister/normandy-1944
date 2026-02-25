@@ -1,35 +1,107 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useCallback } from "react";
+import type { GameState, Achievement } from "./types/index.ts";
+import MainMenu from "./components/MainMenu";
+import GameScreen from "./components/GameScreen";
+import type { GameEndData } from "./components/GameScreen";
+import DeathReport from "./components/DeathReport";
+import EpilogueScreen from "./components/EpilogueScreen";
+import AchievementPopup from "./components/AchievementPopup";
+import "./styles/game.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+type AppScreen = "menu" | "game" | "death" | "epilogue";
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+interface EndState {
+  finalState: GameState;
+  captainSurvived: boolean;
+  deathNarrative: string;
+  lastLesson: string | null;
+  achievements: Achievement[];
 }
 
-export default App
+export default function App() {
+  const [screen, setScreen] = useState<AppScreen>("menu");
+  const [endState, setEndState] = useState<EndState | null>(null);
+  const [achievementQueue, setAchievementQueue] = useState<Achievement[]>([]);
+
+  const handleStartGame = useCallback(() => {
+    setScreen("game");
+    setEndState(null);
+  }, []);
+
+  const handleGameOver = useCallback((data: GameEndData) => {
+    setEndState({
+      finalState: data.finalState,
+      captainSurvived: data.captainSurvived,
+      deathNarrative: data.deathNarrative ?? "You did not survive.",
+      lastLesson: data.lastLesson ?? null,
+      achievements: data.newAchievements,
+    });
+    if (data.newAchievements.length > 0) {
+      setAchievementQueue(data.newAchievements);
+    }
+    setScreen("death");
+  }, []);
+
+  const handleVictory = useCallback((data: GameEndData) => {
+    setEndState({
+      finalState: data.finalState,
+      captainSurvived: true,
+      deathNarrative: "",
+      lastLesson: null,
+      achievements: data.newAchievements,
+    });
+    if (data.newAchievements.length > 0) {
+      setAchievementQueue(data.newAchievements);
+    }
+    setScreen("epilogue");
+  }, []);
+
+  const handleRestart = useCallback(() => {
+    setScreen("menu");
+    setEndState(null);
+    setAchievementQueue([]);
+  }, []);
+
+  const handleContinueToEpilogue = useCallback(() => {
+    setScreen("epilogue");
+  }, []);
+
+  const dismissAchievement = useCallback(() => {
+    setAchievementQueue((q) => q.slice(1));
+  }, []);
+
+  return (
+    <div className="app">
+      {screen === "menu" && <MainMenu onStartGame={handleStartGame} />}
+
+      {screen === "game" && (
+        <GameScreen onGameOver={handleGameOver} onVictory={handleVictory} />
+      )}
+
+      {screen === "death" && endState && (
+        <DeathReport
+          deathNarrative={endState.deathNarrative}
+          lastLesson={endState.lastLesson}
+          finalState={endState.finalState}
+          onRestart={handleRestart}
+          onContinueToEpilogue={handleContinueToEpilogue}
+        />
+      )}
+
+      {screen === "epilogue" && endState && (
+        <EpilogueScreen
+          finalState={endState.finalState}
+          captainSurvived={endState.captainSurvived}
+          onRestart={handleRestart}
+        />
+      )}
+
+      {achievementQueue.length > 0 && (
+        <AchievementPopup
+          achievement={achievementQueue[0]}
+          onDismiss={dismissAchievement}
+        />
+      )}
+    </div>
+  );
+}
