@@ -222,10 +222,11 @@ export function processSceneTransition(
     }
   }
 
-  newState.men = Math.max(
-    0,
-    newRoster.filter((s) => s.status === "active").length
-  );
+  if (outcomeNarrative.menGained && outcomeNarrative.menGained > 0) {
+    newState.men = Math.min(18, newRoster.filter((s) => s.status === "active").length + outcomeNarrative.menGained);
+  } else {
+    newState.men = Math.max(0, newRoster.filter((s) => s.status === "active").length);
+  }
   newState.ammo = clamp(state.ammo - outcomeNarrative.ammoSpent, 0, 100);
   newState.morale = clamp(
     state.morale + outcomeNarrative.moraleChange,
@@ -260,7 +261,7 @@ export function processSceneTransition(
     newState.intel[outcomeNarrative.intelGained] = true;
   }
 
-  if (scene.rally) {
+  if (scene.rally && !outcomeNarrative.skipRally) {
     const rallySoldiers = scene.rally.soldiers.map((s) => ({ ...s }));
     newState.roster = [...newState.roster, ...rallySoldiers];
     newState.men += rallySoldiers.length;

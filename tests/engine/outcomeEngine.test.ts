@@ -8,6 +8,7 @@ import {
   assignCasualties,
   shouldCounterattackTrigger,
   seededRandom,
+  processSceneTransition,
 } from "../../src/engine/outcomeEngine.ts";
 import { createInitialState } from "../../src/engine/gameState.ts";
 import type {
@@ -16,6 +17,8 @@ import type {
   TacticalTier,
   Soldier,
   CaptainPosition,
+  Scenario,
+  OutcomeNarrative,
 } from "../../src/types/index.ts";
 
 // ─── Helpers ──────────────────────────────────────────────────────
@@ -69,6 +72,17 @@ function makeSoldier(
     hometown: "Anytown, USA",
     background: "Test background",
     traits: [],
+    ...overrides,
+  };
+}
+
+function makeMinimalScene(overrides: Partial<Scenario> = {}): Scenario {
+  return {
+    id: "test_scene",
+    act: 1,
+    timeCost: 15,
+    narrative: "Test scene narrative.",
+    decisions: [],
     ...overrides,
   };
 }
@@ -676,5 +690,97 @@ describe("shouldCounterattackTrigger", () => {
       time: { hour: 13, minute: 59 },
     });
     expect(shouldCounterattackTrigger(state)).toBe(false);
+  });
+});
+
+// ─── processSceneTransition — menGained ─────────────────────────────
+
+describe("processSceneTransition — menGained", () => {
+  it("should increase men count when menGained is set", () => {
+    const state = makeState({ men: 1, roster: [
+      makeSoldier({ id: "r1", role: "rifleman" }),
+    ] });
+    const scene = makeMinimalScene();
+    const outcome: OutcomeNarrative = {
+      text: "A stray paratrooper joins you.",
+      menLost: 0,
+      ammoSpent: 0,
+      moraleChange: 5,
+      readinessChange: 0,
+      menGained: 1,
+    };
+    const result = processSceneTransition(state, scene, outcome, "middle");
+    expect(result.state.men).toBe(2);
+  });
+
+  it("should cap men at 18", () => {
+    const roster = Array.from({ length: 18 }, (_, i) =>
+      makeSoldier({ id: `r${i}`, role: "rifleman" })
+    );
+    const state = makeState({ men: 18, roster });
+    const scene = makeMinimalScene();
+    const outcome: OutcomeNarrative = {
+      text: "Another joins.",
+      menLost: 0,
+      ammoSpent: 0,
+      moraleChange: 0,
+      readinessChange: 0,
+      menGained: 2,
+    };
+    const result = processSceneTransition(state, scene, outcome, "middle");
+    expect(result.state.men).toBeLessThanOrEqual(18);
+  });
+});
+
+// ─── processSceneTransition — skipRally ─────────────────────────────
+
+describe("processSceneTransition — skipRally", () => {
+  it("should not process rally when outcome has skipRally: true", () => {
+    const rallyScene = makeMinimalScene({
+      rally: {
+        soldiers: [makeSoldier({ id: "henderson", role: "platoon_sergeant" })],
+        ammoGain: 10,
+        moraleGain: 8,
+        narrative: "Henderson appears.",
+      },
+    });
+    const outcome: OutcomeNarrative = {
+      text: "You slip away.",
+      menLost: 0,
+      ammoSpent: 0,
+      moraleChange: 0,
+      readinessChange: 0,
+      skipRally: true,
+    };
+    const state = makeState({ men: 1, ammo: 20, morale: 40, roster: [
+      makeSoldier({ id: "r1", role: "rifleman" }),
+    ] });
+    const result = processSceneTransition(state, rallyScene, outcome, "middle");
+    expect(result.state.men).toBe(1);
+    expect(result.state.ammo).toBe(20);
+  });
+
+  it("should process rally normally when skipRally is not set", () => {
+    const rallyScene = makeMinimalScene({
+      rally: {
+        soldiers: [makeSoldier({ id: "henderson", role: "platoon_sergeant" })],
+        ammoGain: 10,
+        moraleGain: 8,
+        narrative: "Henderson appears.",
+      },
+    });
+    const outcome: OutcomeNarrative = {
+      text: "Success.",
+      menLost: 0,
+      ammoSpent: 0,
+      moraleChange: 0,
+      readinessChange: 0,
+    };
+    const state = makeState({ men: 1, ammo: 20, morale: 40, roster: [
+      makeSoldier({ id: "r1", role: "rifleman" }),
+    ] });
+    const result = processSceneTransition(state, rallyScene, outcome, "middle");
+    expect(result.state.men).toBe(2);
+    expect(result.state.ammo).toBe(30);
   });
 });

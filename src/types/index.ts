@@ -156,6 +156,8 @@ export interface OutcomeNarrative {
   moraleChange: number;
   readinessChange: number;
   intelGained?: keyof IntelFlags;
+  menGained?: number;
+  skipRally?: boolean;
 }
 
 export interface OutcomeTemplate {

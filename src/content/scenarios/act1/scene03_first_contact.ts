@@ -1,6 +1,6 @@
 import type { Scenario } from '../../../types';
 
-// menLost: -1 represents gaining a stray paratrooper (+1 man)
+// menGained: 1 represents gaining a stray paratrooper (+1 man)
 export const scene03_first_contact: Scenario = {
   id: "act1_first_contact",
   act: 1,
@@ -15,14 +15,14 @@ export const scene03_first_contact: Scenario = {
       outcome: {
         success: {
           text: "One click-clack. Silence — then click-clack, click-clack from the dark. The figure steps forward: a PFC from the 502nd, shaking but armed, dropped miles off his DZ. 'Jesus, am I glad to see someone,' he whispers.",
-          menLost: -1,
+          menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: 5,
           readinessChange: 0
         },
         partial: {
           text: "One click-clack. A long pause — then two clicks, hesitant, fumbling. An American from the 501st, badly shaken, separated from his stick. He can barely hold his clicker, but he's a body.",
-          menLost: -1,
+          menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: 3,
           readinessChange: 0
@@ -45,7 +45,7 @@ export const scene03_first_contact: Scenario = {
       outcome: {
         success: {
           text: "Click-clack, click-clack. The figure freezes — that's the response, not the challenge. Thirty seconds of silence before he whispers 'Flash?' and you manage 'Thunder.' He's American, but you both stood in the open for half a minute sorting it out.",
-          menLost: -1,
+          menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: -2,
           readinessChange: 2
@@ -106,14 +106,14 @@ export const scene03_first_contact: Scenario = {
       outcome: {
         success: {
           text: "'Flash.' A beat. 'Thunder.' The relief almost buckles your knees. A PFC from the 506th — your own regiment — steps out from behind a stone wall. He's yours now.",
-          menLost: -1,
+          menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: 4,
           readinessChange: 2
         },
         partial: {
           text: "'Flash.' Silence. Then, barely audible: '...Thunder?' He stumbles toward you — American, disoriented, maybe concussed from a hard landing. He'll slow you down, but he's an extra pair of eyes.",
-          menLost: -1,
+          menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: 2,
           readinessChange: 2
@@ -136,7 +136,7 @@ export const scene03_first_contact: Scenario = {
       outcome: {
         success: {
           text: "'Thunder.' The figure cocks his head. Wrong word — that's the response, not the challenge. He whispers back: 'Flash?' You say 'Thunder' again. He comes over, shaking his head. 'You got it backwards, buddy.'",
-          menLost: -1,
+          menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: -1,
           readinessChange: 3
@@ -166,14 +166,14 @@ export const scene03_first_contact: Scenario = {
       outcome: {
         success: {
           text: "'FLASH!' Your voice cracks the silence like a rifle shot. 'THUNDER!' the figure shouts back, then catches himself. 'Jesus Christ, keep your voice down.' He's American, but every ear in the area just turned your direction.",
-          menLost: -1,
+          menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: 1,
           readinessChange: 8
         },
         partial: {
           text: "'FLASH!' The word echoes off the hedgerows. The figure drops flat. Somewhere in the distance, a German voice barks something. The figure crawls toward you. 'Are you trying to get us killed?'",
-          menLost: -1,
+          menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: -3,
           readinessChange: 10
