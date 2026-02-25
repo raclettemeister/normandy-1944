@@ -6,6 +6,8 @@ export const scene05_the_patrol: Scenario = {
   timeCost: 20,
   combatScene: true,
 
+  sceneContext: "Stone bridge over drainage canal. Four Germans: Feldwebel reading papers by shielded torch, one guarding French civilian with bound hands. Papers contain DZ locations — critical intel. Patrol preparing to move out.",
+
   narrative:
     "You spot them before they spot you. Four Germans at a stone bridge over a drainage canal. " +
     "A Feldwebel hunches over papers spread on the bridge wall, reading by shielded torchlight. " +
@@ -48,6 +50,7 @@ export const scene05_the_patrol: Scenario = {
             "Two elements in position. You wait until the Germans cluster near the Feldwebel, then signal. " +
             "Converging fire from two angles — ten seconds and it's over. Four dead, zero friendly. " +
             "You pull the papers from the Feldwebel's body. Patrol routes, unit dispositions. Gold.",
+          context: "L-ambush executed textbook. Converging fire, 10 seconds. Four enemy KIA, zero friendly casualties. Intel papers recovered.",
           menLost: 0,
           ammoSpent: -8,
           moraleChange: 8,
@@ -59,6 +62,7 @@ export const scene05_the_patrol: Scenario = {
             "Ambush fires. Three Germans drop. The fourth runs — Malone chases, fires, drops him thirty meters out. " +
             "But return fire nicked Doyle's arm. Not serious, but he's bleeding. " +
             "You get the papers. The French civilian is shaking but alive.",
+          context: "L-ambush mostly successful. Three down, fourth killed in pursuit. Doyle nicked — minor wound. Papers recovered. Civilian alive.",
           menLost: 0,
           ammoSpent: -10,
           moraleChange: 5,
@@ -70,6 +74,7 @@ export const scene05_the_patrol: Scenario = {
             "Doyle fires early. The Germans scatter before your fire teams converge. " +
             "A confused firefight in the dark. Two dead, two escaped toward the village. " +
             "You recover some papers but they'll report contact. Doyle won't stop shaking.",
+          context: "Premature fire by Doyle. Germans scattered. Two KIA, two escaped — will report contact. Partial intel only.",
           menLost: 0,
           ammoSpent: -12,
           moraleChange: 1,
@@ -92,6 +97,7 @@ export const scene05_the_patrol: Scenario = {
             "Your men line the hedgerow. Signal. A volley rips into the Germans — three drop immediately. " +
             "The fourth crawls behind the bridge wall and fires back. Henderson flanks and finishes it. " +
             "You get the papers.",
+          context: "Linear ambush. Three down on volley, fourth flanked by Henderson. Papers recovered. No crossfire advantage.",
           menLost: 0,
           ammoSpent: -10,
           moraleChange: 3,
@@ -102,6 +108,7 @@ export const scene05_the_patrol: Scenario = {
           text:
             "The volley drops two. Two others run — one escapes, one is hit fifty meters out. " +
             "Papers scattered. You find half of them. The escaped German will report contact.",
+          context: "Linear fire dropped two. One escaped, one killed running. Half the papers recovered. Enemy will report contact.",
           menLost: 0,
           ammoSpent: -12,
           moraleChange: 1,
@@ -112,6 +119,7 @@ export const scene05_the_patrol: Scenario = {
             "Linear fire doesn't cover the far side of the bridge. Three Germans escape. " +
             "They fire as they run. A round hits the wall next to your head. " +
             "The Feldwebel grabbed the papers.",
+          context: "Linear ambush failed — no coverage on far side. Three escaped with papers. One friendly KIA. Intel lost.",
           menLost: 1,
           ammoSpent: -10,
           moraleChange: -3,
@@ -132,6 +140,7 @@ export const scene05_the_patrol: Scenario = {
             "You crawl to within arm's reach. The knife goes in clean — hand over the mouth, blade between the ribs. " +
             "He sags. The others don't notice. Your men close the distance. " +
             "A short, vicious fight at close range. It works. Barely.",
+          context: "Knife kill on sentry — silent. Close-range fight took remaining three. Papers recovered. Barely clean.",
           menLost: 0,
           ammoSpent: -3,
           moraleChange: 2,
@@ -143,6 +152,7 @@ export const scene05_the_patrol: Scenario = {
             "The knife goes in but the German screams. Everything goes loud. " +
             "Close-range firefight at the bridge. Two dead, one surrendering, one escaped. " +
             "Your hands are covered in blood. Doyle throws up.",
+          context: "Knife failed to silence sentry. Close-range firefight. Two KIA, one POW, one escaped. Squad shaken by violence.",
           menLost: 0,
           ammoSpent: -5,
           moraleChange: -3,
@@ -152,6 +162,7 @@ export const scene05_the_patrol: Scenario = {
           text:
             "Your boot kicks a stone. The sentry turns. You struggle — the knife misses. He screams. " +
             "The other three open fire. Your men fire back. A chaotic mess. You take a casualty.",
+          context: "Approach detected. Knife missed. Chaotic firefight at bridge. One friendly KIA. No intel recovered.",
           menLost: 1,
           ammoSpent: -8,
           moraleChange: -6,
@@ -171,6 +182,7 @@ export const scene05_the_patrol: Scenario = {
           text:
             "You fire. Your men fire. The Germans drop — surprised, caught in the open. " +
             "But it cost you. A lot of ammunition for a messy result. You grab the papers.",
+          context: "Hasty fire. Germans surprised but engagement was wasteful. Four KIA. Papers recovered. High ammo expenditure.",
           menLost: 0,
           ammoSpent: -12,
           moraleChange: 1,
@@ -181,6 +193,7 @@ export const scene05_the_patrol: Scenario = {
           text:
             "Shots everywhere. Two Germans down. Two running. One makes it to the dark. " +
             "Papers soaked in canal water — half illegible. Ammo burned for a partial result.",
+          context: "Uncontrolled fire. Two KIA, one escaped. Papers water-damaged, half illegible. Excessive ammo burned.",
           menLost: 0,
           ammoSpent: -15,
           moraleChange: -2,
@@ -190,6 +203,7 @@ export const scene05_the_patrol: Scenario = {
           text:
             "You fire. They fire back. Everyone shooting into darkness. " +
             "When it stops, one German is dead, three escaped, and you've used nearly all your ammunition. Papers gone.",
+          context: "Blind firefight. One German KIA, three escaped with papers. Nearly all ammunition expended. One friendly KIA.",
           menLost: 1,
           ammoSpent: -15,
           moraleChange: -5,
@@ -211,6 +225,7 @@ export const scene05_the_patrol: Scenario = {
             "By some miracle the charge closes the distance before they react. The fight is short and savage. " +
             "Four Germans dead. You look at your men. Doyle is staring at his bayonet. " +
             "The violence of it settles on everyone like a weight.",
+          context: "Bayonet charge closed distance before reaction. Four enemy KIA in melee. Zero friendly casualties. Severe psychological impact on squad.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -5,
@@ -220,6 +235,7 @@ export const scene05_the_patrol: Scenario = {
           text:
             "Running through open ground. A Schmeisser opens up. Someone goes down. " +
             "You reach the bridge — hand-to-hand. Ugly. You win. Barely. One of your men is hit.",
+          context: "Bayonet charge across open ground. Schmeisser fire during approach — one friendly KIA. Hand-to-hand at bridge. Pyrrhic win.",
           menLost: 1,
           ammoSpent: -2,
           moraleChange: -8,
@@ -230,6 +246,7 @@ export const scene05_the_patrol: Scenario = {
             "They hear you coming. The Schmeisser tears into your line at twenty meters. " +
             "Two men go down before you close. The fight at the bridge is a slaughter — theirs and yours. " +
             "You survive. Some of your men don't.",
+          context: "Charge detected at 20m. Schmeisser cut into line. Two friendly KIA. Melee at bridge — both sides devastated.",
           menLost: 2,
           ammoSpent: -3,
           moraleChange: -12,
@@ -252,6 +269,7 @@ export const scene05_the_patrol: Scenario = {
             "Rocks splash in the canal. One German looks up. The rest don't move — " +
             "a splash during an invasion means nothing to them. " +
             "When you finally open fire, you've lost the element of complete surprise. It works, but the rocks added nothing.",
+          context: "Rock distraction ineffective — ignored by garrison troops. Opened fire without full surprise. Four KIA but rocks wasted time.",
           menLost: 0,
           ammoSpent: -8,
           moraleChange: 1,
@@ -261,6 +279,7 @@ export const scene05_the_patrol: Scenario = {
           text:
             "The rocks hit the bridge. A German investigates. But your flank position isn't ready — " +
             "you rushed the setup. A sloppy engagement. Two dead, two escaped. Papers partially recovered.",
+          context: "Rock distraction pulled one German but flank not ready. Sloppy engagement — two KIA, two escaped. Partial intel.",
           menLost: 0,
           ammoSpent: -10,
           moraleChange: -2,
@@ -270,6 +289,7 @@ export const scene05_the_patrol: Scenario = {
           text:
             "The Germans hear the rocks and go to alert. Garrison troops, but not stupid. " +
             "When you try to flank, they're already in cover. A firefight — messy, costly, loud.",
+          context: "Rocks alerted Germans to full alert. Flank attempt found them in cover. Costly firefight. One friendly KIA.",
           menLost: 1,
           ammoSpent: -10,
           moraleChange: -4,
@@ -290,6 +310,7 @@ export const scene05_the_patrol: Scenario = {
             "You make a noise. One German mutters and walks toward the hedgerow, rifle raised. " +
             "You jump him — a struggle, you put him down. " +
             "But the noise alerts the others. What started as a ruse turns into a firefight you didn't plan for.",
+          context: "Animal noise drew one German. Killed in struggle but noise triggered unplanned firefight. Position exposed.",
           menLost: 0,
           ammoSpent: -8,
           moraleChange: -3,
@@ -299,6 +320,7 @@ export const scene05_the_patrol: Scenario = {
           text:
             "Your cow impression is not convincing. The German says something to the Feldwebel. " +
             "Two men sent to investigate. They find you. Close-range firefight. Messy.",
+          context: "Unconvincing animal sound. Two Germans sent to investigate. Close-range firefight. One friendly KIA.",
           menLost: 1,
           ammoSpent: -10,
           moraleChange: -6,
@@ -309,6 +331,7 @@ export const scene05_the_patrol: Scenario = {
             "You moo. The Feldwebel barks an order. All four Germans fan out toward your position with weapons raised. " +
             "They're not investigating livestock — they're clearing a suspected ambush position. " +
             "You've given away your location for nothing.",
+          context: "Animal sound recognized as suspicious. All four Germans swept toward position. Ambush position revealed. One friendly KIA.",
           menLost: 1,
           ammoSpent: -12,
           moraleChange: -8,
@@ -329,6 +352,7 @@ export const scene05_the_patrol: Scenario = {
             "You watch them leave. The Feldwebel folds the papers into his case. " +
             "They march the civilian down the road and disappear. No shots fired. " +
             "Henderson watches them go. 'We'll pay for that later, Captain.'",
+          context: "Let patrol pass. No engagement. Papers and civilian taken by Germans. No casualties, no ammo spent, but intel lost.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -3,
@@ -339,6 +363,7 @@ export const scene05_the_patrol: Scenario = {
             "They move out. One German glances your direction — you freeze. He keeps walking. " +
             "The French civilian looks over his shoulder toward the hedgerow, as if he knows you're there. " +
             "You let him go too.",
+          context: "Let patrol pass. Nearly detected — German glanced toward position. Papers lost. French civilian taken. No engagement.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -5,
@@ -349,6 +374,7 @@ export const scene05_the_patrol: Scenario = {
             "They leave. You breathe. Five minutes later, a truck engine starts in the distance. " +
             "They had a vehicle. Those papers are already on the way to the CP. " +
             "Henderson says nothing. He doesn't have to.",
+          context: "Let patrol pass. Enemy had vehicle — papers already en route to CP. DZ intel will reach German command. Strategic failure.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -7,
@@ -371,6 +397,7 @@ export const scene05_the_patrol: Scenario = {
             "The Feldwebel left the map case on the bridge wall while he briefs his men. " +
             "You reach up. Fingers close on the leather strap. Pull it under and crawl back the way you came. " +
             "They won't notice for ten minutes.",
+          context: "Infiltrated via drainage canal. Stole map case undetected. Intel recovered, no shots fired, no casualties. Ten-minute head start.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 10,
@@ -382,6 +409,7 @@ export const scene05_the_patrol: Scenario = {
             "The canal is shallower than you thought. Ripples. The guard looks toward the water — you freeze, half-submerged. " +
             "An agonizing minute. He looks away. You grab the case but knock it against stone. " +
             "Shouting. Bullets hit the water around you. You make it to the hedgerow with the case.",
+          context: "Canal infiltration detected on extraction. Grabbed case but drew fire. Intel recovered but position known. No casualties.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 4,
@@ -392,6 +420,7 @@ export const scene05_the_patrol: Scenario = {
           text:
             "The canal is too shallow. You can't stay submerged. A German sees movement in the water and fires. " +
             "You scramble backward, rounds snapping past. No case. Your position is known. You need to move.",
+          context: "Canal too shallow. Detected and fired upon. No intel recovered. Position compromised. Forced to withdraw.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -5,
@@ -414,6 +443,7 @@ export const scene05_the_patrol: Scenario = {
             "Doyle runs along the hedgerow — visible, making noise. The Germans turn. You open fire. " +
             "Two down before they react. The Feldwebel grabs for the papers — Henderson puts a round through his hand. " +
             "Papers secured. Doyle makes it back, gasping.",
+          context: "Decoy drew attention. Flanking fire dropped two, Henderson stopped Feldwebel. Papers secured. Decoy returned safely.",
           menLost: 0,
           ammoSpent: -8,
           moraleChange: 2,
@@ -425,6 +455,7 @@ export const scene05_the_patrol: Scenario = {
             "Doyle runs. The Germans fire at him — tracers chasing him through the dark. " +
             "You engage from the flank. Two down. Two escape. " +
             "Doyle is hit. Round through the calf. 'I'm okay,' he says. He's not okay.",
+          context: "Decoy drew fire — Doyle hit in calf, wounded. Flank fire dropped two, two escaped. No intel recovered.",
           menLost: 0,
           ammoSpent: -10,
           moraleChange: -2,
@@ -435,6 +466,7 @@ export const scene05_the_patrol: Scenario = {
             "Doyle runs. A burst catches him at twenty meters. He goes down hard. " +
             "You open fire but the Germans are already in cover. " +
             "A firefight you didn't want, and Doyle isn't moving.",
+          context: "Decoy Doyle killed at 20 meters. Germans reached cover before flanking fire. Firefight with enemy in cover. One friendly KIA.",
           menLost: 1,
           ammoSpent: -10,
           moraleChange: -8,

@@ -6,6 +6,8 @@ export const scene02_finding_north: Scenario = {
   timeCost: 20,
   combatScene: false,
 
+  sceneContext: "Bocage country. Hedgerows six feet high, every field a closed box. Overcast, no stars visible. Need bearing to DZ near Sainte-Marie-du-Mont. Alone on solid ground.",
+
   narrative:
     "Wet grass underfoot, solid ground. Bocage country — the hedgerows rise six feet, packed earth and root, every field a box you can't see out of. The briefing maps showed the DZ near Sainte-Marie-du-Mont. Could be anywhere now. No compass, no stars through the overcast. You need to find north.",
 
@@ -23,6 +25,7 @@ export const scene02_finding_north: Scenario = {
       outcome: {
         success: {
           text: "Compass north. A church steeple to the northeast — cross-reference the briefing map you memorized. Sainte-Marie-du-Mont. Two klicks southwest of the DZ. You know where to go.",
+          context: "Compass plus terrain. Cross-referenced steeple to briefing map. Position fixed: two klicks SW of DZ.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 5,
@@ -31,6 +34,7 @@ export const scene02_finding_north: Scenario = {
         },
         partial: {
           text: "The compass gives you north, but nothing on the ground matches the briefing. Either the map was wrong or you're further from the DZ than you thought. A direction, not a position.",
+          context: "Compass gives north but terrain doesn't match briefing. Have direction, not position.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 2,
@@ -38,6 +42,7 @@ export const scene02_finding_north: Scenario = {
         },
         failure: {
           text: "The compass gives you north and nothing else. Every hedgerow looks identical in the dark. You have a bearing — you're guessing at everything else.",
+          context: "Compass north only. Hedgerows identical in dark. Bearing established, position unknown.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 0,
@@ -54,6 +59,7 @@ export const scene02_finding_north: Scenario = {
       outcome: {
         success: {
           text: "A gap in the clouds — the Big Dipper, pointer stars leading to Polaris. You wait for a second gap to confirm. Same answer. You have a bearing.",
+          context: "Found Polaris through cloud gap. Confirmed bearing with second sighting. North established.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 3,
@@ -61,6 +67,7 @@ export const scene02_finding_north: Scenario = {
         },
         partial: {
           text: "The clouds are thick. You catch a glimpse — maybe Polaris, maybe not. You pick a direction based on your best guess. Seventy percent sure.",
+          context: "Brief cloud gap. Possible Polaris sighting, low confidence. Best-guess bearing set.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 1,
@@ -68,6 +75,7 @@ export const scene02_finding_north: Scenario = {
         },
         failure: {
           text: "The clouds won't break. Twenty minutes staring at a gray-black sky. Your neck aches. You're no closer to knowing which way is north.",
+          context: "Overcast held. Twenty minutes watching sky for nothing. No bearing established.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -2,
@@ -84,6 +92,7 @@ export const scene02_finding_north: Scenario = {
       outcome: {
         success: {
           text: "You pick the loudest direction and move. Fifteen minutes of hedgerow climbing, then a road sign. Can't read it in the dark, but the road gives you a line of travel.",
+          context: "Moved toward gunfire 15 minutes. Found road with sign. Line of travel established but bearing uncertain.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -2,
@@ -91,6 +100,7 @@ export const scene02_finding_north: Scenario = {
         },
         partial: {
           text: "You move toward the shooting but the sound bounces off the hedgerows. Fifteen minutes and you're not sure you've walked straight. Then the gunfire stops.",
+          context: "Followed gunfire but sound bounced off hedgerows. 15 minutes, uncertain progress. Sound source lost.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -4,
@@ -98,6 +108,7 @@ export const scene02_finding_north: Scenario = {
         },
         failure: {
           text: "The noise leads you to the edge of a village — German helmets in the firelight. You freeze, back away, circle wide. Fifteen minutes in the wrong direction.",
+          context: "Followed gunfire to edge of German-occupied village. Had to retreat and circle wide. 15 minutes lost wrong direction.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -6,
@@ -114,6 +125,7 @@ export const scene02_finding_north: Scenario = {
       outcome: {
         success: {
           text: "You push through one hedgerow, then another, then another. Every field identical. After twenty-five minutes you stumble onto a dirt track. Something to follow.",
+          context: "Walked random direction 25 minutes through bocage. Found dirt track by chance. Something to follow.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -3,
@@ -121,6 +133,7 @@ export const scene02_finding_north: Scenario = {
         },
         partial: {
           text: "Hedgerow, field, hedgerow, field. Twenty-five minutes and you might have walked in a circle. Your boots are soaked. You're no closer to knowing where you are.",
+          context: "25 minutes through identical fields. Possibly walked in a circle. No progress on orientation.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -5,
@@ -128,6 +141,7 @@ export const scene02_finding_north: Scenario = {
         },
         failure: {
           text: "Twenty-five minutes blundering through the bocage. You trip a stone wall and land in a cow field. When you get up — German voices, close. You press flat against the hedgerow and don't breathe until they pass.",
+          context: "25 minutes blundering through bocage. Nearly stumbled into German patrol. Had to hide. Time and energy wasted.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -8,
@@ -145,6 +159,7 @@ export const scene02_finding_north: Scenario = {
         success: {
           // Negative ammoSpent = ammo gained (no ammoGain field on OutcomeNarrative)
           text: "White silk in a tree. You pull the canister down — rifle ammunition, K-rations, two extra bandoliers. The rounds are dry. You load them and keep moving.",
+          context: "Found supply parachute in tree. Recovered rifle ammo, K-rations, two bandoliers. Ammunition resupply secured.",
           menLost: 0,
           ammoSpent: -10,
           moraleChange: 2,
@@ -152,6 +167,7 @@ export const scene02_finding_north: Scenario = {
         },
         partial: {
           text: "Thirty minutes searching turns up one equipment chute — mostly clothing and a broken radio. One box of .30 cal at the bottom. Better than nothing.",
+          context: "Found one equipment chute after 30 minutes. Mostly clothing and broken radio. One box .30 cal recovered.",
           menLost: 0,
           ammoSpent: -5,
           moraleChange: 0,
@@ -159,6 +175,7 @@ export const scene02_finding_north: Scenario = {
         },
         failure: {
           text: "Thirty minutes crawling through wet fields in the dark. Nothing. The supply bundles could be anywhere in a square mile. Time burned, noise made, nothing gained.",
+          context: "30 minutes searching wet fields. No supply bundles found. Time burned, noise made, nothing gained.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -4,
