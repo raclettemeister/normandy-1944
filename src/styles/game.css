@@ -796,3 +796,125 @@
     padding: 1rem;
   }
 }
+
+/* ─── Streaming Text ────────────────────────────────────────────── */
+
+.streaming-cursor {
+  animation: blink 0.7s step-end infinite;
+  color: var(--accent-gold);
+  font-size: 0.85em;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* ─── Access Code Form ──────────────────────────────────────────── */
+
+.access-code-form {
+  margin: 1rem 0;
+}
+
+.access-code-form__label {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.access-code-form__optional {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.access-code-form__row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.access-code-form__input {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.access-code-form__submit {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  background: var(--bg-secondary);
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold-dim);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.access-code-form__submit:hover:not(:disabled) {
+  border-color: var(--accent-gold);
+  background: var(--bg-tertiary);
+}
+
+.access-code-form__submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.access-code-form__error {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--danger);
+  margin-top: 0.4rem;
+}
+
+/* ─── Free Text Input ───────────────────────────────────────────── */
+
+.free-text-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--border);
+}
+
+.free-text-form__input {
+  flex: 1;
+  font-family: var(--font-narrative);
+  font-size: 0.9rem;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  font-style: italic;
+}
+
+.free-text-form__input::placeholder {
+  color: var(--text-muted);
+}
+
+.free-text-form__submit {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  background: var(--bg-secondary);
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold-dim);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.free-text-form__submit:hover:not(:disabled) {
+  border-color: var(--accent-gold);
+  background: var(--bg-tertiary);
+}
+
+.free-text-form__submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
