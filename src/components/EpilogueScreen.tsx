@@ -1,14 +1,17 @@
-import type { GameState } from "../types/index.ts";
-import type { NarrativeService } from "../services/narrativeService.ts";
+import { useState, useEffect } from "react";
+import type { GameState, PlaythroughEvent } from "../types/index.ts";
+import { NarrativeService } from "../services/narrativeService.ts";
+import { getRelationshipsForSoldier } from "../content/relationships.ts";
 
 interface EpilogueScreenProps {
   finalState: GameState;
   captainSurvived: boolean;
   onRestart: () => void;
   narrativeService: NarrativeService;
+  eventLog: PlaythroughEvent[];
 }
 
-function generateEpilogue(
+function generateDefaultEpilogue(
   name: string,
   status: string,
   hometown: string
@@ -31,12 +34,50 @@ export default function EpilogueScreen({
   finalState,
   captainSurvived,
   onRestart,
-  narrativeService: _narrativeService,
+  narrativeService,
+  eventLog,
 }: EpilogueScreenProps) {
   const survived = finalState.roster.filter(
     (s) => s.status === "active"
   ).length;
   const total = finalState.roster.length;
+
+  const [epilogues, setEpilogues] = useState<Map<string, string>>(new Map());
+  const [loading, setLoading] = useState(narrativeService.getMode() === "llm");
+
+  useEffect(() => {
+    if (narrativeService.getMode() !== "llm") return;
+
+    const eventsBySoldier = new Map<string, PlaythroughEvent[]>();
+    const relationshipsBySoldier = new Map();
+    const allStatuses = finalState.roster.map(s => ({ id: s.id, status: s.status }));
+
+    for (const soldier of finalState.roster) {
+      eventsBySoldier.set(
+        soldier.id,
+        eventLog.filter(e => e.soldierIds.includes(soldier.id))
+      );
+      relationshipsBySoldier.set(
+        soldier.id,
+        getRelationshipsForSoldier(soldier.id)
+      );
+    }
+
+    narrativeService.generateEpilogues(
+      finalState.roster,
+      eventsBySoldier,
+      relationshipsBySoldier,
+    ).then(results => {
+      setEpilogues(results);
+      setLoading(false);
+    }).catch(() => {
+      setLoading(false);
+    });
+  }, [narrativeService, finalState.roster, eventLog]);
+
+  function getEpilogue(soldierId: string, name: string, status: string, hometown: string): string {
+    return epilogues.get(soldierId) ?? generateDefaultEpilogue(name, status, hometown);
+  }
 
   return (
     <div className="epilogue-screen" data-testid="epilogue-screen">
@@ -69,6 +110,12 @@ export default function EpilogueScreen({
         </div>
       )}
 
+      {loading && (
+        <div className="epilogue-loading" data-testid="epilogue-loading">
+          Generating epilogues...
+        </div>
+      )}
+
       {finalState.roster.map((soldier) => (
         <div
           key={soldier.id}
@@ -80,7 +127,7 @@ export default function EpilogueScreen({
             {soldier.nickname ? ` "${soldier.nickname}"` : ""}
           </div>
           <div className="epilogue-soldier__text">
-            {generateEpilogue(soldier.name, soldier.status, soldier.hometown)}
+            {getEpilogue(soldier.id, soldier.name, soldier.status, soldier.hometown)}
           </div>
         </div>
       ))}

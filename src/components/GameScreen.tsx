@@ -1,9 +1,10 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import type {
   GameState,
   CaptainPosition,
   Decision,
   Achievement,
+  PlaythroughEvent,
 } from "../types/index.ts";
 import { createInitialState } from "../engine/gameState.ts";
 import {
@@ -21,6 +22,7 @@ import {
 import { unlockLesson } from "../engine/lessonTracker.ts";
 import { getActiveRelationships } from "../content/relationships.ts";
 import { NarrativeService } from "../services/narrativeService.ts";
+import { EventLog } from "../services/eventLog.ts";
 import StatusPanel from "./StatusPanel";
 import NarrativePanel from "./NarrativePanel";
 import DecisionPanel from "./DecisionPanel";
@@ -39,6 +41,7 @@ export interface GameEndData {
   deathNarrative?: string;
   lastLesson?: string;
   newAchievements: Achievement[];
+  eventLog: PlaythroughEvent[];
 }
 
 interface GameScreenProps {
@@ -62,6 +65,7 @@ export default function GameScreen({
   const [classifyingFreeText, setClassifyingFreeText] = useState(false);
   const [pendingAchievement, setPendingAchievement] =
     useState<Achievement | null>(null);
+  const eventLogRef = useRef(new EventLog());
 
   const scene = getScene(gameState.currentScene);
   const decisions = scene ? getAvailableDecisions(scene, gameState) : [];
@@ -89,6 +93,37 @@ export default function GameScreen({
 
       unlockLesson(decision.outcome.lessonUnlocked);
 
+      const log = eventLogRef.current;
+
+      if (result.casualties && result.casualties.length > 0) {
+        for (const c of result.casualties) {
+          log.append({
+            sceneId: scene.id,
+            type: "casualty",
+            soldierIds: [c.id],
+            description: `${c.rank} ${c.name} ${c.status === "KIA" ? "killed" : "wounded"} at ${scene.title ?? scene.id}`,
+          });
+        }
+      }
+
+      if (result.captainHit) {
+        log.append({
+          sceneId: scene.id,
+          type: "close_call",
+          soldierIds: [],
+          description: `Captain hit at ${scene.title ?? scene.id}`,
+        });
+      }
+
+      if (playerAction) {
+        log.append({
+          sceneId: scene.id,
+          type: "player_action",
+          soldierIds: [],
+          description: playerAction,
+        });
+      }
+
       const isFatal =
         result.captainHit || (decision.outcome.fatal && tier === "failure");
 
@@ -99,6 +134,7 @@ export default function GameScreen({
           deathNarrative: outcome.text,
           lastLesson: decision.outcome.lessonUnlocked,
           newAchievements: [],
+          eventLog: log.getAll(),
         });
         return;
       }
@@ -111,6 +147,7 @@ export default function GameScreen({
             "All your men are down. You are alone, with no way to complete the mission.",
           lastLesson: decision.outcome.lessonUnlocked,
           newAchievements: [],
+          eventLog: log.getAll(),
         });
         return;
       }
@@ -127,6 +164,7 @@ export default function GameScreen({
           finalState: result.state,
           captainSurvived: true,
           newAchievements: [],
+          eventLog: log.getAll(),
         });
         return;
       }

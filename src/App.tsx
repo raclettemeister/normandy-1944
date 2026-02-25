@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
-import type { GameState, Achievement } from "./types/index.ts";
+import type { GameState, Achievement, PlaythroughEvent } from "./types/index.ts";
 import MainMenu from "./components/MainMenu";
 import GameScreen from "./components/GameScreen";
 import type { GameEndData } from "./components/GameScreen";
@@ -19,6 +19,7 @@ interface EndState {
   deathNarrative: string;
   lastLesson: string | null;
   achievements: Achievement[];
+  eventLog: PlaythroughEvent[];
 }
 
 export default function App() {
@@ -48,6 +49,7 @@ export default function App() {
       deathNarrative: data.deathNarrative ?? "You did not survive.",
       lastLesson: data.lastLesson ?? null,
       achievements: data.newAchievements,
+      eventLog: data.eventLog,
     });
     if (data.newAchievements.length > 0) {
       setAchievementQueue(data.newAchievements);
@@ -62,6 +64,7 @@ export default function App() {
       deathNarrative: "",
       lastLesson: null,
       achievements: data.newAchievements,
+      eventLog: data.eventLog,
     });
     if (data.newAchievements.length > 0) {
       setAchievementQueue(data.newAchievements);
@@ -118,6 +121,7 @@ export default function App() {
           captainSurvived={endState.captainSurvived}
           onRestart={handleRestart}
           narrativeService={narrativeService}
+          eventLog={endState.eventLog}
         />
       )}
 
