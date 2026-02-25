@@ -8,6 +8,7 @@ import type {
   Milestone,
   EnemyReadiness,
 } from "../types/index.ts";
+import { loadLessons } from "./lessonTracker.ts";
 
 export function clamp(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, value));
@@ -148,7 +149,7 @@ export function createInitialState(): GameState {
     roster: [],
     secondInCommand: null,
     milestones: createDefaultMilestones(),
-    lessonsUnlocked: [],
+    lessonsUnlocked: loadLessons(),
     scenesVisited: [],
     currentScene: "act1_landing",
     phase: "solo",

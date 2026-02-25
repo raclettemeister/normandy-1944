@@ -1,73 +1,50 @@
-# React + TypeScript + Vite
+# Normandy 1944
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A text-based tactical roguelike set during the D-Day airborne operations. You command 2nd Platoon, Easy Company, 506th Parachute Infantry Regiment, 101st Airborne Division — dropped into occupied France on the night of June 5-6, 1944.
 
-Currently, two official plugins are available:
+## The Game
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+You start alone in a flooded Norman field at 0115 hours. Your stick was scattered by flak. Your rifle is at the bottom of a ditch. You have a pistol, two grenades, and a cricket clicker.
 
-## React Compiler
+Your mission: rally your men, navigate to the objective, and survive.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Every decision costs time. Every minute makes the enemy stronger.**
 
-## Expanding the ESLint configuration
+### Core Mechanics
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **5 resources** — Men, Ammo, Morale, Enemy Readiness, Time
+- **Outcome engine** — Tactical quality + state modifiers + dice = results
+- **Battle Orders** — Timed objectives from the OPORD. The game doesn't remind you. The clock is always visible. You do the math.
+- **18 named soldiers** — Each with traits, personalities, backstories. You learn who they are across playthroughs.
+- **Lessons Learned** — Real tactical knowledge unlocked through play, persisting across runs. The roguelike progression is player knowledge, not stat upgrades.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Current State (Demo)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Act 1, Scenes 1-6: The Drop. Landing, orientation, first contact, rallying your platoon sergeant, a German patrol encounter, and a farmhouse clearing.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Running Locally
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open `http://localhost:5173/` in your browser.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Building
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
 ```
+
+Output goes to `dist/`.
+
+## Tech Stack
+
+- React 19 + TypeScript
+- Vite
+- Zero external game dependencies — pure state machine driven by JSON scenario data
+
+## License
+
+All rights reserved.
