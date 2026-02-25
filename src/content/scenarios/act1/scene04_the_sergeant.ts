@@ -188,7 +188,8 @@ export const scene04_the_sergeant: Scenario = {
           menLost: 0,
           ammoSpent: -1,
           moraleChange: -10,
-          readinessChange: 15
+          readinessChange: 15,
+          skipRally: true,
         },
         lessonUnlocked: "rally_procedures",
         nextScene: "act1_the_patrol"
@@ -229,29 +230,30 @@ export const scene04_the_sergeant: Scenario = {
       id: "sergeant_avoid",
       text: "Slip away into the next field and keep moving",
       tier: "mediocre",
-      // NO RALLY. No soldiers gained. No 2IC. Phase remains solo.
-      // Engine must skip the rally event entirely for this decision.
       outcome: {
         success: {
           text: "You slip into the next field. The voices fade behind the wall. Safe. The silence that follows is the loudest thing you've heard all night. You're still alone.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -5,
-          readinessChange: 0
+          readinessChange: 0,
+          skipRally: true,
         },
         partial: {
           text: "You back away. A branch snaps. The voices go quiet. Someone whispers 'Flash?' — barely audible. You keep moving. Part of you says go back. You don't.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -7,
-          readinessChange: 0
+          readinessChange: 0,
+          skipRally: true,
         },
         failure: {
           text: "You leave. Every sound is louder alone. Every shadow has a rifle. You made the safe choice. The safe choice left you without a single ally in occupied France.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -10,
-          readinessChange: 0
+          readinessChange: 0,
+          skipRally: true,
         },
         lessonUnlocked: "rally_procedures",
         nextScene: "act1_the_patrol"
