@@ -159,6 +159,7 @@ export interface OutcomeNarrative {
   menGained?: number;
   skipRally?: boolean;
   timeCost?: number;
+  context?: string;
 }
 
 export interface OutcomeTemplate {
@@ -190,6 +191,7 @@ export interface Scenario {
   decisions: Decision[];
   rally?: RallyEvent;
   achievesMilestone?: string;
+  sceneContext?: string;
 }
 
 export interface Decision {
@@ -321,4 +323,69 @@ export interface EpilogueTemplate {
   wounded: string[];
   KIA: string[];
   missing: string[];
+}
+
+// ─── Soldier Relationships ────────────────────────────────────────
+
+export interface SoldierRelationship {
+  soldierId: string;
+  targetId: string;
+  type: "protective" | "rivalry" | "brothers" | "depends_on" | "resents";
+  detail: string;
+}
+
+// ─── Playthrough Events ───────────────────────────────────────────
+
+export interface PlaythroughEvent {
+  sceneId: string;
+  type:
+    | "casualty"
+    | "trait_triggered"
+    | "relationship_moment"
+    | "close_call"
+    | "brave_act"
+    | "player_action"
+    | "promotion";
+  soldierIds: string[];
+  description: string;
+}
+
+// ─── Narrative Service ────────────────────────────────────────────
+
+export type NarrativeMode = "llm" | "template" | "hardcoded";
+
+export interface NarrativeRequest {
+  type: "scene" | "outcome" | "rally" | "death" | "epilogue" | "secondInCommand";
+  sceneContext?: string;
+  outcomeContext?: string;
+  playerAction?: string;
+  gameState: GameState;
+  casualties?: Soldier[];
+  captainHit?: boolean;
+  soldier?: Soldier;
+  events?: PlaythroughEvent[];
+}
+
+export interface ClassificationRequest {
+  sceneContext: string;
+  decisions: Decision[];
+  playerText: string;
+  gameState: GameState;
+}
+
+export interface ClassificationResult {
+  matchedDecision: string;
+  tier: TacticalTier;
+  reasoning: string;
+}
+
+// ─── Access Codes ─────────────────────────────────────────────────
+
+export interface AccessCode {
+  code: string;
+  createdAt: string;
+  maxUses?: number;
+  currentUses: number;
+  active: boolean;
+  label?: string;
 }
