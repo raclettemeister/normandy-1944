@@ -784,3 +784,71 @@ describe("processSceneTransition — skipRally", () => {
     expect(result.state.ammo).toBe(30);
   });
 });
+
+// ─── calculateEffectiveScore — captain position ─────────────────────
+
+describe("calculateEffectiveScore — captain position", () => {
+  const decision = makeDecision();
+  const base = { morale: 60, readiness: 0, ammo: 50, men: 0 } as const;
+
+  it("should add +5 for front position", () => {
+    const state = makeState(base);
+    const without = calculateEffectiveScore("sound", state, decision);
+    const withFront = calculateEffectiveScore("sound", state, decision, "front");
+    expect(withFront).toBe(without + 5);
+  });
+
+  it("should subtract -5 for rear position", () => {
+    const state = makeState(base);
+    const without = calculateEffectiveScore("sound", state, decision);
+    const withRear = calculateEffectiveScore("sound", state, decision, "rear");
+    expect(withRear).toBe(without - 5);
+  });
+
+  it("should apply no modifier for middle position", () => {
+    const state = makeState(base);
+    const without = calculateEffectiveScore("sound", state, decision);
+    const withMiddle = calculateEffectiveScore("sound", state, decision, "middle");
+    expect(withMiddle).toBe(without);
+  });
+
+  it("should apply no modifier when position is undefined", () => {
+    const state = makeState(base);
+    const without = calculateEffectiveScore("sound", state, decision);
+    const withUndef = calculateEffectiveScore("sound", state, decision, undefined);
+    expect(withUndef).toBe(without);
+  });
+});
+
+// ─── processSceneTransition — per-decision timeCost ─────────────────
+
+describe("processSceneTransition — per-decision timeCost", () => {
+  it("should use outcome timeCost over scene timeCost when present", () => {
+    const state = makeState({ time: { hour: 1, minute: 0 }, roster: [] });
+    const scene = makeMinimalScene({ timeCost: 15 });
+    const outcome: OutcomeNarrative = {
+      text: "result",
+      menLost: 0,
+      ammoSpent: 0,
+      moraleChange: 0,
+      readinessChange: 0,
+      timeCost: 30,
+    };
+    const result = processSceneTransition(state, scene, outcome, "middle");
+    expect(result.state.time).toEqual({ hour: 1, minute: 30 });
+  });
+
+  it("should fall back to scene timeCost when outcome timeCost is absent", () => {
+    const state = makeState({ time: { hour: 1, minute: 0 }, roster: [] });
+    const scene = makeMinimalScene({ timeCost: 15 });
+    const outcome: OutcomeNarrative = {
+      text: "result",
+      menLost: 0,
+      ammoSpent: 0,
+      moraleChange: 0,
+      readinessChange: 0,
+    };
+    const result = processSceneTransition(state, scene, outcome, "middle");
+    expect(result.state.time).toEqual({ hour: 1, minute: 15 });
+  });
+});

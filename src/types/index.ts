@@ -158,6 +158,7 @@ export interface OutcomeNarrative {
   intelGained?: keyof IntelFlags;
   menGained?: number;
   skipRally?: boolean;
+  timeCost?: number;
 }
 
 export interface OutcomeTemplate {

@@ -64,17 +64,17 @@ export default function GameScreen({ onGameOver, onVictory }: GameScreenProps) {
       if (!scene || processing) return;
       setProcessing(true);
 
+      const pos = scene.combatScene ? captainPosition : "middle";
       const effectiveScore = calculateEffectiveScore(
         decision.tier,
         gameState,
-        decision
+        decision,
+        pos
       );
       const range = getOutcomeRange(effectiveScore);
       const roll = rollOutcome(range);
       const tier = getOutcomeTier(roll);
       const outcome = decision.outcome[tier];
-
-      const pos = scene.combatScene ? captainPosition : "middle";
       const result = processSceneTransition(gameState, scene, outcome, pos);
 
       unlockLesson(decision.outcome.lessonUnlocked);

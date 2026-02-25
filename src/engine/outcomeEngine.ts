@@ -26,7 +26,8 @@ import { checkMilestones, achieveMilestone } from "./battleOrders.ts";
 export function calculateEffectiveScore(
   tier: TacticalTier,
   state: GameState,
-  decision: Decision
+  decision: Decision,
+  captainPosition?: CaptainPosition
 ): number {
   let score = TIER_BASE_SCORES[tier];
 
@@ -78,6 +79,9 @@ export function calculateEffectiveScore(
   if (activeTraits.includes("hothead")) {
     score += 3;
   }
+
+  if (captainPosition === "front") score += 5;
+  if (captainPosition === "rear") score -= 5;
 
   return clamp(score, 0, 100);
 }
@@ -246,10 +250,11 @@ export function processSceneTransition(
     newState.morale = clamp(newState.morale - 5, 0, 100);
   }
 
-  newState.time = advanceTime(state.time, scene.timeCost);
+  const effectiveTimeCost = outcomeNarrative.timeCost ?? scene.timeCost;
+  newState.time = advanceTime(state.time, effectiveTimeCost);
 
   newState.readiness = clamp(
-    newState.readiness + Math.floor(scene.timeCost / 10),
+    newState.readiness + Math.floor(effectiveTimeCost / 10),
     0,
     100
   );
