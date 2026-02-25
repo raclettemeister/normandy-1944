@@ -1,13 +1,17 @@
+import StreamingText from "./StreamingText";
+
 interface NarrativePanelProps {
   narrative: string;
   outcomeText: string | null;
   rallyText: string | null;
+  isStreaming?: boolean;
 }
 
 export default function NarrativePanel({
   narrative,
   outcomeText,
   rallyText,
+  isStreaming = false,
 }: NarrativePanelProps) {
   return (
     <div className="narrative-panel">
@@ -16,7 +20,11 @@ export default function NarrativePanel({
       </div>
       {outcomeText && (
         <div className="outcome-text" data-testid="outcome-narrative">
-          {outcomeText}
+          {isStreaming ? (
+            <StreamingText text={outcomeText} isStreaming={isStreaming} />
+          ) : (
+            outcomeText
+          )}
         </div>
       )}
       {rallyText && <div className="rally-text">{rallyText}</div>}

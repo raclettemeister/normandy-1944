@@ -1,11 +1,21 @@
 import { loadAchievements } from "../engine/achievementTracker.ts";
 import { loadLessons, resetLessons } from "../engine/lessonTracker.ts";
+import type { NarrativeMode } from "../types/index.ts";
+import AccessCodeInput from "./AccessCodeInput";
 
 interface MainMenuProps {
   onStartGame: () => void;
+  apiUrl: string;
+  onAccessCodeValidated: (code: string) => void;
+  narrativeMode: NarrativeMode;
 }
 
-export default function MainMenu({ onStartGame }: MainMenuProps) {
+export default function MainMenu({
+  onStartGame,
+  apiUrl,
+  onAccessCodeValidated,
+  narrativeMode,
+}: MainMenuProps) {
   const achievements = loadAchievements();
   const lessons = loadLessons();
 
@@ -29,6 +39,16 @@ export default function MainMenu({ onStartGame }: MainMenuProps) {
         Parachute Infantry Regiment, 101st Airborne Division. Your men are
         scattered across the Normandy countryside. The clock is ticking.
       </p>
+
+      {apiUrl && narrativeMode !== "llm" && (
+        <AccessCodeInput apiUrl={apiUrl} onValidated={onAccessCodeValidated} />
+      )}
+
+      {narrativeMode === "llm" && (
+        <div className="main-menu__mode-badge" data-testid="narrative-mode-badge">
+          AI Narration Active
+        </div>
+      )}
 
       <div className="main-menu__actions">
         <button

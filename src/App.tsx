@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import type { GameState, Achievement } from "./types/index.ts";
 import MainMenu from "./components/MainMenu";
 import GameScreen from "./components/GameScreen";
@@ -6,7 +6,10 @@ import type { GameEndData } from "./components/GameScreen";
 import DeathReport from "./components/DeathReport";
 import EpilogueScreen from "./components/EpilogueScreen";
 import AchievementPopup from "./components/AchievementPopup";
+import { NarrativeService } from "./services/narrativeService.ts";
 import "./styles/game.css";
+
+const NARRATIVE_API_URL = import.meta.env.VITE_NARRATIVE_API_URL ?? "";
 
 type AppScreen = "menu" | "game" | "death" | "epilogue";
 
@@ -22,6 +25,16 @@ export default function App() {
   const [screen, setScreen] = useState<AppScreen>("menu");
   const [endState, setEndState] = useState<EndState | null>(null);
   const [achievementQueue, setAchievementQueue] = useState<Achievement[]>([]);
+  const [accessCode, setAccessCode] = useState("");
+
+  const narrativeService = useMemo(
+    () => new NarrativeService({ apiUrl: NARRATIVE_API_URL, accessCode }),
+    [accessCode]
+  );
+
+  const handleAccessCodeValidated = useCallback((code: string) => {
+    setAccessCode(code);
+  }, []);
 
   const handleStartGame = useCallback(() => {
     setScreen("game");
@@ -72,10 +85,21 @@ export default function App() {
 
   return (
     <div className="app">
-      {screen === "menu" && <MainMenu onStartGame={handleStartGame} />}
+      {screen === "menu" && (
+        <MainMenu
+          onStartGame={handleStartGame}
+          apiUrl={NARRATIVE_API_URL}
+          onAccessCodeValidated={handleAccessCodeValidated}
+          narrativeMode={narrativeService.getMode()}
+        />
+      )}
 
       {screen === "game" && (
-        <GameScreen onGameOver={handleGameOver} onVictory={handleVictory} />
+        <GameScreen
+          onGameOver={handleGameOver}
+          onVictory={handleVictory}
+          narrativeService={narrativeService}
+        />
       )}
 
       {screen === "death" && endState && (
@@ -93,6 +117,7 @@ export default function App() {
           finalState={endState.finalState}
           captainSurvived={endState.captainSurvived}
           onRestart={handleRestart}
+          narrativeService={narrativeService}
         />
       )}
 

@@ -19,9 +19,12 @@ import {
   processSceneTransition,
 } from "../engine/outcomeEngine.ts";
 import { unlockLesson } from "../engine/lessonTracker.ts";
+import { getActiveRelationships } from "../content/relationships.ts";
+import { NarrativeService } from "../services/narrativeService.ts";
 import StatusPanel from "./StatusPanel";
 import NarrativePanel from "./NarrativePanel";
 import DecisionPanel from "./DecisionPanel";
+import FreeTextInput from "./FreeTextInput";
 import LessonJournal from "./LessonJournal";
 import OrdersPanel from "./OrdersPanel";
 import WikiPanel from "./WikiPanel";
@@ -41,15 +44,22 @@ export interface GameEndData {
 interface GameScreenProps {
   onGameOver: (data: GameEndData) => void;
   onVictory: (data: GameEndData) => void;
+  narrativeService: NarrativeService;
 }
 
-export default function GameScreen({ onGameOver, onVictory }: GameScreenProps) {
+export default function GameScreen({
+  onGameOver,
+  onVictory,
+  narrativeService,
+}: GameScreenProps) {
   const [gameState, setGameState] = useState<GameState>(createInitialState);
   const [outcomeText, setOutcomeText] = useState<string | null>(null);
   const [captainPosition, setCaptainPosition] =
     useState<CaptainPosition>("middle");
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [processing, setProcessing] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
+  const [classifyingFreeText, setClassifyingFreeText] = useState(false);
   const [pendingAchievement, setPendingAchievement] =
     useState<Achievement | null>(null);
 
@@ -60,7 +70,7 @@ export default function GameScreen({ onGameOver, onVictory }: GameScreenProps) {
     : null;
 
   const handleDecision = useCallback(
-    (decision: Decision) => {
+    async (decision: Decision, playerAction?: string) => {
       if (!scene || processing) return;
       setProcessing(true);
 
@@ -121,6 +131,35 @@ export default function GameScreen({ onGameOver, onVictory }: GameScreenProps) {
         return;
       }
 
+      setOutcomeText(outcome.text);
+
+      if (narrativeService.getMode() === "llm" && outcome.context) {
+        setIsStreaming(true);
+        const activeSoldierIds = gameState.roster
+          .filter(s => s.status === "active")
+          .map(s => s.id);
+        const relationships = getActiveRelationships(activeSoldierIds);
+
+        narrativeService.generateOutcomeNarrative({
+          outcomeText: outcome.text,
+          outcomeContext: outcome.context,
+          sceneContext: scene.sceneContext,
+          gameState,
+          roster: gameState.roster.filter(s => s.status === "active"),
+          relationships,
+          captainHit: result.captainHit,
+          playerAction,
+          onChunk: (chunk) => {
+            setOutcomeText(prev => (prev === outcome.text ? chunk : (prev ?? "") + chunk));
+          },
+        }).then(finalText => {
+          setOutcomeText(finalText);
+          setIsStreaming(false);
+        }).catch(() => {
+          setIsStreaming(false);
+        });
+      }
+
       setGameState({
         ...result.state,
         currentScene: nextSceneId,
@@ -133,11 +172,34 @@ export default function GameScreen({ onGameOver, onVictory }: GameScreenProps) {
         ],
       });
 
-      setOutcomeText(outcome.text);
       setCaptainPosition("middle");
       setProcessing(false);
     },
-    [scene, gameState, captainPosition, processing, onGameOver, onVictory]
+    [scene, gameState, captainPosition, processing, onGameOver, onVictory, narrativeService]
+  );
+
+  const handleFreeText = useCallback(
+    async (playerText: string) => {
+      if (!scene || processing) return;
+      setClassifyingFreeText(true);
+
+      const classification = await narrativeService.classifyPlayerAction({
+        sceneContext: scene.sceneContext ?? scene.narrative,
+        decisions,
+        playerText,
+        gameState,
+      });
+
+      setClassifyingFreeText(false);
+
+      if (!classification) return;
+
+      const matched = decisions.find(d => d.id === classification.matchedDecision);
+      if (!matched) return;
+
+      handleDecision(matched, playerText);
+    },
+    [scene, processing, narrativeService, decisions, gameState, handleDecision]
   );
 
   const narrative = scene?.narrative ?? "";
@@ -205,6 +267,7 @@ export default function GameScreen({ onGameOver, onVictory }: GameScreenProps) {
         narrative={narrative}
         outcomeText={outcomeText}
         rallyText={rallyText}
+        isStreaming={isStreaming}
       />
 
       <DecisionPanel
@@ -214,8 +277,16 @@ export default function GameScreen({ onGameOver, onVictory }: GameScreenProps) {
         isCombatScene={!!scene.combatScene}
         captainPosition={captainPosition}
         onCaptainPositionChange={setCaptainPosition}
-        disabled={processing}
+        disabled={processing || isStreaming}
       />
+
+      {narrativeService.getMode() === "llm" && (
+        <FreeTextInput
+          onSubmit={handleFreeText}
+          disabled={processing || isStreaming}
+          loading={classifyingFreeText}
+        />
+      )}
 
       {overlay === "orders" && (
         <OrdersPanel

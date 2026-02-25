@@ -61,6 +61,18 @@
   max-width: 480px;
 }
 
+.main-menu__mode-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--success);
+  border: 1px solid var(--success);
+  padding: 0.3rem 0.6rem;
+  display: inline-block;
+  margin: 0.75rem 0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 .main-menu__actions {
   display: flex;
   flex-direction: column;

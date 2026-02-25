@@ -1,9 +1,11 @@
 import type { GameState } from "../types/index.ts";
+import type { NarrativeService } from "../services/narrativeService.ts";
 
 interface EpilogueScreenProps {
   finalState: GameState;
   captainSurvived: boolean;
   onRestart: () => void;
+  narrativeService: NarrativeService;
 }
 
 function generateEpilogue(
@@ -29,6 +31,7 @@ export default function EpilogueScreen({
   finalState,
   captainSurvived,
   onRestart,
+  narrativeService: _narrativeService,
 }: EpilogueScreenProps) {
   const survived = finalState.roster.filter(
     (s) => s.status === "active"
