@@ -7,8 +7,11 @@ import type {
   PlaythroughEvent,
   Scenario,
   OutcomeNarrative,
+  Difficulty,
+  TacticalPhase,
+  DMEvaluation,
 } from "../types/index.ts";
-import { createInitialState } from "../engine/gameState.ts";
+import { createInitialStateWithDifficulty, advanceTime, clamp } from "../engine/gameState.ts";
 import {
   getScene,
   getAvailableDecisions,
@@ -16,19 +19,22 @@ import {
 } from "../engine/scenarioLoader.ts";
 import {
   calculateEffectiveScore,
+  calculateEffectiveScoreFromTier,
   getOutcomeRange,
   rollOutcome,
   getOutcomeTier,
   processSceneTransition,
 } from "../engine/outcomeEngine.ts";
+import { deriveBalanceEnvelope } from "../engine/balanceEnvelope.ts";
 import { unlockLesson } from "../engine/lessonTracker.ts";
 import { getActiveRelationships } from "../content/relationships.ts";
 import { NarrativeService } from "../services/narrativeService.ts";
 import { EventLog } from "../services/eventLog.ts";
 import StatusPanel from "./StatusPanel";
 import NarrativePanel from "./NarrativePanel";
-import DecisionPanel from "./DecisionPanel";
-import FreeTextInput from "./FreeTextInput";
+import PrepPhase from "./PrepPhase.tsx";
+import PlanPhase from "./PlanPhase.tsx";
+import BriefingPhase from "./BriefingPhase.tsx";
 import LessonJournal from "./LessonJournal";
 import OrdersPanel from "./OrdersPanel";
 import WikiPanel from "./WikiPanel";
@@ -59,14 +65,18 @@ interface GameScreenProps {
   onGameOver: (data: GameEndData) => void;
   onVictory: (data: GameEndData) => void;
   narrativeService: NarrativeService;
+  difficulty: Difficulty;
 }
 
 export default function GameScreen({
   onGameOver,
   onVictory,
   narrativeService,
+  difficulty,
 }: GameScreenProps) {
-  const [gameState, setGameState] = useState<GameState>(createInitialState);
+  const [gameState, setGameState] = useState<GameState>(() =>
+    createInitialStateWithDifficulty(difficulty)
+  );
   const [outcomeText, setOutcomeText] = useState<string | null>(null);
   const [sceneNarrative, setSceneNarrative] = useState<string | null>(null);
   const [rallyNarrative, setRallyNarrative] = useState<string | null>(null);
@@ -75,12 +85,16 @@ export default function GameScreen({
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [processing, setProcessing] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
-  const [classifyingFreeText, setClassifyingFreeText] = useState(false);
   const [pendingTransition, setPendingTransition] = useState<PendingTransition | null>(null);
   const [generatingScene, setGeneratingScene] = useState(false);
   const [pendingAchievement, setPendingAchievement] =
     useState<Achievement | null>(null);
   const eventLogRef = useRef(new EventLog());
+
+  const [currentPhase, setCurrentPhase] = useState<TacticalPhase>("situation");
+  const [dmEvaluation, setDmEvaluation] = useState<DMEvaluation | null>(null);
+  const [forcedEasyMode, setForcedEasyMode] = useState(false);
+  const [fallbackMessage, setFallbackMessage] = useState<string | null>(null);
 
   const scene = getScene(gameState.currentScene);
   const decisions = scene ? getAvailableDecisions(scene, gameState) : [];
@@ -258,6 +272,10 @@ export default function GameScreen({
 
     setGameState(newState);
     setPendingTransition(null);
+    setCurrentPhase("situation");
+    setDmEvaluation(null);
+    setForcedEasyMode(false);
+    setFallbackMessage(null);
 
     if (isLlmMode && nextScene.sceneContext) {
       const nextActiveRoster = newState.roster.filter(s => s.status === "active");
@@ -294,29 +312,221 @@ export default function GameScreen({
     setGeneratingScene(false);
   }, [pendingTransition, isStreaming, narrativeService]);
 
-  const handleFreeText = useCallback(
-    async (playerText: string) => {
-      if (!scene || processing || showingOutcome) return;
-      setClassifyingFreeText(true);
+  const handlePrepComplete = useCallback((timeCostMinutes: number) => {
+    if (timeCostMinutes > 0) {
+      setGameState((prev) => ({
+        ...prev,
+        time: advanceTime(prev.time, timeCostMinutes),
+        readiness: clamp(prev.readiness + Math.floor(timeCostMinutes / 10), 0, 100),
+      }));
+    }
+    setCurrentPhase("plan");
+  }, []);
 
-      const classification = await narrativeService.classifyPlayerAction({
+  const handleSubmitPrompt = useCallback(
+    async (playerText: string) => {
+      if (!scene) return;
+      setProcessing(true);
+
+      const dmLayer = narrativeService.getDMLayer();
+      if (!dmLayer) {
+        setFallbackMessage("Fall back on training, Captain.");
+        setForcedEasyMode(true);
+        setCurrentPhase("plan");
+        setProcessing(false);
+        return;
+      }
+
+      const recentEvents = eventLogRef.current.getRecentForDM(10);
+      const activeSoldierIds = gameState.roster
+        .filter((s) => s.status === "active")
+        .map((s) => s.id);
+      const relationships = getActiveRelationships(activeSoldierIds);
+
+      const evaluation = await dmLayer.evaluatePrompt({
+        playerText,
         sceneContext: scene.sceneContext ?? scene.narrative,
         decisions,
-        playerText,
         gameState,
+        roster: gameState.roster.filter((s) => s.status === "active"),
+        relationships,
+        recentEvents,
+        lessonsUnlocked: gameState.lessonsUnlocked,
       });
 
-      setClassifyingFreeText(false);
+      if (!evaluation) {
+        setFallbackMessage("Fall back on training, Captain.");
+        setForcedEasyMode(true);
+        setProcessing(false);
+        return;
+      }
 
-      if (!classification) return;
+      setDmEvaluation(evaluation);
+      setFallbackMessage(null);
+      setForcedEasyMode(false);
 
-      const matched = decisions.find(d => d.id === classification.matchedDecision);
-      if (!matched) return;
+      eventLogRef.current.append({
+        sceneId: scene.id,
+        type: "plan_summary",
+        soldierIds: [],
+        description: evaluation.planSummary,
+      });
 
-      handleDecision(matched, playerText);
+      setCurrentPhase("briefing");
+      setProcessing(false);
     },
-    [scene, processing, showingOutcome, narrativeService, decisions, gameState, handleDecision]
+    [scene, gameState, decisions, narrativeService]
   );
+
+  const handleRevealTokenUsed = useCallback(() => {
+    setGameState((prev) => ({
+      ...prev,
+      revealTokensRemaining: Math.max(0, prev.revealTokensRemaining - 1),
+    }));
+  }, []);
+
+  const handleBriefingRevise = useCallback(() => {
+    setDmEvaluation(null);
+    setCurrentPhase("plan");
+  }, []);
+
+  const handleBriefingCommit = useCallback(async () => {
+    if (!scene || !dmEvaluation) return;
+    setCurrentPhase("execution");
+    setProcessing(true);
+
+    const log = eventLogRef.current;
+    const pos = scene.combatScene ? captainPosition : "middle";
+    const referenceDecision = decisions[0];
+
+    if (dmEvaluation.fatal) {
+      onGameOver({
+        finalState: gameState,
+        captainSurvived: false,
+        deathNarrative: dmEvaluation.narrative,
+        lastLesson: referenceDecision?.outcome.lessonUnlocked,
+        newAchievements: [],
+        eventLog: log.getAll(),
+      });
+      return;
+    }
+
+    const effectiveScore = calculateEffectiveScoreFromTier(
+      dmEvaluation.tier, gameState, pos
+    );
+    const range = getOutcomeRange(effectiveScore);
+    const roll = rollOutcome(range);
+    const outcomeTier = getOutcomeTier(roll);
+
+    const derivedEnvelope = deriveBalanceEnvelope(decisions);
+    const envelope = scene.balanceEnvelopeOverride ?? derivedEnvelope;
+    const envRange = envelope[outcomeTier];
+    const rollPosition = (range.ceiling - range.floor) > 0
+      ? (roll - range.floor) / (range.ceiling - range.floor)
+      : 0.5;
+
+    const lerp = (min: number, max: number) =>
+      Math.round(min + rollPosition * (max - min));
+
+    const outcome: OutcomeNarrative = {
+      text: dmEvaluation.narrative,
+      context: dmEvaluation.reasoning,
+      menLost: lerp(envRange.menLost[0], envRange.menLost[1]),
+      ammoSpent: lerp(envRange.ammoSpent[0], envRange.ammoSpent[1]),
+      moraleChange: lerp(envRange.moraleChange[0], envRange.moraleChange[1]),
+      readinessChange: lerp(envRange.readinessChange[0], envRange.readinessChange[1]),
+      intelGained: dmEvaluation.intelGained,
+    };
+
+    const result = processSceneTransition(gameState, scene, outcome, pos);
+
+    if (referenceDecision) {
+      unlockLesson(referenceDecision.outcome.lessonUnlocked);
+    }
+
+    if (result.casualties.length > 0) {
+      for (const c of result.casualties) {
+        log.append({
+          sceneId: scene.id,
+          type: "casualty",
+          soldierIds: [c.id],
+          description: `${c.rank} ${c.name} ${c.status === "KIA" ? "killed" : "wounded"} at ${scene.id}`,
+        });
+      }
+    }
+
+    if (result.captainHit) {
+      log.append({
+        sceneId: scene.id,
+        type: "close_call",
+        soldierIds: [],
+        description: `Captain hit at ${scene.id}`,
+      });
+
+      onGameOver({
+        finalState: result.state,
+        captainSurvived: false,
+        deathNarrative: dmEvaluation.narrative,
+        lastLesson: referenceDecision?.outcome.lessonUnlocked,
+        newAchievements: [],
+        eventLog: log.getAll(),
+      });
+      return;
+    }
+
+    if (result.state.men <= 0 && result.state.roster.length > 0) {
+      onGameOver({
+        finalState: result.state,
+        captainSurvived: true,
+        deathNarrative: "All your men are down. You are alone, with no way to complete the mission.",
+        lastLesson: referenceDecision?.outcome.lessonUnlocked,
+        newAchievements: [],
+        eventLog: log.getAll(),
+      });
+      return;
+    }
+
+    const nextSceneId = referenceDecision
+      ? (outcomeTier === "failure" && referenceDecision.outcome.nextSceneOnFailure
+          ? referenceDecision.outcome.nextSceneOnFailure
+          : referenceDecision.outcome.nextScene)
+      : "";
+
+    const nextScene = getScene(nextSceneId);
+
+    if (!nextScene) {
+      onVictory({
+        finalState: result.state,
+        captainSurvived: true,
+        newAchievements: [],
+        eventLog: log.getAll(),
+      });
+      return;
+    }
+
+    setOutcomeText(dmEvaluation.narrative);
+
+    const newState = {
+      ...result.state,
+      currentScene: nextSceneId,
+      scenesVisited: [...result.state.scenesVisited, scene.id],
+      lessonsUnlocked: referenceDecision
+        ? [...new Set([...result.state.lessonsUnlocked, referenceDecision.outcome.lessonUnlocked])]
+        : result.state.lessonsUnlocked,
+    };
+
+    setPendingTransition({
+      nextSceneId,
+      nextScene,
+      newState,
+      outcomeContext: outcome.context,
+      outcome,
+      lessonUnlocked: referenceDecision?.outcome.lessonUnlocked ?? "",
+    });
+
+    setCaptainPosition("middle");
+    setProcessing(false);
+  }, [scene, dmEvaluation, gameState, decisions, captainPosition, onGameOver, onVictory, narrativeService]);
 
   const narrative = sceneNarrative ?? scene?.narrative ?? "";
   const rallyText = rallyNarrative ?? scene?.rally?.narrative ?? null;
@@ -409,26 +619,69 @@ export default function GameScreen({
 
           {!generatingScene && (
             <>
-              {narrativeService.getMode() === "llm" && (
+              {currentPhase === "situation" && (
+                <button
+                  className="btn btn--primary"
+                  onClick={() => setCurrentPhase(
+                    scene.prepActions && scene.prepActions.length > 0
+                      ? "preparation"
+                      : "plan"
+                  )}
+                  data-testid="situation-continue"
+                >
+                  Assess the Situation
+                </button>
+              )}
+
+              {currentPhase === "preparation" && scene.prepActions && (
+                <PrepPhase
+                  prepActions={scene.prepActions}
+                  secondInCommandCompetence={
+                    gameState.secondInCommand?.competence ?? "green"
+                  }
+                  onPrepComplete={handlePrepComplete}
+                  disabled={processing}
+                />
+              )}
+
+              {currentPhase === "plan" && (
                 <>
-                  <FreeTextInput
-                    onSubmit={handleFreeText}
+                  {fallbackMessage && (
+                    <div className="fallback-message" data-testid="fallback-message">
+                      {fallbackMessage}
+                    </div>
+                  )}
+                  <PlanPhase
+                    difficulty={forcedEasyMode ? "easy" : difficulty}
+                    decisions={decisions}
+                    revealTokensRemaining={gameState.revealTokensRemaining}
+                    onSubmitPrompt={handleSubmitPrompt}
+                    onSelectDecision={(d) => {
+                      setForcedEasyMode(false);
+                      setFallbackMessage(null);
+                      handleDecision(d);
+                    }}
+                    onRevealTokenUsed={handleRevealTokenUsed}
+                    secondInCommandComment={secondInCommandComment}
+                    isCombatScene={!!scene.combatScene}
+                    captainPosition={captainPosition}
+                    onCaptainPositionChange={setCaptainPosition}
                     disabled={processing}
-                    loading={classifyingFreeText}
+                    loading={processing}
                   />
-                  <div className="decision-separator">or choose an action</div>
                 </>
               )}
 
-              <DecisionPanel
-                decisions={decisions}
-                onDecision={handleDecision}
-                secondInCommandComment={secondInCommandComment}
-                isCombatScene={!!scene.combatScene}
-                captainPosition={captainPosition}
-                onCaptainPositionChange={setCaptainPosition}
-                disabled={processing}
-              />
+              {currentPhase === "briefing" && dmEvaluation && (
+                <BriefingPhase
+                  secondInCommandReaction={dmEvaluation.secondInCommandReaction}
+                  soldierReactions={dmEvaluation.soldierReactions}
+                  roster={gameState.roster}
+                  onRevise={handleBriefingRevise}
+                  onCommit={handleBriefingCommit}
+                  disabled={processing}
+                />
+              )}
             </>
           )}
         </>
