@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
-import type { GameState, Achievement, PlaythroughEvent } from "./types/index.ts";
+import type { GameState, Achievement, PlaythroughEvent, Difficulty } from "./types/index.ts";
 import MainMenu from "./components/MainMenu";
 import GameScreen from "./components/GameScreen";
 import type { GameEndData } from "./components/GameScreen";
@@ -27,6 +27,7 @@ export default function App() {
   const [endState, setEndState] = useState<EndState | null>(null);
   const [achievementQueue, setAchievementQueue] = useState<Achievement[]>([]);
   const [accessCode, setAccessCode] = useState("");
+  const [difficulty, setDifficulty] = useState<Difficulty>("easy");
 
   const narrativeService = useMemo(
     () => new NarrativeService({ apiUrl: NARRATIVE_API_URL, accessCode }),
@@ -37,7 +38,8 @@ export default function App() {
     setAccessCode(code);
   }, []);
 
-  const handleStartGame = useCallback(() => {
+  const handleStartGame = useCallback((diff: Difficulty) => {
+    setDifficulty(diff);
     setScreen("game");
     setEndState(null);
   }, []);
@@ -102,6 +104,7 @@ export default function App() {
           onGameOver={handleGameOver}
           onVictory={handleVictory}
           narrativeService={narrativeService}
+          difficulty={difficulty}
         />
       )}
 
