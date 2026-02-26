@@ -141,6 +141,58 @@ export const TIER_BASE_SCORES: Record<TacticalTier, number> = {
   masterful: 105,
 };
 
+// ─── Difficulty ────────────────────────────────────────────────────
+
+export type Difficulty = "easy" | "medium" | "hardcore";
+
+// ─── Tactical Cycle Phases ─────────────────────────────────────────
+
+export type TacticalPhase = "situation" | "preparation" | "plan" | "briefing" | "execution";
+
+// ─── DM Layer Types ────────────────────────────────────────────────
+
+export interface DMEvaluation {
+  tier: TacticalTier;
+  reasoning: string;
+  narrative: string;
+  fatal?: boolean;
+  intelGained?: keyof IntelFlags;
+  soldierReactions: SoldierReaction[];
+  secondInCommandReaction: string;
+  planSummary: string;
+}
+
+export interface SoldierReaction {
+  soldierId: string;
+  text: string;
+}
+
+// ─── Prep Actions ──────────────────────────────────────────────────
+
+export interface PrepAction {
+  id: string;
+  text: string;
+  soldierId?: string;
+  timeCost: number;
+  responseVeteran: string;
+  responseGreen: string;
+}
+
+// ─── Balance Envelope ──────────────────────────────────────────────
+
+export interface BalanceEnvelopeRange {
+  menLost: [number, number];
+  ammoSpent: [number, number];
+  moraleChange: [number, number];
+  readinessChange: [number, number];
+}
+
+export interface BalanceEnvelope {
+  success: BalanceEnvelopeRange;
+  partial: BalanceEnvelopeRange;
+  failure: BalanceEnvelopeRange;
+}
+
 // ─── Outcome Engine ────────────────────────────────────────────────
 
 export type OutcomeTier = "success" | "partial" | "failure";
@@ -193,6 +245,8 @@ export interface Scenario {
   rally?: RallyEvent;
   achievesMilestone?: string;
   sceneContext?: string;
+  prepActions?: PrepAction[];
+  balanceEnvelopeOverride?: BalanceEnvelope;
 }
 
 export interface Decision {
