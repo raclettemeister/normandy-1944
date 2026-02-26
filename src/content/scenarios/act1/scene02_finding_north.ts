@@ -6,26 +6,26 @@ export const scene02_finding_north: Scenario = {
   timeCost: 20,
   combatScene: false,
 
-  sceneContext: "Bocage country. Hedgerows six feet high, every field a closed box. Overcast, no stars visible. Need bearing to DZ near Sainte-Marie-du-Mont. Alone on solid ground.",
+  sceneContext: "Pays de bocage. Haies de six pieds, chaque champ une boite fermee. Ciel couvert, pas d'etoiles visibles. Besoin d'un cap vers la zone de saut pres de Sainte-Marie-du-Mont. Seul sur la terre ferme.",
 
   narrative:
-    "Wet grass underfoot, solid ground. Bocage country — the hedgerows rise six feet, packed earth and root, every field a box you can't see out of. The briefing maps showed the DZ near Sainte-Marie-du-Mont. Could be anywhere now. No compass, no stars through the overcast. You need to find north.",
+    "Herbe mouillee sous les pieds, terre ferme. Pays de bocage — les haies s'elevent a six pieds, terre tassee et racines, chaque champ une boite dont on ne voit pas l'exterieur. Les cartes du briefing montraient la zone de saut pres de Sainte-Marie-du-Mont. Ca pourrait etre n'importe ou maintenant. Pas de boussole, pas d'etoiles a travers la couverture nuageuse. Il faut trouver le nord.",
 
   narrativeAlt: {
     "hasCompass":
-      "Wet grass underfoot, solid ground. Bocage country — the hedgerows rise six feet, packed earth and root, every field a box you can't see out of. The briefing maps showed the DZ near Sainte-Marie-du-Mont, but that could be anywhere now. You pull the compass from your leg pocket. The luminous dial settles — north. But north of where?",
+      "Herbe mouillee sous les pieds, terre ferme. Pays de bocage — les haies s'elevent a six pieds, terre tassee et racines, chaque champ une boite dont on ne voit pas l'exterieur. Les cartes du briefing montraient la zone de saut pres de Sainte-Marie-du-Mont, mais ca pourrait etre n'importe ou maintenant. Vous sortez la boussole de la poche de votre jambe. Le cadran lumineux se stabilise — nord. Mais nord de ou?",
   },
 
   decisions: [
     {
       id: "north_compass_terrain",
-      text: "Use your compass and match terrain to the briefing maps",
+      text: "Utiliser votre boussole et faire correspondre le terrain aux cartes du briefing",
       tier: "excellent",
       visibleIf: { hasIntel: "hasCompass" },
       outcome: {
         success: {
-          text: "Compass north. A church steeple to the northeast — cross-reference the briefing map you memorized. Sainte-Marie-du-Mont. Two klicks southwest of the DZ. You know where to go.",
-          context: "Compass plus terrain. Cross-referenced steeple to briefing map. Position fixed: two klicks SW of DZ.",
+          text: "Nord a la boussole. Un clocher au nord-est — recoupe avec la carte du briefing memorisee. Sainte-Marie-du-Mont. Deux kilometres au sud-ouest de la zone de saut. Vous savez ou aller.",
+          context: "Boussole plus terrain. Recoupe le clocher avec la carte du briefing. Position fixee : deux km au SO de la zone de saut.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 5,
@@ -33,16 +33,16 @@ export const scene02_finding_north: Scenario = {
           intelGained: "hasMap",
         },
         partial: {
-          text: "The compass gives you north, but nothing on the ground matches the briefing. Either the map was wrong or you're further from the DZ than you thought. A direction, not a position.",
-          context: "Compass gives north but terrain doesn't match briefing. Have direction, not position.",
+          text: "La boussole vous donne le nord, mais rien au sol ne correspond au briefing. Soit la carte etait fausse soit vous etes plus loin de la zone de saut que prevu. Une direction, pas une position.",
+          context: "Boussole donne le nord mais le terrain ne correspond pas au briefing. Direction obtenue, pas la position.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 2,
           readinessChange: 0,
         },
         failure: {
-          text: "The compass gives you north and nothing else. Every hedgerow looks identical in the dark. You have a bearing — you're guessing at everything else.",
-          context: "Compass north only. Hedgerows identical in dark. Bearing established, position unknown.",
+          text: "La boussole vous donne le nord et rien d'autre. Chaque haie est identique dans l'obscurite. Vous avez un cap — vous devinez tout le reste.",
+          context: "Boussole nord seulement. Haies identiques dans le noir. Cap etabli, position inconnue.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 0,
@@ -54,28 +54,28 @@ export const scene02_finding_north: Scenario = {
     },
     {
       id: "north_stars",
-      text: "Look for the North Star through gaps in the cloud cover",
+      text: "Chercher l'Etoile polaire a travers les trouees dans les nuages",
       tier: "sound",
       outcome: {
         success: {
-          text: "A gap in the clouds — the Big Dipper, pointer stars leading to Polaris. You wait for a second gap to confirm. Same answer. You have a bearing.",
-          context: "Found Polaris through cloud gap. Confirmed bearing with second sighting. North established.",
+          text: "Une trouee dans les nuages — la Grande Ourse, les etoiles pointeuses menant a Polaris. Vous attendez une deuxieme trouee pour confirmer. Meme reponse. Vous avez un cap.",
+          context: "Trouve Polaris a travers une trouee. Cap confirme par deuxieme observation. Nord etabli.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 3,
           readinessChange: 0,
         },
         partial: {
-          text: "The clouds are thick. You catch a glimpse — maybe Polaris, maybe not. You pick a direction based on your best guess. Seventy percent sure.",
-          context: "Brief cloud gap. Possible Polaris sighting, low confidence. Best-guess bearing set.",
+          text: "Les nuages sont epais. Vous apercevez quelque chose — peut-etre Polaris, peut-etre pas. Vous choisissez une direction selon votre meilleure estimation. Soixante-dix pour cent sur.",
+          context: "Breve trouee. Observation possible de Polaris, faible confiance. Cap etabli au mieux.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 1,
           readinessChange: 0,
         },
         failure: {
-          text: "The clouds won't break. Twenty minutes staring at a gray-black sky. Your neck aches. You're no closer to knowing which way is north.",
-          context: "Overcast held. Twenty minutes watching sky for nothing. No bearing established.",
+          text: "Les nuages ne se dissipent pas. Vingt minutes a fixer un ciel gris-noir. Votre cou vous fait mal. Vous n'etes pas plus proche de savoir ou est le nord.",
+          context: "Ciel couvert maintenu. Vingt minutes a regarder le ciel pour rien. Aucun cap etabli.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -2,
@@ -87,28 +87,28 @@ export const scene02_finding_north: Scenario = {
     },
     {
       id: "north_follow_gunfire",
-      text: "Head toward the gunfire — that's where the action is",
+      text: "Se diriger vers les coups de feu — c'est la ou se passe l'action",
       tier: "mediocre",
       outcome: {
         success: {
-          text: "You pick the loudest direction and move. Fifteen minutes of hedgerow climbing, then a road sign. Can't read it in the dark, but the road gives you a line of travel.",
-          context: "Moved toward gunfire 15 minutes. Found road with sign. Line of travel established but bearing uncertain.",
+          text: "Vous prenez la direction la plus bruyante et vous bougez. Quinze minutes a escalader les haies, puis un panneau. Illisible dans le noir, mais la route vous donne une ligne de marche.",
+          context: "Marche vers les coups de feu 15 minutes. Trouve route avec panneau. Ligne de marche etablie mais cap incertain.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -2,
           readinessChange: 3,
         },
         partial: {
-          text: "You move toward the shooting but the sound bounces off the hedgerows. Fifteen minutes and you're not sure you've walked straight. Then the gunfire stops.",
-          context: "Followed gunfire but sound bounced off hedgerows. 15 minutes, uncertain progress. Sound source lost.",
+          text: "Vous marchez vers les tirs mais le son rebondit sur les haies. Quinze minutes et vous n'etes pas sur d'avoir marche droit. Puis les coups de feu s'arretent.",
+          context: "Suivi les coups de feu mais le son rebondissait. 15 minutes, progression incertaine. Source du son perdue.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -4,
           readinessChange: 3,
         },
         failure: {
-          text: "The noise leads you to the edge of a village — German helmets in the firelight. You freeze, back away, circle wide. Fifteen minutes in the wrong direction.",
-          context: "Followed gunfire to edge of German-occupied village. Had to retreat and circle wide. 15 minutes lost wrong direction.",
+          text: "Le bruit vous mene au bord d'un village — casques allemands dans la lueur du feu. Vous vous figez, reculez, contournez large. Quinze minutes dans la mauvaise direction.",
+          context: "Suivi les coups de feu jusqu'au bord d'un village occupe par les Allemands. Du retraiter et contourner. 15 minutes perdues mauvaise direction.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -6,
@@ -120,28 +120,28 @@ export const scene02_finding_north: Scenario = {
     },
     {
       id: "north_just_walk",
-      text: "Pick a direction and start walking — standing still is dying",
+      text: "Choisir une direction et marcher — rester immobile c'est mourir",
       tier: "reckless",
       outcome: {
         success: {
-          text: "You push through one hedgerow, then another, then another. Every field identical. After twenty-five minutes you stumble onto a dirt track. Something to follow.",
-          context: "Walked random direction 25 minutes through bocage. Found dirt track by chance. Something to follow.",
+          text: "Vous traversez une haie, puis une autre, puis une autre. Chaque champ identique. Apres vingt-cinq minutes vous tombez sur un chemin de terre. Quelque chose a suivre.",
+          context: "Marche direction aleatoire 25 minutes a travers le bocage. Trouve chemin de terre par hasard. Quelque chose a suivre.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -3,
           readinessChange: 2,
         },
         partial: {
-          text: "Hedgerow, field, hedgerow, field. Twenty-five minutes and you might have walked in a circle. Your boots are soaked. You're no closer to knowing where you are.",
-          context: "25 minutes through identical fields. Possibly walked in a circle. No progress on orientation.",
+          text: "Haie, champ, haie, champ. Vingt-cinq minutes et vous avez peut-etre tourne en rond. Vos bottes sont trempees. Vous n'etes pas plus proche de savoir ou vous etes.",
+          context: "25 minutes a travers des champs identiques. Peut-etre tourne en rond. Aucun progres sur l'orientation.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -5,
           readinessChange: 3,
         },
         failure: {
-          text: "Twenty-five minutes blundering through the bocage. You trip a stone wall and land in a cow field. When you get up — German voices, close. You press flat against the hedgerow and don't breathe until they pass.",
-          context: "25 minutes blundering through bocage. Nearly stumbled into German patrol. Had to hide. Time and energy wasted.",
+          text: "Vingt-cinq minutes a errer dans le bocage. Vous trebuchez sur un mur de pierre et atterrissez dans un pre a vaches. Quand vous vous relevez — des voix allemandes, proches. Vous vous plaquez contre la haie et ne respirez plus jusqu'a ce qu'ils passent.",
+          context: "25 minutes a errer dans le bocage. Presque tombe sur une patrouille allemande. Du se cacher. Temps et energie gaspilles.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -8,
@@ -153,29 +153,29 @@ export const scene02_finding_north: Scenario = {
     },
     {
       id: "north_search_supplies",
-      text: "Search the area for supply bundles — parachutes should be visible",
+      text: "Fouiller la zone pour les colis de ravitaillement — les parachutes devraient etre visibles",
       tier: "sound",
       outcome: {
         success: {
           // Negative ammoSpent = ammo gained (no ammoGain field on OutcomeNarrative)
-          text: "White silk in a tree. You pull the canister down — rifle ammunition, K-rations, two extra bandoliers. The rounds are dry. You load them and keep moving.",
-          context: "Found supply parachute in tree. Recovered rifle ammo, K-rations, two bandoliers. Ammunition resupply secured.",
+          text: "Soie blanche dans un arbre. Vous tirez le conteneur — munitions de fusil, rations K, deux bandoulieres supplementaires. Les cartouches sont seches. Vous les chargez et continuez.",
+          context: "Trouve parachute de ravitaillement dans un arbre. Recupere munitions fusil, rations K, deux bandoulieres. Ravitaillement en munitions securise.",
           menLost: 0,
           ammoSpent: -10,
           moraleChange: 2,
           readinessChange: 3,
         },
         partial: {
-          text: "Thirty minutes searching turns up one equipment chute — mostly clothing and a broken radio. One box of .30 cal at the bottom. Better than nothing.",
-          context: "Found one equipment chute after 30 minutes. Mostly clothing and broken radio. One box .30 cal recovered.",
+          text: "Trente minutes de recherche donnent un parachute d'equipement — surtout des vetements et une radio cassee. Une boite de .30 cal au fond. Mieux que rien.",
+          context: "Trouve un parachute d'equipement apres 30 minutes. Surtout vetements et radio cassee. Une boite .30 cal recuperee.",
           menLost: 0,
           ammoSpent: -5,
           moraleChange: 0,
           readinessChange: 3,
         },
         failure: {
-          text: "Thirty minutes crawling through wet fields in the dark. Nothing. The supply bundles could be anywhere in a square mile. Time burned, noise made, nothing gained.",
-          context: "30 minutes searching wet fields. No supply bundles found. Time burned, noise made, nothing gained.",
+          text: "Trente minutes a ramper dans les champs mouilles dans le noir. Rien. Les colis de ravitaillement peuvent etre n'importe ou sur un kilometre carre. Temps brule, bruit fait, rien gagne.",
+          context: "30 minutes a fouiller les champs mouilles. Aucun colis trouve. Temps brule, bruit fait, rien gagne.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -4,
@@ -189,8 +189,8 @@ export const scene02_finding_north: Scenario = {
 
   interlude: {
     type: "movement",
-    beat: "You wade through the flooded field toward higher ground. The water thins, then gives way to mud, then firm earth.",
-    context: "relief mixed with disorientation, alone in the dark",
-    objectiveReminder: "Find your men. Rally at the nearest landmark.",
+    beat: "Vous pataugez a travers le champ inonde vers les hauteurs. L'eau s'amenuise, puis cede la place a la boue, puis a la terre ferme.",
+    context: "soulagement melange a la desorientation, seul dans le noir",
+    objectiveReminder: "Trouvez vos hommes. Rassemblez-vous au point de repere le plus proche.",
   },
 };

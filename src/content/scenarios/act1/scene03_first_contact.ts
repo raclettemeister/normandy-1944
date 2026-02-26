@@ -7,34 +7,34 @@ export const scene03_first_contact: Scenario = {
   timeCost: 15,
   combatScene: false,
 
-  sceneContext: "Hedgerow gap. Unidentified figure 20 meters ahead, darker than the dark. No visible uniform or weapon. Cricket clicker available. Recognition procedure: one click challenge, two clicks response.",
+  sceneContext: "Trouee dans la haie. Silhouette non identifiee a vingt metres, plus sombre que l'obscurite. Pas d'uniforme ni d'arme visibles. Clicker disponible. Procedure de reconnaissance : un clic defi, deux clics reponse.",
 
-  narrative: "Footsteps ahead — twenty meters. A figure in the hedgerow gap, darker than the dark. No uniform or weapon you can see. One hand on your pistol, the other on the cricket clicker in your breast pocket. There was a recognition procedure in the briefing. You remember that much.",
+  narrative: "Des pas devant — vingt metres. Une silhouette dans la trouee de la haie, plus sombre que l'obscurite. Pas d'uniforme ni d'arme visibles. Une main sur votre pistolet, l'autre sur le clicker dans la poche de poitrine. Il y avait une procedure de reconnaissance dans le briefing. Vous vous en souvenez.",
   decisions: [
     {
       id: "contact_click_once",
-      text: "Click the cricket once and listen for a reply",
+      text: "Faire cliquer le clicker une fois et ecouter la reponse",
       tier: "excellent",
       outcome: {
         success: {
-          text: "One click-clack. Silence — then click-clack, click-clack from the dark. The figure steps forward: a PFC from the 502nd, shaking but armed, dropped miles off his DZ. 'Jesus, am I glad to see someone,' he whispers.",
-          context: "Correct cricket challenge. Proper response received. Gained one stray PFC from 502nd, armed.",
+          text: "Un clic-clac. Silence — puis clic-clac, clic-clac depuis l'obscurite. La silhouette s'avance : un soldat de la 502e, tremblant mais arme, tombe a des kilometres de sa zone de saut. 'Mon Dieu, content de voir quelqu'un,' chuchote-t-il.",
+          context: "Defi clicker correct. Reponse appropriee recue. Gagne un soldat egaré de la 502e, arme.",
           menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: 5,
           readinessChange: 0
         },
         partial: {
-          text: "One click-clack. A long pause — then two clicks, hesitant, fumbling. An American from the 501st, badly shaken, separated from his stick. He can barely hold his clicker, but he's a body.",
-          context: "Correct challenge, hesitant response. Gained one shaken trooper from 501st. Low readiness but extra manpower.",
+          text: "Un clic-clac. Une longue pause — puis deux clics, hesitants, maladroits. Un Americain de la 501e, tres secoue, separe de son stick. Il tient a peine son clicker, mais c'est un corps de plus.",
+          context: "Defi correct, reponse hesitante. Gagne un parachutiste secoue de la 501e. Faible preparation mais main-d'oeuvre supplementaire.",
           menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: 3,
           readinessChange: 0
         },
         failure: {
-          text: "One click-clack, then nothing. The figure bolts through the hedgerow — you catch a flash of a 101st patch before he's gone. Too panicked to respond.",
-          context: "Correct challenge but figure bolted. American 101st patch spotted. Too panicked to respond. No contact made.",
+          text: "Un clic-clac, puis rien. La silhouette fonce a travers la haie — vous apercevez un insigne 101e avant qu'il disparaisse. Trop panique pour repondre.",
+          context: "Defi correct mais la silhouette a fui. Insigne 101e apercu. Trop panique pour repondre. Pas de contact etabli.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -1,
@@ -46,28 +46,28 @@ export const scene03_first_contact: Scenario = {
     },
     {
       id: "contact_click_twice",
-      text: "Click the cricket twice and listen for a reply",
+      text: "Faire cliquer le clicker deux fois et ecouter la reponse",
       tier: "reckless",
       outcome: {
         success: {
-          text: "Click-clack, click-clack. The figure freezes — that's the response, not the challenge. Thirty seconds of silence before he whispers 'Flash?' and you manage 'Thunder.' He's American, but you both stood in the open for half a minute sorting it out.",
-          context: "Gave response instead of challenge. Confusion sorted after 30 seconds exposed. Gained one trooper but sloppy contact.",
+          text: "Clic-clac, clic-clac. La silhouette se fige — c'est la reponse, pas le defi. Trente secondes de silence avant qu'il chuchote 'Flash?' et vous repondez 'Thunder.' Il est Americain, mais vous avez tous deux reste exposes une demi-minute a regler ca.",
+          context: "Donne la reponse au lieu du defi. Confusion reglee apres 30 secondes d'exposition. Gagne un parachutiste mais contact neglige.",
           menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: -2,
           readinessChange: 2
         },
         partial: {
-          text: "Click-clack, click-clack. The figure backs away slowly, then scrambles through the hedgerow. You gave the response instead of the challenge. He didn't trust it.",
-          context: "Wrong signal — gave response not challenge. Figure retreated, didn't trust it. No contact made.",
+          text: "Clic-clac, clic-clac. La silhouette recule lentement, puis se precipite a travers la haie. Vous avez donne la reponse au lieu du defi. Il ne vous a pas fait confiance.",
+          context: "Mauvais signal — donne la reponse pas le defi. La silhouette a recule, pas confiance. Pas de contact etabli.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -4,
           readinessChange: 3
         },
         failure: {
-          text: "Click-clack, click-clack. A shot cracks the air — muzzle flash blinding in the dark, the round snapping past your ear. You hit the dirt. By the time you look up, he's gone. An American who shot at you because you gave the wrong signal.",
-          context: "Wrong signal triggered friendly fire. Shot snapped past, near miss. American fled. Position compromised by gunshot.",
+          text: "Clic-clac, clic-clac. Un coup de feu dechire l'air — l'eclair de la bouche aveuglant dans le noir, la balle sifflant a votre oreille. Vous vous jetez au sol. Quand vous relevez la tete, il a disparu. Un Americain qui vous a tire dessus parce que vous avez donne le mauvais signal.",
+          context: "Mauvais signal a declenche tir ami. Balle passee pres, quasi-accident. Americain en fuite. Position compromise par le coup de feu.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -6,
@@ -79,28 +79,28 @@ export const scene03_first_contact: Scenario = {
     },
     {
       id: "contact_click_three",
-      text: "Click the cricket three times in quick succession",
+      text: "Faire cliquer le clicker trois fois rapidement",
       tier: "suicidal",
       outcome: {
         success: {
-          text: "Three rapid clicks. The figure drops flat — you hear a rifle bolt being worked. 'WHO'S THERE?' An American voice, terrified. You call out 'Flash' and get 'Thunder' back, but he nearly killed you.",
-          context: "Three clicks — meaningless signal. Nearly shot by terrified American. Verbal challenge salvaged contact. Extreme noise.",
+          text: "Trois clics rapides. La silhouette se jette au sol — vous entendez une culasse. 'QUI EST LA?' Une voix americaine, terrifiee. Vous criez 'Flash' et recevez 'Thunder', mais il a failli vous tuer.",
+          context: "Trois clics — signal sans signification. Presque tue par un Americain terrifie. Defi verbal a sauve le contact. Bruit extreme.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -5,
           readinessChange: 5
         },
         partial: {
-          text: "Three clicks. A burst of rifle fire — bullets thud into the hedgerow above as you press yourself into the dirt. When the shooting stops, the figure is gone. German or American, you'll never know.",
-          context: "Three clicks triggered burst of rifle fire. Rounds into hedgerow overhead. Figure fled. Identity unknown. Area compromised.",
+          text: "Trois clics. Une rafale de fusil — les balles s'enfoncent dans la haie au-dessus de vous pendant que vous vous plaquez dans la terre. Quand les tirs s'arretent, la silhouette a disparu. Allemand ou Americain, vous ne saurez jamais.",
+          context: "Trois clics ont declenche une rafale. Balles dans la haie au-dessus. Silhouette en fuite. Identite inconnue. Zone compromise.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -8,
           readinessChange: 8
         },
         failure: {
-          text: "Three clicks. The figure fires. Dirt and rock spray into your face as the round hits the ground beside you. You roll behind the hedgerow, half-blind. Everyone within five hundred meters heard those shots.",
-          context: "Three clicks drew direct fire. Round hit ground beside captain. Half-blinded by debris. Gunshots audible 500m+.",
+          text: "Trois clics. La silhouette tire. Terre et cailloux vous eclaboussent le visage quand la balle frappe le sol a cote de vous. Vous roulez derriere la haie, a moitie aveugle. Tout le monde a cinq cents metres a entendu ces coups de feu.",
+          context: "Trois clics ont attire des tirs directs. Balle a frappe le sol a cote du capitaine. A moitie aveugle par les debris. Coups de feu audibles a 500m+.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -10,
@@ -113,28 +113,28 @@ export const scene03_first_contact: Scenario = {
     },
     {
       id: "contact_flash",
-      text: "Whisper 'Flash' into the dark and wait",
+      text: "Chuchoter 'Flash' dans le noir et attendre",
       tier: "sound",
       outcome: {
         success: {
-          text: "'Flash.' A beat. 'Thunder.' The relief almost buckles your knees. A PFC from the 506th — your own regiment — steps out from behind a stone wall. He's yours now.",
-          context: "Verbal challenge. Correct response. Gained one PFC from 506th — same regiment. Clean contact.",
+          text: "'Flash.' Un temps. 'Thunder.' Le soulagement vous fait presque plier les genoux. Un soldat de la 506e — votre propre regiment — sort de derriere un mur de pierre. Il est a vous maintenant.",
+          context: "Defi verbal. Reponse correcte. Gagne un soldat de la 506e — meme regiment. Contact propre.",
           menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: 4,
           readinessChange: 2
         },
         partial: {
-          text: "'Flash.' Silence. Then, barely audible: '...Thunder?' He stumbles toward you — American, disoriented, maybe concussed from a hard landing. He'll slow you down, but he's an extra pair of eyes.",
-          context: "Verbal challenge, slow response. Gained one trooper, possibly concussed. Extra body but reduced capability.",
+          text: "'Flash.' Silence. Puis, a peine audible : '...Thunder?' Il trebuche vers vous — Americain, desoriente, peut-etre commotionne par un atterrissage brutal. Il vous ralentira, mais c'est une paire d'yeux de plus.",
+          context: "Defi verbal, reponse lente. Gagne un parachutiste, peut-etre commotionne. Corps supplementaire mais capacite reduite.",
           menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: 2,
           readinessChange: 2
         },
         failure: {
-          text: "'Flash.' Nothing. Again: 'Flash.' The figure turns and walks into the dark. Not running — walking. Maybe German, maybe a shell-shocked American who forgot the code. Your voice hung in the night air twice. You need to move.",
-          context: "Verbal challenge twice, no response. Figure walked away. Voice exposed position. Need to relocate.",
+          text: "'Flash.' Rien. Encore : 'Flash.' La silhouette se retourne et s'en va dans le noir. Pas en courant — en marchant. Peut-etre Allemand, peut-etre un Americain choque qui a oublie le code. Votre voix a flotte deux fois dans l'air nocturne. Il faut bouger.",
+          context: "Defi verbal deux fois, pas de reponse. Silhouette partie en marchant. Voix a expose la position. Besoin de se deplacer.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -2,
@@ -146,28 +146,28 @@ export const scene03_first_contact: Scenario = {
     },
     {
       id: "contact_thunder",
-      text: "Whisper 'Thunder' into the dark and wait",
+      text: "Chuchoter 'Thunder' dans le noir et attendre",
       tier: "reckless",
       outcome: {
         success: {
-          text: "'Thunder.' The figure cocks his head. Wrong word — that's the response, not the challenge. He whispers back: 'Flash?' You say 'Thunder' again. He comes over, shaking his head. 'You got it backwards, buddy.'",
-          context: "Gave response instead of challenge. Confusion resolved. Gained one trooper but looked incompetent.",
+          text: "'Thunder.' La silhouette penche la tete. Mauvais mot — c'est la reponse, pas le defi. Il chuchote : 'Flash?' Vous dites 'Thunder' encore. Il s'approche en secouant la tete. 'Tu t'es trompe de sens, mon pote.'",
+          context: "Donne la reponse au lieu du defi. Confusion resolue. Gagne un parachutiste mais a l'air incompetent.",
           menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: -1,
           readinessChange: 3
         },
         partial: {
-          text: "'Thunder.' Nothing. The figure steps back. Two full minutes of standoff in the dark before he whispers 'Flash?' and you realize your mistake. By then, you've both been standing in the open far too long.",
-          context: "Wrong verbal — gave response first. Two-minute standoff exposed in open. No contact gained.",
+          text: "'Thunder.' Rien. La silhouette recule. Deux longues minutes de face-a-face dans le noir avant qu'il chuchote 'Flash?' et vous realisez votre erreur. D'ici la, vous avez tous deux reste exposes bien trop longtemps.",
+          context: "Mauvais verbal — donne la reponse en premier. Face-a-face de deux minutes expose. Pas de contact etabli.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -3,
           readinessChange: 4
         },
         failure: {
-          text: "'Thunder.' The figure freezes. Says nothing. Then he disappears into the hedgerow at a run. He thinks you're German — what American says the response first?",
-          context: "Gave response first. Figure assumed German — fled at run. No contact. Procedure failure.",
+          text: "'Thunder.' La silhouette se fige. Ne dit rien. Puis il disparait dans la haie en courant. Il pense que vous etes Allemand — quel Americain dit la reponse en premier?",
+          context: "Donne la reponse en premier. Silhouette a suppose Allemand — a fui en courant. Pas de contact. Echec de procedure.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -5,
@@ -179,28 +179,28 @@ export const scene03_first_contact: Scenario = {
     },
     {
       id: "contact_yell_flash",
-      text: "Yell 'Flash' at the top of your voice",
+      text: "Crier 'Flash' a pleine voix",
       tier: "reckless",
       outcome: {
         success: {
-          text: "'FLASH!' Your voice cracks the silence like a rifle shot. 'THUNDER!' the figure shouts back, then catches himself. 'Jesus Christ, keep your voice down.' He's American, but every ear in the area just turned your direction.",
-          context: "Yelled challenge at full volume. Got response. Gained one trooper but massive noise signature. Area alerted.",
+          text: "'FLASH!' Votre voix dechire le silence comme un coup de fusil. 'THUNDER!' crie la silhouette en retour, puis se reprend. 'Mon Dieu, baisse la voix.' Il est Americain, mais toutes les oreilles du coin viennent de se tourner vers vous.",
+          context: "Defi crie a pleine voix. Reponse obtenue. Gagne un parachutiste mais signature sonore massive. Zone alertee.",
           menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: 1,
           readinessChange: 8
         },
         partial: {
-          text: "'FLASH!' The word echoes off the hedgerows. The figure drops flat. Somewhere in the distance, a German voice barks something. The figure crawls toward you. 'Are you trying to get us killed?'",
-          context: "Yelled challenge. Echo alerted Germans in distance. Gained one trooper. German voice responded to noise.",
+          text: "'FLASH!' Le mot resonne sur les haies. La silhouette se jette au sol. Quelque part au loin, une voix allemande aboie quelque chose. La silhouette rampe vers vous. 'Vous voulez nous faire tuer?'",
+          context: "Defi crie. Echo a alerte les Allemands au loin. Gagne un parachutiste. Voix allemande a repondu au bruit.",
           menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: -3,
           readinessChange: 10
         },
         failure: {
-          text: "'FLASH!' Silence — then a Schmeisser opens up from your left. The figure scatters. You hit the ground as bullets snap through the air above. When it stops, you're alone, and the Germans know exactly where you are.",
-          context: "Yelled challenge. Drew Schmeisser fire from nearby German position. Figure fled. Alone and position known to enemy.",
+          text: "'FLASH!' Silence — puis une Schmeisser ouvre le feu sur votre gauche. La silhouette se disperse. Vous vous jetez au sol pendant que les balles sifflent au-dessus. Quand ca s'arrete, vous etes seul, et les Allemands savent exactement ou vous etes.",
+          context: "Defi crie. A attire des tirs Schmeisser d'une position allemande proche. Silhouette en fuite. Seul et position connue de l'ennemi.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -8,
@@ -212,28 +212,28 @@ export const scene03_first_contact: Scenario = {
     },
     {
       id: "contact_shoot",
-      text: "Draw your pistol and fire at the figure",
+      text: "Degainer votre pistolet et tirer sur la silhouette",
       tier: "suicidal",
       outcome: {
         success: {
-          text: "You fire. The figure drops. You rush forward — screaming eagle patch on his shoulder. 101st. American. The round hit his canteen. He's alive, staring up at you with an expression you'll carry for the rest of the war.",
-          context: "Fired on unidentified figure. Hit canteen — American 101st, alive but shot at. Severe trust damage. Gunshot noise.",
+          text: "Vous tirez. La silhouette s'effondre. Vous vous precipitez — insigne aigle hurlant sur son epaule. 101e. Americain. La balle a touche sa gourde. Il est vivant, vous regarde avec une expression que vous porterez le reste de la guerre.",
+          context: "Tire sur silhouette non identifiee. Touche la gourde — Americain 101e, vivant mais tire dessus. Degats de confiance severes. Bruit du coup de feu.",
           menLost: 0,
           ammoSpent: -2,
           moraleChange: -10,
           readinessChange: 8
         },
         partial: {
-          text: "You fire. Miss. The figure fires back. Both of you shooting blind until he screams 'FLASH! FLASH! FLASH!' American. You stop. He stops. You find each other with shaking hands. You almost killed each other.",
-          context: "Mutual blind firefight with American. Both missed. Identified by verbal challenge after shots fired. Massive noise signature.",
+          text: "Vous tirez. Rate. La silhouette riposte. Vous vous tirez dessus tous les deux a l'aveugle jusqu'a ce qu'il crie 'FLASH! FLASH! FLASH!' Americain. Vous vous arretez. Lui aussi. Vous vous retrouvez a mains tremblantes. Vous avez failli vous tuer.",
+          context: "Echange de tirs a l'aveugle avec Americain. Tous les deux ont rate. Identifie par defi verbal apres les coups de feu. Signature sonore massive.",
           menLost: 0,
           ammoSpent: -3,
           moraleChange: -8,
           readinessChange: 10
         },
         failure: {
-          text: "You fire. The figure crumples. Screaming eagle patch. 101st. He's not moving. You killed an American — alone in the dark, just like you — and you shot him dead.",
-          context: "Shot and killed an American paratrooper, 101st. Friendly fire fatality. Catastrophic morale and psychological damage.",
+          text: "Vous tirez. La silhouette s'effondre. Insigne aigle hurlant. 101e. Il ne bouge plus. Vous avez tue un Americain — seul dans le noir, comme vous — et vous l'avez abattu.",
+          context: "Tire et tue un parachutiste americain, 101e. Fatalite par tir ami. Degats moraux et psychologiques catastrophiques.",
           menLost: 0,
           ammoSpent: -2,
           moraleChange: -15,
@@ -246,28 +246,28 @@ export const scene03_first_contact: Scenario = {
     },
     {
       id: "contact_freeze",
-      text: "Hold still — don't move, don't make a sound",
+      text: "Rester immobile — ne pas bouger, ne pas faire de bruit",
       tier: "mediocre",
       outcome: {
         success: {
-          text: "You hold your breath. The figure stands there for what feels like an hour, then moves on into the hedgerow. Safe. But whoever that was, they could have been yours.",
-          context: "Held still. Figure moved on without detecting. No contact made. Potential ally lost.",
+          text: "Vous retenez votre souffle. La silhouette reste la pendant ce qui semble une heure, puis s'en va dans la haie. En securite. Mais qui que ce soit, il aurait pu etre des votres.",
+          context: "Reste immobile. Silhouette partie sans vous detecter. Pas de contact etabli. Allie potentiel perdu.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -2,
           readinessChange: 0
         },
         partial: {
-          text: "You freeze. The figure turns toward you — did he hear something? Your heart hammers against your ribs. Then he turns away and disappears. Safe, but alone.",
-          context: "Froze. Figure almost detected, turned away. No contact made. Still alone.",
+          text: "Vous vous figez. La silhouette se tourne vers vous — a-t-il entendu quelque chose? Votre coeur martele vos cotes. Puis il se detourne et disparait. En securite, mais seul.",
+          context: "S'est fige. Silhouette a failli detecter, s'est detournee. Pas de contact etabli. Toujours seul.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -3,
           readinessChange: 0
         },
         failure: {
-          text: "You try to hold still but your boot shifts on gravel. The figure spins. A tense second — then he bolts. Gone. You're standing in the dark with a pounding heart and nothing to show for it.",
-          context: "Tried to hold still but made noise. Figure spooked and bolted. No contact, minor noise made.",
+          text: "Vous essayez de rester immobile mais votre botte bouge sur le gravier. La silhouette pivote. Une seconde tendue — puis il fonce. Parti. Vous restez dans le noir le coeur battant et rien a montrer.",
+          context: "A essaye de rester immobile mais a fait du bruit. Silhouette effrayee et partie. Pas de contact, bruit mineur.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -4,
@@ -279,28 +279,28 @@ export const scene03_first_contact: Scenario = {
     },
     {
       id: "contact_retreat",
-      text: "Crawl backward slowly and slip through the gap",
+      text: "Ramper en arriere lentement et vous faufiler par la trouee",
       tier: "mediocre",
       outcome: {
         success: {
-          text: "You ease backward, one hand behind you feeling for the gap. Slow. Silent. The figure never turns. You slip into the dark. Alive, but still completely alone.",
-          context: "Silent withdrawal. Undetected. No contact made. Potential ally bypassed.",
+          text: "Vous reculez doucement, une main derriere vous cherchant la trouee. Lent. Silencieux. La silhouette ne se retourne jamais. Vous vous glissez dans le noir. Vivant, mais toujours completement seul.",
+          context: "Retrait silencieux. Non detecte. Pas de contact etabli. Allie potentiel contourne.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -3,
           readinessChange: 0
         },
         partial: {
-          text: "You back up. A branch snaps under your knee. The figure turns — but you're already through the gap. You hear a whisper behind you, but you're gone.",
-          context: "Retreated. Branch snapped, nearly detected. Escaped through gap. No contact made.",
+          text: "Vous reculez. Une branche craque sous votre genou. La silhouette se tourne — mais vous etes deja passe par la trouee. Vous entendez un chuchotement derriere vous, mais vous etes parti.",
+          context: "Retraite. Branche cassee, presque detecte. Echappe par la trouee. Pas de contact etabli.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -4,
           readinessChange: 1
         },
         failure: {
-          text: "You crawl backward and your canteen clanks against your pistol. The figure drops to a knee — rifle bolt. You freeze. A minute passes that feels like an hour before he moves on. You're shaking.",
-          context: "Retreat failed — canteen noise. Figure readied weapon. Tense standoff before he moved on. Shaken.",
+          text: "Vous rampez en arriere et votre gourde claque contre votre pistolet. La silhouette se met a genoux — culasse. Vous vous figez. Une minute qui semble une heure avant qu'il parte. Vous tremblez.",
+          context: "Retraite ratee — bruit de gourde. Silhouette a arme son arme. Face-a-face tendu avant qu'il parte. Secoue.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -5,
