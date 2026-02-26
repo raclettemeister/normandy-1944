@@ -852,3 +852,20 @@ describe("processSceneTransition — per-decision timeCost", () => {
     expect(result.state.time).toEqual({ hour: 1, minute: 15 });
   });
 });
+
+describe("calculateEffectiveScore — masterful tier", () => {
+  it("masterful base score clamps to 100", () => {
+    const state = makeState({ morale: 60, readiness: 0, ammo: 50, men: 0 });
+    const decision = makeDecision();
+    const score = calculateEffectiveScore("masterful", state, decision);
+    expect(score).toBe(100);
+  });
+
+  it("masterful with bad state still scores above excellent-with-bad-state", () => {
+    const state = makeState({ morale: 30, readiness: 50, ammo: 20, men: 3 });
+    const decision = makeDecision();
+    const masterful = calculateEffectiveScore("masterful", state, decision);
+    const excellent = calculateEffectiveScore("excellent", state, decision);
+    expect(masterful).toBeGreaterThan(excellent);
+  });
+});
