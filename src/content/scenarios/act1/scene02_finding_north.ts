@@ -25,7 +25,7 @@ export const scene02_finding_north: Scenario = {
       outcome: {
         success: {
           text: "Nord a la boussole. Un clocher au nord-est — recoupe avec la carte du briefing memorisee. Sainte-Marie-du-Mont. Deux kilometres au sud-ouest de la zone de saut. Vous savez ou aller.",
-          context: "Boussole plus terrain. Recoupe le clocher avec la carte du briefing. Position fixee : deux km au SO de la zone de saut.",
+          context: "Boussole + terrain. Clocher recoupe avec la carte du briefing. Position fixee : deux km au sud-ouest de la zone de saut.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 5,

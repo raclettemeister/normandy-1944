@@ -76,7 +76,7 @@ export default function StatusPanel({ state }: StatusPanelProps) {
 
       {state.difficulty === "medium" && (
         <div className="status-row">
-          <span className="status-label">Jetons revelation</span>
+          <span className="status-label">Jetons de revelation</span>
           <span className="status-value" data-testid="reveal-token-count">
             {state.revealTokensRemaining}
           </span>

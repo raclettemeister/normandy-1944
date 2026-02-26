@@ -226,7 +226,7 @@ export default function GameScreen({
             sceneId: scene.id,
             type: "casualty",
             soldierIds: [c.id],
-            description: `${c.rank} ${c.name} ${c.status === "KIA" ? "killed" : "wounded"} at ${scene.id}`,
+            description: `${c.rank} ${c.name} ${c.status === "KIA" ? "tue" : "blesse"} a ${scene.id}`,
           });
         }
       }
@@ -236,7 +236,7 @@ export default function GameScreen({
           sceneId: scene.id,
           type: "close_call",
           soldierIds: [],
-          description: `Captain hit at ${scene.id}`,
+          description: `Capitaine touche a ${scene.id}`,
         });
       }
 
@@ -613,7 +613,7 @@ export default function GameScreen({
           sceneId: scene.id,
           type: "casualty",
           soldierIds: [c.id],
-          description: `${c.rank} ${c.name} ${c.status === "KIA" ? "killed" : "wounded"} at ${scene.id}`,
+          description: `${c.rank} ${c.name} ${c.status === "KIA" ? "tue" : "blesse"} a ${scene.id}`,
         });
       }
     }
@@ -623,7 +623,7 @@ export default function GameScreen({
         sceneId: scene.id,
         type: "close_call",
         soldierIds: [],
-        description: `Captain hit at ${scene.id}`,
+        description: `Capitaine touche a ${scene.id}`,
       });
 
       onGameOver({
@@ -761,7 +761,7 @@ export default function GameScreen({
             data-testid="wiki-btn"
             onClick={() => setOverlay(overlay === "wiki" ? null : "wiki")}
           >
-            Wiki
+            Lexique
           </button>
         </div>
       </header>

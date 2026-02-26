@@ -79,13 +79,13 @@ export default function MainMenu({
             disabled={narrativeMode !== "llm"}
             data-testid="start-hardcore"
           >
-            <span className="difficulty-btn__name">Hardcore</span>
+            <span className="difficulty-btn__name">Extreme</span>
             <span className="difficulty-btn__desc">Aucune decision. Aucun jeton. Commandez ou mourez.</span>
           </button>
 
           {narrativeMode !== "llm" && (
             <p className="difficulty-note">
-              Entrez un code d'acces ci-dessus pour debloquer les modes Moyen et Hardcore.
+              Entrez un code d'acces ci-dessus pour debloquer les modes Moyen et Extreme.
             </p>
           )}
         </div>

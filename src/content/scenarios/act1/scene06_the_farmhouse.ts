@@ -271,7 +271,7 @@ export const scene06_the_farmhouse: Scenario = {
       outcome: {
         success: {
           text: "Vous passez la ferme sans vous arreter. Henderson regarde en arriere une fois. 'C'etait des notres, mon capitaine.' Peut-etre. Peut-etre pas. L'equipement sur le porche vous reste plus longtemps qu'il ne devrait.",
-          context: "Ferme contournee. Pas de tentative de rassemblement. Amis possibles laisses derriere. Continue vers le point de rassemblement.",
+          context: "Ferme contournee. Pas de tentative de rassemblement. Amis possibles laisses derriere. Poursuite vers le point de rassemblement.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -3,
@@ -279,7 +279,7 @@ export const scene06_the_farmhouse: Scenario = {
         },
         partial: {
           text: "Vous poussez a travers le champ suivant. La ferme reste derriere dans le gris. A mi-chemin, vous l'entendez — un clicker dans cette direction. Un clic. Faible. Vous etes deja en marche et vous ne revenez pas.",
-          context: "Ferme contournee. Entendu clicker derriere — amis confirmes. N'est pas revenu. Opportunite de rassemblement manquee.",
+          context: "Ferme contournee. Clicker entendu derriere — allies confirmes. Le groupe n'est pas revenu. Opportunite de rassemblement manquee.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -5,

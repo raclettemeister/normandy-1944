@@ -44,7 +44,7 @@ export default function PrepPhase({
   return (
     <div className="prep-phase" data-testid="prep-phase">
       <div className="prep-phase__header">
-        <h3>Preparation</h3>
+        <h3>Preparation tactique</h3>
         <span className="prep-phase__time-cost">
           Temps consomme : {totalTimeCost} min
         </span>

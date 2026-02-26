@@ -19,7 +19,7 @@ function formatStatus(status: Soldier["status"]): string {
     case "wounded":
       return "blesse";
     case "KIA":
-      return "MIA";
+      return "KIA";
     case "missing":
       return "disparu";
   }

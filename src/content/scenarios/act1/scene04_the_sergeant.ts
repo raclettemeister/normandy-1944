@@ -269,7 +269,7 @@ export const scene04_the_sergeant: Scenario = {
       outcome: {
         success: {
           text: "Vous vous faufilez dans le champ suivant. Les voix s'estompent derriere le mur. En securite. Le silence qui suit est la chose la plus bruyante que vous ayez entendue de toute la nuit. Vous etes toujours seul.",
-          context: "Evite tout contact. S'est faufile sans etre detecte. Pas de rassemblement — toujours seul. Aucun risque pris, aucun homme gagne.",
+          context: "Contact evite. Le groupe s'est faufile sans etre detecte. Pas de rassemblement — toujours seul. Aucun risque pris, aucun homme gagne.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -5,
@@ -278,7 +278,7 @@ export const scene04_the_sergeant: Scenario = {
         },
         partial: {
           text: "Vous reculez. Une branche craque. Les voix se taisent. Quelqu'un chuchote 'Flash?' — a peine audible. Vous continuez. Une part de vous dit de revenir. Vous ne le faites pas.",
-          context: "Retraite. Entendu defi 'Flash' derriere — Americains. Continue quand meme. Rassemblement saute. Seul.",
+          context: "Retraite. Defi 'Flash' entendu derriere — Americains confirmes. Repli maintenu. Rassemblement saute. Toujours seul.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -7,
@@ -287,7 +287,7 @@ export const scene04_the_sergeant: Scenario = {
         },
         failure: {
           text: "Vous partez. Chaque son est plus fort quand on est seul. Chaque ombre a un fusil. Vous avez fait le choix prudent. Le choix prudent vous a laisse sans un seul allie en France occupee.",
-          context: "A laisse des allies potentiels derriere le mur. Pas de rassemblement. Seul en territoire ennemi. Decision motivee par la peur.",
+          context: "Allies potentiels laisses derriere le mur. Pas de rassemblement. Seul en territoire ennemi. Decision motivee par la peur.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -10,

@@ -259,7 +259,7 @@ export const scene03_first_contact: Scenario = {
         },
         partial: {
           text: "Vous vous figez. La silhouette se tourne vers vous — a-t-il entendu quelque chose? Votre coeur martele vos cotes. Puis il se detourne et disparait. En securite, mais seul.",
-          context: "S'est fige. Silhouette a failli detecter, s'est detournee. Pas de contact etabli. Toujours seul.",
+          context: "Immobile. La silhouette a failli detecter votre presence, puis s'est detournee. Pas de contact etabli. Toujours seul.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -3,
