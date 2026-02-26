@@ -1,10 +1,4 @@
-import { test, expect, devices, type Locator, type Page } from "@playwright/test";
-
-const MOBILE_PRESETS = [
-  { name: "iPhone SE", settings: devices["iPhone SE"] },
-  { name: "iPhone 12", settings: devices["iPhone 12"] },
-  { name: "Pixel 5", settings: devices["Pixel 5"] },
-] as const;
+import { test, expect, type Locator, type Page } from "@playwright/test";
 
 async function expectNoHorizontalOverflow(page: Page, context: string) {
   const metrics = await page.evaluate(() => {
@@ -51,74 +45,70 @@ async function expectPanelWithinViewport(page: Page, panel: Locator, label: stri
   );
 }
 
-for (const preset of MOBILE_PRESETS) {
-  test.describe(`mobile UI sanity (${preset.name})`, () => {
-    test.use({ ...preset.settings });
+test.describe("mobile UI sanity", () => {
+  test("menu, overlays, and controls remain mobile-safe", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByTestId("main-menu")).toBeVisible();
+    await expectNoHorizontalOverflow(page, "main menu");
 
-    test("menu, overlays, and controls remain mobile-safe", async ({ page }) => {
-      await page.goto("/");
-      await expect(page.getByTestId("main-menu")).toBeVisible();
-      await expectNoHorizontalOverflow(page, "main menu");
+    await expectMinHeight(page.getByTestId("start-easy"), 44, "main menu start button");
+    await page.getByTestId("start-easy").click();
 
-      await expectMinHeight(page.getByTestId("start-easy"), 44, "main menu start button");
-      await page.getByTestId("start-easy").click();
+    await expect(page.getByTestId("orders-btn")).toBeVisible();
+    await expectNoHorizontalOverflow(page, "game screen");
 
-      await expect(page.getByTestId("orders-btn")).toBeVisible();
-      await expectNoHorizontalOverflow(page, "game screen");
+    await expectMinHeight(page.getByTestId("orders-btn"), 44, "orders toolbar button");
+    await expectMinHeight(page.getByTestId("roster-btn"), 44, "roster toolbar button");
+    await expectMinHeight(page.getByTestId("wiki-btn"), 44, "wiki toolbar button");
 
-      await expectMinHeight(page.getByTestId("orders-btn"), 44, "orders toolbar button");
-      await expectMinHeight(page.getByTestId("roster-btn"), 44, "roster toolbar button");
-      await expectMinHeight(page.getByTestId("wiki-btn"), 44, "wiki toolbar button");
+    await page.getByTestId("situation-continue").click();
+    const firstDecision = page.locator(".decision-btn").first();
+    await expect(firstDecision).toBeVisible();
+    await expectMinHeight(firstDecision, 44, "decision button");
 
-      await page.getByTestId("situation-continue").click();
-      const firstDecision = page.locator(".decision-btn").first();
-      await expect(firstDecision).toBeVisible();
-      await expectMinHeight(firstDecision, 44, "decision button");
+    await page.getByTestId("orders-btn").click();
+    const ordersPanel = page.getByTestId("orders-panel");
+    await expect(ordersPanel).toBeVisible();
+    await expectPanelWithinViewport(page, ordersPanel, "orders overlay");
+    await expectMinHeight(
+      ordersPanel.locator(".overlay-close"),
+      44,
+      "orders overlay close button"
+    );
+    await ordersPanel.locator(".overlay-close").click();
 
-      await page.getByTestId("orders-btn").click();
-      const ordersPanel = page.getByTestId("orders-panel");
-      await expect(ordersPanel).toBeVisible();
-      await expectPanelWithinViewport(page, ordersPanel, "orders overlay");
-      await expectMinHeight(
-        ordersPanel.locator(".overlay-close"),
-        44,
-        "orders overlay close button"
-      );
-      await ordersPanel.locator(".overlay-close").click();
+    await page.getByTestId("roster-btn").click();
+    const rosterPanel = page.getByTestId("roster-panel");
+    await expect(rosterPanel).toBeVisible();
+    await expectPanelWithinViewport(page, rosterPanel, "roster overlay");
+    await rosterPanel.locator(".overlay-close").click();
 
-      await page.getByTestId("roster-btn").click();
-      const rosterPanel = page.getByTestId("roster-panel");
-      await expect(rosterPanel).toBeVisible();
-      await expectPanelWithinViewport(page, rosterPanel, "roster overlay");
-      await rosterPanel.locator(".overlay-close").click();
+    await page.getByTestId("wiki-btn").click();
+    const wikiPanel = page.getByTestId("wiki-panel");
+    await expect(wikiPanel).toBeVisible();
+    await expectPanelWithinViewport(page, wikiPanel, "wiki overlay");
+    await expectMinHeight(
+      wikiPanel.locator(".wiki-category-btn").first(),
+      44,
+      "wiki category button"
+    );
+    await wikiPanel.locator(".overlay-close").click();
 
-      await page.getByTestId("wiki-btn").click();
-      const wikiPanel = page.getByTestId("wiki-panel");
-      await expect(wikiPanel).toBeVisible();
-      await expectPanelWithinViewport(page, wikiPanel, "wiki overlay");
-      await expectMinHeight(
-        wikiPanel.locator(".wiki-category-btn").first(),
-        44,
-        "wiki category button"
-      );
-      await wikiPanel.locator(".overlay-close").click();
-
-      await expectNoHorizontalOverflow(page, "post-overlay game screen");
-    });
-
-    test("outcome transition remains tappable and non-clipped", async ({ page }) => {
-      await page.goto("/");
-      await page.getByTestId("start-easy").click();
-      await page.getByTestId("situation-continue").click();
-
-      const firstDecision = page.locator(".decision-btn").first();
-      await expect(firstDecision).toBeVisible();
-      await firstDecision.click();
-
-      const continueButton = page.locator(".transition-prompt__btn");
-      await expect(continueButton).toBeVisible();
-      await expectMinHeight(continueButton, 44, "transition continue button");
-      await expectNoHorizontalOverflow(page, "outcome transition");
-    });
+    await expectNoHorizontalOverflow(page, "post-overlay game screen");
   });
-}
+
+  test("outcome transition remains tappable and non-clipped", async ({ page }) => {
+    await page.goto("/");
+    await page.getByTestId("start-easy").click();
+    await page.getByTestId("situation-continue").click();
+
+    const firstDecision = page.locator(".decision-btn").first();
+    await expect(firstDecision).toBeVisible();
+    await firstDecision.click();
+
+    const continueButton = page.locator(".transition-prompt__btn");
+    await expect(continueButton).toBeVisible();
+    await expectMinHeight(continueButton, 44, "transition continue button");
+    await expectNoHorizontalOverflow(page, "outcome transition");
+  });
+});

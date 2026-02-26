@@ -1,4 +1,4 @@
-import { defineConfig } from "@playwright/test";
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -13,6 +13,20 @@ export default defineConfig({
     baseURL: "http://127.0.0.1:4173/normandy-1944/",
     trace: "retain-on-failure",
   },
+  projects: [
+    {
+      name: "iphone-se",
+      use: { ...devices["iPhone SE"], browserName: "chromium" },
+    },
+    {
+      name: "iphone-12",
+      use: { ...devices["iPhone 12"], browserName: "chromium" },
+    },
+    {
+      name: "pixel-5",
+      use: { ...devices["Pixel 5"] },
+    },
+  ],
   webServer: {
     command: "npm run dev -- --host 127.0.0.1 --port 4173",
     url: "http://127.0.0.1:4173/normandy-1944/",
