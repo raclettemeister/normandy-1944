@@ -3,35 +3,35 @@ import type { SoldierRelationship } from '../types';
 const RELATIONSHIPS: SoldierRelationship[] = [
   {
     soldierId: "henderson", targetId: "doyle", type: "protective",
-    detail: "Trained him personally at Toccoa. Promised his mother he'd bring him home.",
+    detail: "L'a entraine personnellement a Toccoa. A promis a sa mere de le ramener.",
   },
   {
     soldierId: "malone", targetId: "caruso", type: "rivalry",
-    detail: "Boston vs. Brooklyn. They argue about everything. Inseparable.",
+    detail: "Boston contre Brooklyn. Ils se disputent sur tout. Inseparables.",
   },
   {
     soldierId: "kowalski", targetId: "novak", type: "brothers",
-    detail: "BAR team. Work as one unit. Novak carries Kowalski's extra ammo.",
+    detail: "Equipe BAR. Travaillent comme une seule unite. Novak porte les munitions en plus de Kowalski.",
   },
   {
     soldierId: "park", targetId: "webb", type: "depends_on",
-    detail: "Park uses Webb as his eyes. Webb spots, Park shoots.",
+    detail: "Park utilise Webb comme ses yeux. Webb repere, Park tire.",
   },
   {
     soldierId: "rivera", targetId: "everyone", type: "protective",
-    detail: "Doc treats everyone. Losing Doc is losing hope.",
+    detail: "Doc soigne tout le monde. Perdre Doc c'est perdre l'espoir.",
   },
   {
     soldierId: "palmer", targetId: "malone", type: "resents",
-    detail: "Malone calls Palmer a coward to his face. Palmer hates him for it.",
+    detail: "Malone traite Palmer de froussard en face. Palmer le hait pour ca.",
   },
   {
     soldierId: "doyle", targetId: "ellis", type: "brothers",
-    detail: "Both green, both scared. They stick together because nobody else will.",
+    detail: "Tous deux bleus, tous deux effrayes. Ils restent ensemble car personne d'autre ne le fera.",
   },
   {
     soldierId: "washington", targetId: "henderson", type: "rivalry",
-    detail: "Washington's seen real danger. Respects Henderson but thinks he's too cautious.",
+    detail: "Washington a vu le vrai danger. Respecte Henderson mais le trouve trop prudent.",
   },
 ];
 
