@@ -20,20 +20,22 @@ export default function NarrativePanel({
       {isLoading ? (
         <div className="narrative-loading" data-testid="narrative-loading">...</div>
       ) : (
-        <div className="narrative-text" data-testid="narrative">
-          {narrative}
-        </div>
-      )}
-      {outcomeText && (
-        <div className="outcome-text" data-testid="outcome-narrative">
-          {isStreaming ? (
-            <StreamingText text={outcomeText} isStreaming={isStreaming} />
-          ) : (
-            outcomeText
+        <>
+          <div className="narrative-text" data-testid="narrative">
+            {narrative}
+          </div>
+          {outcomeText && (
+            <div className="outcome-text" data-testid="outcome-narrative">
+              {isStreaming ? (
+                <StreamingText text={outcomeText} isStreaming={isStreaming} />
+              ) : (
+                outcomeText
+              )}
+            </div>
           )}
-        </div>
+          {rallyText && <div className="rally-text">{rallyText}</div>}
+        </>
       )}
-      {rallyText && <div className="rally-text">{rallyText}</div>}
     </div>
   );
 }

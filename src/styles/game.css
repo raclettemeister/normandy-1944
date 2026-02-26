@@ -917,6 +917,7 @@
 
 .free-text-form {
   display: flex;
+  flex-direction: column;
   gap: 0.5rem;
   margin-bottom: 0.75rem;
 }
@@ -933,17 +934,43 @@
 }
 
 .free-text-form__input {
-  flex: 1;
+  width: 100%;
+  min-height: 5rem;
   font-family: var(--font-narrative);
   font-size: 1rem;
   background: var(--bg-tertiary);
   color: var(--text-primary);
   border: 1px solid var(--border);
-  padding: 0.5rem 0.75rem;
+  padding: 0.75rem;
   font-style: italic;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.free-text-form__input:focus {
+  outline: none;
+  border-color: var(--accent-gold-dim);
 }
 
 .free-text-form__input::placeholder {
+  color: var(--text-muted);
+}
+
+.free-text-form__error {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--danger);
+}
+
+.free-text-form__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.free-text-form__count {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
   color: var(--text-muted);
 }
 
@@ -953,7 +980,7 @@
   background: var(--bg-secondary);
   color: var(--accent-gold);
   border: 1px solid var(--accent-gold-dim);
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 1rem;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s ease;
@@ -967,4 +994,98 @@
 .free-text-form__submit:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+/* ─── Briefing Phase ───────────────────────────────────────────── */
+
+.briefing-phase {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.briefing-phase__header h3 {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.briefing-phase__player-plan {
+  background: var(--bg-tertiary);
+  border-left: 2px solid var(--accent-gold-dim);
+  padding: 0.75rem 1rem;
+}
+
+.briefing-phase__plan-label {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.briefing-phase__plan-text {
+  font-family: var(--font-narrative);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  font-style: italic;
+  margin: 0.4rem 0 0;
+}
+
+.briefing-phase__reactions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.briefing-reaction {
+  font-family: var(--font-narrative);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.briefing-reaction--2ic {
+  color: var(--text-primary);
+}
+
+.briefing-reaction__speaker {
+  font-weight: 600;
+  color: var(--accent-gold-dim);
+  margin-right: 0.4rem;
+}
+
+.briefing-phase__actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* ─── Plan Phase ───────────────────────────────────────────────── */
+
+.plan-phase__header h3 {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+}
+
+.plan-phase__reveal-btn {
+  margin-bottom: 0.75rem;
+}
+
+.plan-phase__captain-position {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
 }

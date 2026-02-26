@@ -235,7 +235,14 @@ const ADVERSARIAL_RULES = `[ADVERSARIAL INPUT HANDLING]
 - Fantasy/impossible ("cast fireball") → tier: mediocre. Narrative: incoherent order, men stare.
 - Do nothing / "wait" → tier: mediocre. Time passes, readiness increases, morale drops.
 - Vague / lazy ("attack") → tier: mediocre. Generic outcome.
-- Repeating the same plan as a previous scene → consider downgrading. The enemy adapts.`;
+- Repeating the same plan as a previous scene → consider downgrading. The enemy adapts.
+
+[TYPO & NAME TOLERANCE]
+Players use speech-to-text and type under pressure. Be charitable:
+- Misspelled or phonetically similar soldier names (e.g. "Anderson" for "Henderson", "Mcarthy" for "McCarthy") → interpret as the closest matching soldier from the ACTIVE ROSTER. NEVER invent a nonexistent soldier or claim they are dead/missing just because the name is slightly wrong.
+- Misspelled locations, weapon names, or tactical terms → interpret the obvious intent.
+- Grammatical errors, fragments, or rough phrasing → evaluate the tactical IDEA, not the writing quality.
+Only penalize if the meaning is genuinely ambiguous or the player clearly names someone/something that has no plausible match.`;
 
 export function buildDMEvaluationPrompt(input: DMEvaluationPromptInput): PromptPair {
   const anchorLines = input.decisions.map((d) => {

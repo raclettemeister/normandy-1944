@@ -6,6 +6,7 @@ interface FreeTextInputProps {
   loading: boolean;
   placeholder?: string;
   maxLength?: number;
+  initialText?: string;
 }
 
 export default function FreeTextInput({
@@ -14,8 +15,9 @@ export default function FreeTextInput({
   loading,
   placeholder = "Captain, what are your orders?",
   maxLength = 500,
+  initialText = "",
 }: FreeTextInputProps) {
-  const [text, setText] = useState("");
+  const [text, setText] = useState(initialText);
   const [error, setError] = useState<string | null>(null);
 
   function handleSubmit(e: React.FormEvent) {
@@ -27,7 +29,6 @@ export default function FreeTextInput({
     }
     setError(null);
     onSubmit(trimmed);
-    setText("");
   }
 
   return (

@@ -12,6 +12,7 @@ interface PlanPhaseProps {
   decisions: Decision[];
   revealTokensRemaining: number;
   onSubmitPrompt: (text: string) => void;
+  initialPromptText?: string;
   onSelectDecision: (decision: Decision) => void;
   onRevealTokenUsed: () => void;
   secondInCommandComment: string | null;
@@ -27,6 +28,7 @@ export default function PlanPhase({
   decisions,
   revealTokensRemaining,
   onSubmitPrompt,
+  initialPromptText,
   onSelectDecision,
   onRevealTokenUsed,
   secondInCommandComment,
@@ -62,6 +64,7 @@ export default function PlanPhase({
             onSubmit={onSubmitPrompt}
             disabled={disabled}
             loading={loading}
+            initialText={initialPromptText}
           />
           {showDecisions && (
             <div className="decision-separator">or choose a predefined action</div>

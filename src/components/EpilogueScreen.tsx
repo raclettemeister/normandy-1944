@@ -50,7 +50,6 @@ export default function EpilogueScreen({
 
     const eventsBySoldier = new Map<string, PlaythroughEvent[]>();
     const relationshipsBySoldier = new Map();
-    const allStatuses = finalState.roster.map(s => ({ id: s.id, status: s.status }));
 
     for (const soldier of finalState.roster) {
       eventsBySoldier.set(

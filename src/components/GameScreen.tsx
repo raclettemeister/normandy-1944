@@ -95,6 +95,7 @@ export default function GameScreen({
   const [dmEvaluation, setDmEvaluation] = useState<DMEvaluation | null>(null);
   const [forcedEasyMode, setForcedEasyMode] = useState(false);
   const [fallbackMessage, setFallbackMessage] = useState<string | null>(null);
+  const [lastPlayerText, setLastPlayerText] = useState<string>("");
 
   const scene = getScene(gameState.currentScene);
   const decisions = scene ? getAvailableDecisions(scene, gameState) : [];
@@ -132,7 +133,7 @@ export default function GameScreen({
             sceneId: scene.id,
             type: "casualty",
             soldierIds: [c.id],
-            description: `${c.rank} ${c.name} ${c.status === "KIA" ? "killed" : "wounded"} at ${scene.title ?? scene.id}`,
+            description: `${c.rank} ${c.name} ${c.status === "KIA" ? "killed" : "wounded"} at ${scene.id}`,
           });
         }
       }
@@ -142,7 +143,7 @@ export default function GameScreen({
           sceneId: scene.id,
           type: "close_call",
           soldierIds: [],
-          description: `Captain hit at ${scene.title ?? scene.id}`,
+          description: `Captain hit at ${scene.id}`,
         });
       }
 
@@ -276,6 +277,7 @@ export default function GameScreen({
     setDmEvaluation(null);
     setForcedEasyMode(false);
     setFallbackMessage(null);
+    setLastPlayerText("");
 
     if (isLlmMode && nextScene.sceneContext) {
       const nextActiveRoster = newState.roster.filter(s => s.status === "active");
@@ -327,6 +329,7 @@ export default function GameScreen({
     async (playerText: string) => {
       if (!scene) return;
       setProcessing(true);
+      setLastPlayerText(playerText);
 
       const dmLayer = narrativeService.getDMLayer();
       if (!dmLayer) {
@@ -656,6 +659,7 @@ export default function GameScreen({
                     decisions={decisions}
                     revealTokensRemaining={gameState.revealTokensRemaining}
                     onSubmitPrompt={handleSubmitPrompt}
+                    initialPromptText={lastPlayerText}
                     onSelectDecision={(d) => {
                       setForcedEasyMode(false);
                       setFallbackMessage(null);
@@ -674,9 +678,11 @@ export default function GameScreen({
 
               {currentPhase === "briefing" && dmEvaluation && (
                 <BriefingPhase
+                  playerPlanText={lastPlayerText}
                   secondInCommandReaction={dmEvaluation.secondInCommandReaction}
                   soldierReactions={dmEvaluation.soldierReactions}
-                  roster={gameState.roster}
+                  roster={gameState.roster.filter((s) => s.status === "active")}
+                  hasSecondInCommand={gameState.secondInCommand !== null}
                   onRevise={handleBriefingRevise}
                   onCommit={handleBriefingCommit}
                   disabled={processing}

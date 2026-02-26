@@ -1,9 +1,11 @@
 import type { SoldierReaction, Soldier } from "../types/index.ts";
 
 interface BriefingPhaseProps {
+  playerPlanText: string;
   secondInCommandReaction: string;
   soldierReactions: SoldierReaction[];
   roster: Soldier[];
+  hasSecondInCommand: boolean;
   onRevise: () => void;
   onCommit: () => void;
   disabled: boolean;
@@ -15,36 +17,50 @@ function getSoldierName(roster: Soldier[], soldierId: string): string {
 }
 
 export default function BriefingPhase({
+  playerPlanText,
   secondInCommandReaction,
   soldierReactions,
   roster,
+  hasSecondInCommand,
   onRevise,
   onCommit,
   disabled,
 }: BriefingPhaseProps) {
+  const hasSoldiers = roster.length > 0;
+  const hasReactions = (hasSecondInCommand && secondInCommandReaction) || soldierReactions.length > 0;
+
   return (
     <div className="briefing-phase" data-testid="briefing-phase">
       <div className="briefing-phase__header">
-        <h3>Team Briefing</h3>
+        <h3>{hasSoldiers ? "Team Briefing" : "Your Assessment"}</h3>
       </div>
 
-      <div className="briefing-phase__reactions">
-        {secondInCommandReaction && (
-          <div className="briefing-reaction briefing-reaction--2ic">
-            <span className="briefing-reaction__speaker">Henderson:</span>
-            <span className="briefing-reaction__text">{secondInCommandReaction}</span>
-          </div>
-        )}
+      {playerPlanText && (
+        <div className="briefing-phase__player-plan">
+          <span className="briefing-phase__plan-label">Your orders:</span>
+          <p className="briefing-phase__plan-text">{playerPlanText}</p>
+        </div>
+      )}
 
-        {soldierReactions.map((reaction) => (
-          <div key={reaction.soldierId} className="briefing-reaction">
-            <span className="briefing-reaction__speaker">
-              {getSoldierName(roster, reaction.soldierId)}:
-            </span>
-            <span className="briefing-reaction__text">{reaction.text}</span>
-          </div>
-        ))}
-      </div>
+      {hasReactions && (
+        <div className="briefing-phase__reactions">
+          {hasSecondInCommand && secondInCommandReaction && (
+            <div className="briefing-reaction briefing-reaction--2ic">
+              <span className="briefing-reaction__speaker">Henderson:</span>
+              <span className="briefing-reaction__text">{secondInCommandReaction}</span>
+            </div>
+          )}
+
+          {soldierReactions.map((reaction) => (
+            <div key={reaction.soldierId} className="briefing-reaction">
+              <span className="briefing-reaction__speaker">
+                {getSoldierName(roster, reaction.soldierId)}:
+              </span>
+              <span className="briefing-reaction__text">{reaction.text}</span>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="briefing-phase__actions">
         <button
