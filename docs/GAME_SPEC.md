@@ -1493,7 +1493,100 @@ Agents follow these rules without asking:
 - Never force push
 - Branch: `main` for the vertical slice, feature branches for Acts 2/3
 
-## 16. Agent Log Format
+## 16. AI Narrative System
+
+### Overview
+
+The game supports two narrative modes:
+
+- **Hardcoded mode** (default): uses static `text` fields from scene files. No API needed.
+- **LLM mode**: when an access code is validated, scene outcomes are narrated dynamically by Claude Sonnet via a Cloudflare Worker proxy. Free-text player actions and personalized epilogues are also enabled.
+
+### Architecture
+
+```
+┌─────────────┐     ┌──────────────────┐     ┌───────────────┐
+│  React App  │────>│ Cloudflare Worker │────>│ Anthropic API │
+│  (Vite)     │<────│ (narrative proxy) │<────│ (SSE stream)  │
+└─────────────┘     └──────────────────┘     └───────────────┘
+                            │
+                    ┌───────┴───────┐
+                    │ Cloudflare KV │
+                    │ (access codes)│
+                    └───────────────┘
+```
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `src/services/narrativeService.ts` | Client-side service: mode detection, API calls, SSE parsing, fallback chain |
+| `src/services/promptBuilder.ts` | Builds system+user prompts for narration, classification, epilogues |
+| `src/services/eventLog.ts` | Append-only log of significant playthrough events (feeds epilogues) |
+| `src/content/relationships.ts` | Soldier relationship map (feeds prompts and epilogues) |
+| `worker/src/index.ts` | Cloudflare Worker: access code validation, Anthropic proxy |
+| `src/components/StreamingText.tsx` | Typewriter/streaming text display component |
+| `src/components/AccessCodeInput.tsx` | Access code validation form |
+| `src/components/FreeTextInput.tsx` | Free-text player action input |
+
+### Content Author Guide
+
+To make a scene LLM-compatible, add two fields:
+
+1. **`sceneContext`** on the `Scenario`: 1-3 sentences describing the tactical situation for the LLM.
+
+```typescript
+sceneContext: "Night. Flooded field near DZ. No weapon, no bearings. AA fire along horizon. Alone in enemy territory."
+```
+
+2. **`context`** on each `OutcomeNarrative` (success/partial/failure): mechanical description of what happened.
+
+```typescript
+context: "Gear check successful. Found pistol, grenades, compass. Morale boost."
+```
+
+If `context` is absent on an outcome, the LLM is not called and the hardcoded `text` is shown.
+
+### Free-Text Player Actions
+
+When LLM mode is active, players can type custom actions. The flow:
+
+1. Player types an action (min 5 chars)
+2. LLM classifies it against existing decisions → returns `{ matchedDecision, tier, reasoning }`
+3. Game engine processes the matched decision normally (same casualties, ammo, morale)
+4. LLM narrates the player's specific action with the mechanical outcome
+
+### Epilogue Generation
+
+At game end, each soldier's epilogue is generated from:
+- Their status (active/KIA/wounded/missing)
+- Their relationships with other soldiers
+- Playthrough events they were involved in
+
+In hardcoded mode, default templates are used. In LLM mode, personalized epilogues are generated in parallel.
+
+### Access Codes
+
+Access codes are stored in Cloudflare KV. Each code has:
+- `active: boolean`
+- `maxUses?: number`
+- `currentUses?: number`
+
+### Deployment
+
+1. Create a KV namespace: `wrangler kv namespace create ACCESS_CODES`
+2. Update `worker/wrangler.jsonc` with the KV namespace ID
+3. Set the API key: `wrangler secret put ANTHROPIC_API_KEY`
+4. Deploy: `cd worker && wrangler deploy`
+5. Set `VITE_NARRATIVE_API_URL` to the Worker URL
+
+### Cost Estimate
+
+- ~$0.15-0.20 per full playthrough with LLM narration
+- Classification adds ~$0.02 per free-text action
+- Epilogues add ~$0.05 total (all soldiers in parallel)
+
+## 17. Agent Log Format
 
 Every agent writes a summary to `docs/agent-logs/phase-{N}-{description}.md`:
 
