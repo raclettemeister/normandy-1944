@@ -237,6 +237,15 @@ export interface SceneTransitionResult {
 
 // ─── Scenario / Content ────────────────────────────────────────────
 
+// ─── Interludes ───────────────────────────────────────────────────
+
+export interface Interlude {
+  type: "movement" | "rest" | "transition";
+  beat: string;
+  context?: string;
+  objectiveReminder?: string;
+}
+
 export interface Scenario {
   id: string;
   act: 1 | 2 | 3;
@@ -251,6 +260,7 @@ export interface Scenario {
   sceneContext?: string;
   prepActions?: PrepAction[];
   balanceEnvelopeOverride?: BalanceEnvelope;
+  interlude?: Interlude;
 }
 
 export interface Decision {
@@ -416,7 +426,7 @@ export interface PlaythroughEvent {
 export type NarrativeMode = "llm" | "template" | "hardcoded";
 
 export interface NarrativeRequest {
-  type: "scene" | "outcome" | "rally" | "death" | "epilogue" | "secondInCommand";
+  type: "scene" | "outcome" | "rally" | "death" | "epilogue" | "secondInCommand" | "interlude";
   sceneContext?: string;
   outcomeContext?: string;
   playerAction?: string;

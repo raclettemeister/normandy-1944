@@ -347,3 +347,58 @@ Status at end: ${input.soldier.status}`;
 
   return { system, userMessage };
 }
+
+// ─── Interlude Prompt ─────────────────────────────────────────────
+
+export interface InterludePromptInput {
+  beat: string;
+  context?: string;
+  objectiveReminder?: string;
+  previousOutcomeText: string;
+  previousOutcomeContext?: string;
+  nextSceneContext: string;
+  nextSceneNarrative: string;
+  gameState: GameState;
+  roster: Soldier[];
+  relationships: SoldierRelationship[];
+  interludeType: "movement" | "rest" | "transition";
+}
+
+export function buildInterludePrompt(input: InterludePromptInput): PromptPair {
+  const system = `[ROLE]
+You are the narrator of a WWII tactical text game set during D-Day. You are writing a TRANSITION MOMENT — a brief, atmospheric bridge between two scenes.
+
+[TONE GUIDE]
+${TONE_GUIDE}
+
+[GAME STATE]
+${formatGameState(input.gameState)}
+
+[ACTIVE ROSTER]
+${formatRoster(input.roster)}
+${formatRelationships(input.relationships)}
+
+[WHAT JUST HAPPENED]
+${input.previousOutcomeText}${input.previousOutcomeContext ? `\nContext: ${input.previousOutcomeContext}` : ""}
+
+[TRANSITION BEAT — authored direction]
+Type: ${input.interludeType}
+${input.beat}${input.context ? `\nTone: ${input.context}` : ""}
+
+[WHAT'S COMING NEXT]
+${input.nextSceneContext || input.nextSceneNarrative}
+
+[INSTRUCTIONS]
+Write 2-4 sentences of transitional narration. This is a BREATHING MOMENT between scenes.
+- Reference what just happened (backward anchor)
+- Follow the authored beat direction
+- Hint at what's coming (forward anchor) without spoiling specifics
+- Include soldier banter, movement details, or atmosphere as appropriate
+- The interlude type guides the feeling: "movement" = marching/advancing, "rest" = brief pause, "transition" = shift in situation
+- Do not reference game mechanics
+- Maximum 80 words.`;
+
+  const userMessage = `Write the transition narration following the beat: "${input.beat}"`;
+
+  return { system, userMessage };
+}

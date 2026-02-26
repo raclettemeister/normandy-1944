@@ -12,6 +12,7 @@ import {
   buildRallyPrompt,
   buildClassificationPrompt,
   buildEpiloguePrompt,
+  buildInterludePrompt,
 } from './promptBuilder.ts';
 import { DMLayer } from './dmLayer.ts';
 
@@ -220,6 +221,33 @@ export class NarrativeService {
 
     await Promise.all(promises);
     return results;
+  }
+
+  async narrateInterlude(input: {
+    beat: string;
+    context?: string;
+    objectiveReminder?: string;
+    previousOutcomeText: string;
+    previousOutcomeContext?: string;
+    nextSceneContext: string;
+    nextSceneNarrative: string;
+    gameState: GameState;
+    roster: Soldier[];
+    relationships: SoldierRelationship[];
+    interludeType: "movement" | "rest" | "transition";
+    onChunk?: (text: string) => void;
+  }): Promise<string> {
+    if (this.mode !== "llm") {
+      return input.beat;
+    }
+
+    try {
+      const prompt = buildInterludePrompt(input);
+      const text = await this.callLLM(prompt.system, prompt.userMessage, 200, input.onChunk);
+      return text || input.beat;
+    } catch {
+      return input.beat;
+    }
   }
 
   private getDefaultEpilogue(soldier: Soldier): string {
