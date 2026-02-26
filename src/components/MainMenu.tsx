@@ -1,10 +1,10 @@
 import { loadAchievements } from "../engine/achievementTracker.ts";
 import { loadLessons, resetLessons } from "../engine/lessonTracker.ts";
-import type { NarrativeMode } from "../types/index.ts";
+import type { NarrativeMode, Difficulty } from "../types/index.ts";
 import AccessCodeInput from "./AccessCodeInput";
 
 interface MainMenuProps {
-  onStartGame: () => void;
+  onStartGame: (difficulty: Difficulty) => void;
   apiUrl: string;
   onAccessCodeValidated: (code: string) => void;
   narrativeMode: NarrativeMode;
@@ -51,13 +51,44 @@ export default function MainMenu({
       )}
 
       <div className="main-menu__actions">
-        <button
-          className="btn btn--primary"
-          data-testid="start-game-btn"
-          onClick={onStartGame}
-        >
-          Begin Operation
-        </button>
+        <div className="difficulty-selection">
+          <h2>Select Difficulty</h2>
+
+          <button
+            className="btn btn--primary difficulty-btn"
+            onClick={() => onStartGame("easy")}
+            data-testid="start-easy"
+          >
+            <span className="difficulty-btn__name">Easy</span>
+            <span className="difficulty-btn__desc">Decisions visible. No AI required.</span>
+          </button>
+
+          <button
+            className="btn btn--primary difficulty-btn"
+            onClick={() => onStartGame("medium")}
+            disabled={narrativeMode !== "llm"}
+            data-testid="start-medium"
+          >
+            <span className="difficulty-btn__name">Medium</span>
+            <span className="difficulty-btn__desc">Write your own orders. 5 reveal tokens.</span>
+          </button>
+
+          <button
+            className="btn btn--primary difficulty-btn"
+            onClick={() => onStartGame("hardcore")}
+            disabled={narrativeMode !== "llm"}
+            data-testid="start-hardcore"
+          >
+            <span className="difficulty-btn__name">Hardcore</span>
+            <span className="difficulty-btn__desc">No decisions. No tokens. Lead or die.</span>
+          </button>
+
+          {narrativeMode !== "llm" && (
+            <p className="difficulty-note">
+              Enter an access code above to unlock Medium and Hardcore modes.
+            </p>
+          )}
+        </div>
 
         {(achievements.length > 0 || lessons.length > 0) && (
           <button className="btn" onClick={handleReset}>
