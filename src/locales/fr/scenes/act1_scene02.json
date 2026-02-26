@@ -1,0 +1,38 @@
+{
+  "narrative": "Herbe mouillée sous les pieds, sol ferme. Pays de bocage — les haies s'élèvent à deux mètres, terre tassée et racines, chaque champ une boîte dont on ne voit pas la sortie. Les cartes du briefing situaient la DZ près de Sainte-Marie-du-Mont. Ça pourrait être n'importe où maintenant. Pas de boussole, pas d'étoiles à travers la couverture nuageuse. Vous devez trouver le nord.",
+  "narrativeAlt": {
+    "hasCompass": "Herbe mouillée sous les pieds, sol ferme. Pays de bocage — les haies s'élèvent à deux mètres, terre tassée et racines, chaque champ une boîte dont on ne voit pas la sortie. Les cartes du briefing situaient la DZ près de Sainte-Marie-du-Mont, mais ça pourrait être n'importe où maintenant. Vous sortez la boussole de votre poche de cuisse. Le cadran lumineux se stabilise — nord. Mais au nord de quoi ?"
+  },
+  "decisions": {
+    "north_compass_terrain": {
+      "text": "Utiliser votre boussole et recouper le terrain avec les cartes du briefing",
+      "success": "Nord à la boussole. Un clocher au nord-est — recoupement avec la carte mémorisée. Sainte-Marie-du-Mont. Deux kilomètres au sud-ouest de la DZ. Vous savez où aller.",
+      "partial": "La boussole vous donne le nord, mais rien au sol ne correspond au briefing. Soit la carte était fausse, soit vous êtes plus loin de la DZ que prévu. Une direction, pas une position.",
+      "failure": "La boussole vous donne le nord et rien d'autre. Chaque haie est identique dans l'obscurité. Vous avez un azimut — vous devinez tout le reste."
+    },
+    "north_stars": {
+      "text": "Chercher l'étoile Polaire dans les trouées de nuages",
+      "success": "Une trouée dans les nuages — la Grande Ourse, les étoiles-guides vers Polaris. Vous attendez une deuxième trouée pour confirmer. Même résultat. Vous avez un azimut.",
+      "partial": "Les nuages sont épais. Vous apercevez une lueur — peut-être Polaris, peut-être pas. Vous choisissez une direction au mieux. Soixante-dix pour cent de certitude.",
+      "failure": "Les nuages ne se dégagent pas. Vingt minutes à fixer un ciel gris-noir. Votre nuque est raide. Vous n'êtes pas plus avancé."
+    },
+    "north_follow_gunfire": {
+      "text": "Se diriger vers les tirs — c'est là que ça se passe",
+      "success": "Vous choisissez la direction la plus bruyante et avancez. Quinze minutes à escalader des haies, puis un panneau routier. Illisible dans le noir, mais la route vous donne un axe de progression.",
+      "partial": "Vous avancez vers les tirs mais le son rebondit sur les haies. Quinze minutes sans être sûr d'avoir marché droit. Puis les tirs cessent.",
+      "failure": "Le bruit vous mène à la lisière d'un village — des casques allemands dans la lueur du feu. Vous vous figez, reculez, contournez au large. Quinze minutes dans la mauvaise direction."
+    },
+    "north_just_walk": {
+      "text": "Choisir une direction et marcher — rester immobile, c'est mourir",
+      "success": "Vous franchissez une haie, puis une autre, puis une autre. Chaque champ identique. Au bout de vingt-cinq minutes, vous tombez sur un chemin de terre. Quelque chose à suivre.",
+      "partial": "Haie, champ, haie, champ. Vingt-cinq minutes et vous avez peut-être tourné en rond. Vos bottes sont trempées. Vous ne savez toujours pas où vous êtes.",
+      "failure": "Vingt-cinq minutes à errer dans le bocage. Vous trébuchez sur un muret et atterrissez dans un pré. Quand vous vous relevez — des voix allemandes, proches. Vous vous plaquez contre la haie et retenez votre souffle jusqu'à ce qu'elles s'éloignent."
+    },
+    "north_search_supplies": {
+      "text": "Fouiller la zone à la recherche de conteneurs de ravitaillement — les parachutes devraient être visibles",
+      "success": "De la soie blanche dans un arbre. Vous tirez le conteneur au sol — munitions pour fusil, rations K, deux bandoulières supplémentaires. Les cartouches sont sèches. Vous rechargez et continuez.",
+      "partial": "Trente minutes de recherche pour un seul conteneur — surtout des vêtements et une radio cassée. Une boîte de calibre .30 au fond. Mieux que rien.",
+      "failure": "Trente minutes à ramper dans des champs détrempés en pleine nuit. Rien. Les conteneurs pourraient être n'importe où dans un rayon d'un kilomètre. Du temps perdu, du bruit fait, rien gagné."
+    }
+  }
+}

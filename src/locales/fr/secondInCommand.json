@@ -1,0 +1,48 @@
+{
+  "veteran": {
+    "low_ammo": "Capitaine, on brûle nos munitions. Faudrait peut-être économiser pour l'objectif.",
+    "low_morale": "Les hommes flanchent, Capitaine. Il nous faut une victoire — quelque chose pour les stabiliser.",
+    "low_men": "On n'est plus qu'une poignée, mon Capitaine. Pas assez pour un assaut en règle. Faut trouver un autre moyen.",
+    "high_readiness": "Ils sont retranchés maintenant, mon Capitaine. Ça va pas être simple. Faut y aller malin.",
+    "time_surplus": "On est en avance sur l'horaire. On pourrait en profiter pour reconnaître l'approche.",
+    "bad_decision_suicidal": "Sauf votre respect, mon Capitaine — c'est du suicide. Il doit y avoir un autre moyen.",
+    "bad_decision_reckless": "Mon Capitaine, c'est risqué. Très risqué. Je voudrais un meilleur plan avant d'engager les hommes."
+  },
+  "green": {
+    "low_ammo": "Euh… on n'a plus beaucoup de munitions, mon Capitaine.",
+    "low_morale": "Les gars ont l'air d'avoir la trouille, mon Capitaine.",
+    "low_men": "Il… il reste plus grand monde, Capitaine.",
+    "high_readiness": "On dirait que ça canarde sec devant, mon Capitaine.",
+    "time_surplus": "On fait quoi maintenant, mon Capitaine ?",
+    "bad_decision_suicidal": "Oui mon Capitaine, à vos ordres.",
+    "bad_decision_reckless": "Si vous le dites, mon Capitaine."
+  },
+  "scenes": {
+    "act1_the_patrol": {
+      "patrol_l_ambush": "Bonne position, mon Capitaine. Je prends le deuxième élément. À votre signal.",
+      "patrol_linear_ambush": "Embuscade latérale, mon Capitaine ? C'est mieux que rien. Mais certains fileront par le pont.",
+      "patrol_knife": "C'est… optimiste, Capitaine. Vous en plantez un, les trois autres entendent.",
+      "patrol_open_fire": "Pas de mise en place, mon Capitaine ? On… tire, c'est tout ?",
+      "patrol_charge": "Capitaine — vous n'êtes pas sérieux. Une charge à la baïonnette ? Contre quatre hommes armés de pistolets-mitrailleurs ?",
+      "patrol_rocks": "Des cailloux, mon Capitaine ? Ce ne sont pas des gamins.",
+      "patrol_animal_sounds": "Mon Capitaine… vous voulez meugler ?",
+      "patrol_let_pass": "Ces documents, mon Capitaine. S'ils retournent à leur PC, ils sauront où sont toutes les DZ. Ça va nous coûter cher.",
+      "patrol_decoy": "Qui envoyez-vous comme leurre, mon Capitaine ?"
+    },
+    "act1_the_farmhouse": {
+      "farmhouse_stack_clear": "Je prends la tête. Binôme standard. On nettoie à gauche en entrant.",
+      "farmhouse_two_element": "Malone et moi prenons l'avant. Vous couvrez l'arrière avec Doyle.",
+      "farmhouse_rush": "Doucement, Capitaine. On ne sait pas qui est là-dedans. C'est peut-être les nôtres.",
+      "farmhouse_grenade": "Mon Capitaine, c'est du matériel de para sur le perron. Il pourrait y avoir les nôtres à l'intérieur. On ne tire pas.",
+      "farmhouse_clicker_outside": "Bien vu. Laissez le criquet parler.",
+      "farmhouse_scout": "Prenez votre temps. Je tiens la lisière.",
+      "farmhouse_skip": "Capitaine, c'est du matériel de para sur le perron. Y a quelqu'un là-dedans."
+    },
+    "act1_scene07": {
+      "road_scouts_forward": "Bonne décision, mon Capitaine. Je garde le reste au silence jusqu'à leur signal.",
+      "road_hedgerow_route": "Lent mais sûr. Je mets Malone en sûreté arrière.",
+      "road_straight_through": "Capitaine, ces traces de pneus sont fraîches. Je ne m'aventurerais pas là-dedans.",
+      "road_open_field": "Mon Capitaine, il n'y a aucun couvert là-bas. S'il y a une patrouille…"
+    }
+  }
+}

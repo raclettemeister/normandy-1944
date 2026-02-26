@@ -1,0 +1,32 @@
+{
+  "narrative": "Vous avez de l'eau jusqu'à la taille. Eau noire, glaciale. Le parachute vous tire en arrière, les suspentes enroulées autour de vos jambes. Pas de lune, pas d'étoiles — juste le battement lointain de la DCA à l'horizon. Votre fusil est quelque part sous la surface. Le pistolet est encore à votre ceinture. Vous êtes seul en France occupée.",
+  "narrativeAlt": {
+    "assess_before_acting": "Vous avez de l'eau jusqu'à la taille. Eau noire, glaciale. Le parachute vous tire en arrière, les suspentes enroulées autour de vos jambes. Pas de lune, pas d'étoiles — juste le battement lointain de la DCA à l'horizon. Votre fusil est quelque part sous la surface. Le pistolet est encore à votre ceinture. Vous connaissez la procédure. Du calme. Réfléchissez d'abord."
+  },
+  "decisions": {
+    "landing_check_gear": {
+      "text": "Vérifier votre équipement — fouiller chaque poche, contrôler chaque sangle",
+      "success": "Vous inspectez vos poches méthodiquement. Pistolet, deux grenades, criquet — tout est là. Vos doigts se referment sur la boussole dans la poche de pantalon. Le cadran lumineux brille d'un vert pâle.",
+      "partial": "Vos mains sont engourdies. Vous trouvez le pistolet, sentez les deux grenades, mais vos doigts refusent de coopérer pour le reste. Il vous faut de la terre ferme avant un inventaire complet.",
+      "failure": "Vous tâtonnez avec votre harnais. Quelque chose tombe du brelage — un bruit d'éclaboussure, puis rien. Vos doigts fouillent l'eau mais c'est perdu. Le froid gagne."
+    },
+    "landing_assess": {
+      "text": "Prendre vos repères — écouter, chercher une lumière ou un point de référence",
+      "success": "Vous vous forcez à respirer et à écouter. Tirs lointains — nord, peut-être nord-est. Puis vous le voyez : un clocher d'église, à peine visible contre les nuages. Les cartes du briefing mentionnaient un clocher près de la DZ.",
+      "partial": "Vous vous arrêtez et écoutez. Des explosions quelque part, mais le son rebondit sur les haies. Toutes les directions se ressemblent. Au moins, vous avez les idées claires.",
+      "failure": "Vous scrutez, vous tendez l'oreille. L'obscurité ne vous donne rien et le froid s'infiltre plus profond. Vous n'êtes pas mieux orienté qu'à l'atterrissage."
+    },
+    "landing_move_fast": {
+      "text": "Sortir de cette eau — rejoindre la terre ferme immédiatement",
+      "success": "Vous avancez dans l'eau vers la berge la plus proche. La boue agrippe vos bottes. Vous vous hissez sur la terre ferme, trempé et haletant — mais vous n'avez aucune idée de la direction.",
+      "partial": "Vous vous élancez. Votre botte accroche un piquet de clôture immergé et vous plongez tête la première. Vous rampez jusqu'à la berge en toussant, pistolet trempé.",
+      "failure": "Vous vous débattez vers la berge et votre cheville se prend dans quelque chose sous l'eau — du fil de fer, une racine. La douleur remonte dans la jambe. Vous atteignez la terre ferme en boitant, et quelqu'un a peut-être entendu tout ce remue-ménage."
+    },
+    "landing_freeze": {
+      "text": "Ne pas bouger — rester immobile, pas un bruit",
+      "success": "Vous restez immobile. L'eau engourdit vos jambes et le silence pèse. Les minutes passent. Personne ne vient — il faut bouger.",
+      "partial": "Vous attendez. Le froid dépasse vos cuisses. Vos dents commencent à claquer et vous serrez la mâchoire. Cinq minutes pour rien.",
+      "failure": "Vous vous figez sur place. Vos jambes s'engourdissent, puis vos mains. Quand vous essayez enfin de bouger, vous trébuchez et éclaboussez. Le froid a rongé vos muscles et vous n'avez rien gagné à attendre."
+    }
+  }
+}

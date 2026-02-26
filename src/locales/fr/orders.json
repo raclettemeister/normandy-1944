@@ -1,0 +1,11 @@
+{
+  "opord": "OPÉRATION ALBANY — 506th PIR, 2e SECTION, COMPAGNIE EASY\nCLASSIFICATION : SECRET\nDATE : 5 JUIN 1944\n\nMISSION : Sécuriser la sortie de chaussée à Sainte-Marie-du-Mont\npour permettre la jonction avec les forces amphibies\ndébarquant à Utah Beach à H-Hour.\n\nCHRONOLOGIE :\n  01h00 — Largage sur DZ C. Ralliement au point de rassemblement.\n  04h00 — Rassemblement terminé. Progression vers la zone d'objectif.\n  06h00 — H-HOUR. Début du débarquement.\n  09h00 — Carrefour SÉCURISÉ. Établir un périmètre défensif.\n  12h00 — Ravitaillement attendu des éléments de plage.\n  18h00 — Relève par la 4th Infantry Division.\n  01h00 — Fin de la période opérationnelle.\n\nINTENTION DU COMMANDANT : La rapidité est cruciale. Chaque\nheure de retard donne à l'ennemi le temps de s'organiser.\nFrappez tant qu'ils sont désorganisés. Les hommes qui\ndébarquent sur cette plage comptent sur nous.",
+  "milestones": {
+    "rally_complete": "Rassemblement terminé",
+    "move_to_objective": "Progression vers la zone d'objectif",
+    "crossroads_secured": "Carrefour SÉCURISÉ",
+    "resupply": "Ravitaillement des éléments de plage",
+    "relief": "Relève par la 4th Infantry Division",
+    "end_operational_period": "Fin de la période opérationnelle"
+  }
+}

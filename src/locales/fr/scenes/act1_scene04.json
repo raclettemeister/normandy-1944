@@ -1,0 +1,59 @@
+{
+  "narrative": "Des voix de l'autre côté d'un muret de pierre. Trente mètres, peut-être moins. Deux, trois personnes — l'une donne des ordres, à voix basse mais ferme. La cadence semble américaine. Mais le briefing mettait en garde contre les troupes des Ost-Bataillone avec un anglais approximatif, des Fallschirmjäger équipés de matériel capturé. Votre main trouve le criquet.",
+  "narrativeAlt": {
+    "low_morale": "Des voix de l'autre côté d'un muret de pierre. Proches. Vous mettez un genou à terre. La cadence ressemble peut-être à de l'anglais — ou vous avez besoin qu'elle y ressemble. Vous êtes trop épuisé pour faire confiance à vos propres oreilles. Le criquet est dans votre poche de poitrine. Vos doigts mettent du temps à le trouver."
+  },
+  "rally": {
+    "narrative": "Henderson se relève de la haie, carabine basse. « Capitaine. » C'est tout ce qu'il dit. Derrière lui, Malone est accroupi avec son Thompson, les yeux balayant l'obscurité, la mâchoire serrée comme s'il espérait qu'on lui donne une raison. Doyle est à plat ventre, les mains crispées sur son Garand. Le gamin ne lève pas les yeux. Trois hommes. Vos hommes. Quelque chose se desserre dans votre poitrine."
+  },
+  "decisions": {
+    "sergeant_clicker": {
+      "text": "Utiliser le criquet depuis derrière le muret",
+      "success": "Un clic-clac. Silence — puis clic-clac, clic-clac dans le noir. Vous passez le muret. Henderson est là, carabine basse, regard posé. « Capitaine, dit-il. Content de vous voir. »",
+      "partial": "Un clic-clac. Un long silence. Des voix chuchotées de l'autre côté. Puis deux clics — hésitants. Vous escaladez le muret prudemment. Henderson vous met en joue avec son pistolet jusqu'à ce qu'il voie votre visage. « Capitaine. Nom de Dieu. » Il baisse l'arme.",
+      "failure": "Un clic-clac. Rien. Puis une culasse qu'on arme. La voix de Malone : « Flash. Tout de suite. » Vous répondez « Thunder ». Il baisse son arme. « On vous prenait pour un Boche. » Les retrouvailles sont tendues — tout le monde est à cran."
+    },
+    "sergeant_flash": {
+      "text": "Lancer « Flash » depuis derrière le muret",
+      "success": "« Flash. » Instantané : « Thunder. Identifiez-vous. » La voix d'Henderson — vous la reconnaîtriez n'importe où. « Capitaine, 2e section. » « Avancez, mon capitaine. » Henderson, Malone, Doyle. Vos hommes.",
+      "partial": "« Flash. » Une pause qui dure une éternité. Puis : « …Thunder. » Incertain. Vous contournez le muret lentement. Henderson a la carabine levée. Quand il vous voit, il expire. « Capitaine. Bon sang. »",
+      "failure": "« Flash. » « THUNDER ! » Malone le hurle — assez fort pour que ça résonne contre les haies. « Malone, fermez-la », siffle Henderson. Trop tard. Quelque part à l'est, une fusée éclairante monte dans le ciel. Vous êtes repérés."
+    },
+    "sergeant_rush": {
+      "text": "Foncer vers les voix avant qu'elles s'éloignent",
+      "success": "Vous passez le muret et foncez. Malone pivote — pistolet levé. Henderson lui attrape le bras. « CESSEZ LE FEU ! » Vous dérapez, hors d'haleine. Henderson vous dévisage. « Avec tout le respect que je vous dois, mon capitaine — ne refaites jamais ça. »",
+      "partial": "Vous sautez le muret. Lueur de tir — Malone fait feu. La balle siffle à votre oreille. « CESSEZ LE FEU ! » Henderson plaque Malone au sol. Doyle hurle. Quand le calme revient, personne n'est touché. Mais votre oreille bourdonne et vos mains ne cessent de trembler.",
+      "failure": "Vous chargez par-dessus le muret. Malone tire deux fois. La douleur déchire votre épaule — vous vous effondrez. Henderson hurle. C'est le chaos. La balle vous a éraflé, mais le sang imbibe votre manche. Votre propre homme vous a tiré dessus."
+    },
+    "sergeant_pebble": {
+      "text": "Lancer un caillou par-dessus le muret et écouter",
+      "success": "Le caillou rebondit de l'autre côté du muret. Les voix se taisent. Puis : « Qui va là ? Flash. » Henderson. Vous répondez « Thunder ». Ça marche — mais ça a pris plus de temps que nécessaire.",
+      "partial": "Le caillou atterrit. Silence de mort. Des armes qu'on prépare. Deux minutes entières avant un chuchotement : « Si vous êtes américain, utilisez votre foutu criquet. » C'est ce que vous faites. Henderson : « Ça aurait été bien de commencer par là, mon capitaine. »",
+      "failure": "Le caillou atterrit et Malone ouvre le feu sur le bruit. Vous vous aplatissez dans la terre. Henderson hurle de cesser le feu. Dix minutes de chaos avant que vous établissiez le contact avec le criquet. Doyle pleure. Malone ne vous regarde pas."
+    },
+    "sergeant_signal_shot": {
+      "text": "Tirer un coup en l'air pour les signaler",
+      "success": "Le coup de feu déchire la nuit. Les voix se dispersent — des pas dans toutes les directions. « FLASH ! » hurlez-vous. « THUNDER ! » Henderson, cinquante mètres plus loin et qui s'éloigne. Malone et Doyle ont disparu — filé dans le noir. Henderson vous retrouve seul. « Un coup de signal, mon capitaine ? En Normandy ? »",
+      "partial": "Le coup de feu résonne contre les haies. Panique — des pas, des cris, une voix allemande qui aboie au loin. Vous trouvez Henderson accroupi derrière le muret, seul. Malone et Doyle se sont dispersés. « Capitaine. Je n'ai rien d'aimable à dire sur ce que vous venez de faire. »",
+      "failure": "Le coup de feu résonne. Une mitrailleuse ouvre le feu à trois cents mètres — longues rafales, des traçantes fouettent au-dessus de vos têtes. Tout le monde se disperse. Quarante-cinq minutes à ramper dans des fossés. Vous retrouvez Henderson. Henderson seulement. Malone et Doyle ont disparu."
+    },
+    "sergeant_observe": {
+      "text": "Contourner par la haie et les observer",
+      "success": "Cent mètres à travers le bocage, les vingt derniers en rampant. Sous le nouvel angle : trois hommes. Casques américains. Bottes de parachutiste. Un Thompson — arme de sous-officier. Vous actionnez le criquet. Henderson répond.",
+      "partial": "Vingt-cinq minutes à travers une haie dense. Des formes dans le noir — impossible de distinguer les détails. Américains, probablement. Vous actionnez le criquet. Deux clics en retour. Henderson, Malone, Doyle. « Où étiez-vous passé, capitaine ? Ça fait une heure qu'on attend ici. »",
+      "failure": "Vous contournez trop large. Trente-cinq minutes. Quand vous atteignez l'endroit, ils ont bougé. Encore dix minutes de pistage avant que le criquet d'Henderson vous localise. Vous avez brûlé presque une heure."
+    },
+    "sergeant_avoid": {
+      "text": "Se glisser dans le champ suivant et continuer",
+      "success": "Vous vous glissez dans le champ suivant. Les voix s'estompent derrière le muret. Sauf. Le silence qui suit est le son le plus assourdissant de la nuit. Vous êtes toujours seul.",
+      "partial": "Vous reculez. Une branche craque. Les voix se taisent. Quelqu'un souffle « Flash ? » — à peine audible. Vous continuez. Une partie de vous dit de revenir. Vous ne le faites pas.",
+      "failure": "Vous partez. Chaque son est plus fort quand on est seul. Chaque ombre porte un fusil. Vous avez fait le choix prudent. Le choix prudent vous a laissé sans un seul allié en France occupée."
+    },
+    "sergeant_listen": {
+      "text": "Se plaquer contre le muret et écouter avant de décider",
+      "success": "Cinq minutes contre le muret. « …le point de rassemblement devrait être… » De l'anglais américain. Pas celui des manuels — un vrai accent de Boston. C'est Malone. Henderson le corrige à voix basse. Vous actionnez le criquet. Ils répondent instantanément.",
+      "partial": "Cinq minutes à écouter. Des voix indistinctes. L'un d'eux rit — quelque chose à propos des Red Sox. Américain. Probablement. Vous actionnez le criquet. Deux clics en retour. Henderson, Malone, Doyle.",
+      "failure": "Cinq minutes et les mots se perdent dans le noir. Accents, cadence — rien de clair. Vous actionnez le criquet quand même. Henderson répond. Mais vous êtes resté accroupi trop longtemps. Vos genoux sont douloureux et le temps a filé."
+    }
+  }
+}

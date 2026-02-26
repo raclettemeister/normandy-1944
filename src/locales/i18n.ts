@@ -16,6 +16,17 @@ import enAchievements from './en/achievements.json';
 import enSecondInCommand from './en/secondInCommand.json';
 import frUi from './fr/ui.json';
 import frGame from './fr/game.json';
+import frScene01 from './fr/scenes/act1_scene01.json';
+import frScene02 from './fr/scenes/act1_scene02.json';
+import frScene03 from './fr/scenes/act1_scene03.json';
+import frScene04 from './fr/scenes/act1_scene04.json';
+import frScene05 from './fr/scenes/act1_scene05.json';
+import frScene06 from './fr/scenes/act1_scene06.json';
+import frScene07 from './fr/scenes/act1_scene07.json';
+import frSoldiers from './fr/soldiers.json';
+import frOrders from './fr/orders.json';
+import frAchievements from './fr/achievements.json';
+import frSecondInCommand from './fr/secondInCommand.json';
 
 const enScenes = {
   act1_landing: enScene01,
@@ -25,6 +36,16 @@ const enScenes = {
   act1_the_patrol: enScene05,
   act1_the_farmhouse: enScene06,
   act1_the_road: enScene07,
+};
+
+const frScenes = {
+  act1_landing: frScene01,
+  act1_finding_north: frScene02,
+  act1_first_contact: frScene03,
+  act1_the_sergeant: frScene04,
+  act1_the_patrol: frScene05,
+  act1_the_farmhouse: frScene06,
+  act1_the_road: frScene07,
 };
 
 const STORAGE_KEY = 'normandy1944_language';
@@ -43,7 +64,7 @@ function getDefaultLanguage(): string {
 i18n.use(initReactI18next).init({
   resources: {
     en: { ui: enUi, game: enGame, scenes: enScenes, soldiers: enSoldiers, orders: enOrders, achievements: enAchievements, secondInCommand: enSecondInCommand },
-    fr: { ui: frUi, game: frGame },
+    fr: { ui: frUi, game: frGame, scenes: frScenes, soldiers: frSoldiers, orders: frOrders, achievements: frAchievements, secondInCommand: frSecondInCommand },
   },
   lng: getDefaultLanguage(),
   fallbackLng: 'en',

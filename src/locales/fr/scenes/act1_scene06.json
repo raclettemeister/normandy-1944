@@ -1,0 +1,54 @@
+{
+  "narrative": "Une ferme en pierre au bord d'un pâturage. Deux étages, toit en ardoise, grange attenante. Du matériel de parachutiste sur le porche — musette bag, casque avec l'as de pique. C'est le 506th. La porte est fermée et les fenêtres sont sombres, mais vous entendez le plancher craquer à l'intérieur. Quelqu'un est là.",
+  "narrativeAlt": {
+    "hasSecondInCommand": "Une ferme en pierre. Du matériel de parachutiste sur le porche — casque du 506th, musette bag. Henderson observe le bâtiment un long moment. « Ça pourrait être des nôtres, » dit-il à voix basse. Il vérifie sa carabine. « Comment vous voulez procéder, sir ? »",
+    "solo": "Une ferme en pierre, seule au bord d'un pâturage. Du matériel de parachutiste sur le porche — c'est le 506th, votre régiment. Des munitions là-dedans, peut-être. De l'équipement. Mais les fenêtres sont sombres et vous êtes un homme seul avec un pistolet."
+  },
+  "rally": {
+    "narrative": "Rivera sort en tremblant, mais ses mains vont directement à la sacoche de soins — il examine déjà vos hommes sans qu'on le lui demande. Kowalski remplit l'encadrement de la porte derrière lui, BAR en travers de la poitrine, deux bandoulières supplémentaires sur les épaules. Il vous regarde et hoche la tête une fois. Un médecin et une arme automatique. Tout vient de changer."
+  },
+  "decisions": {
+    "farmhouse_stack_clear": {
+      "text": "Se mettre en colonne à la porte — nettoyer pièce par pièce",
+      "success": "Henderson clique à la porte. Deux clics en réponse de l'intérieur. Il entre bas, balaye à gauche — Rivera debout, mains levées, Kowalski avec le BAR calé dans l'encadrement. « Thunder, » murmure Rivera. Pièce par pièce, vous nettoyez. Rien que des nôtres.",
+      "partial": "Henderson clique à la porte. Silence — Rivera a perdu son clicker au largage. « Flash, » murmure Henderson. Une voix tremblante en retour : « Thunder ! Tirez pas, on est américains ! » La porte s'ouvre sur le BAR de Kowalski pointé sur la poitrine de Henderson. Une longue minute avant que quiconque arrête de trembler.",
+      "failure": "Doyle accroche le seau de lait avec sa botte — il roule sur la pierre dans un fracas et le BAR ouvre le feu à travers la porte. Henderson se jette à terre en hurlant « AMERICAN ! » jusqu'à ce que le tir cesse. Personne touché. Tout juste."
+    },
+    "farmhouse_two_element": {
+      "text": "Envoyer deux hommes à l'avant pendant que vous couvrez la sortie arrière",
+      "success": "Henderson et Malone prennent l'avant. Henderson clique. Deux clics de l'intérieur. « Éléments amis en approche. » La porte s'ouvre et la voix de Henderson porte par la fenêtre : « RAS. Captain, entrez. » Rivera et Kowalski. Vivants et armés.",
+      "partial": "Henderson et Malone entrent. Vous entendez des voix — urgentes, pas de coups de feu. Puis Henderson à la fenêtre arrière : « Captain, ce sont des nôtres. Rivera et Kowalski. » Mais Doyle à la porte arrière a entendu l'agitation et a failli tirer. Vous avez dû repousser son canon vous-même.",
+      "failure": "Henderson entre. Kowalski tire sur le mouvement. Henderson plonge. Malone riposte. « CESSEZ LE FEU ! CESSEZ LE FEU ! » — Henderson hurle dans le noir. Quand le sifflement s'arrête, Malone a une éraflure au bras. Personne de mort. De justesse."
+    },
+    "farmhouse_rush": {
+      "text": "Entrer en force — investir le bâtiment avant que quiconque réagisse",
+      "success": "Vous enfoncez la porte. Rivera hurle. Kowalski pivote le BAR vers votre poitrine et s'arrête — la silhouette de votre casque, américain. « BON DIEU ! On est américains ! » crie Rivera. Le doigt de Kowalski était sur la détente. Une seconde de plus.",
+      "partial": "Vous défoncez la porte. Le BAR tire — la balle frappe le mur à un centimètre de votre tête, poussière de plâtre dans les yeux. « FLASH ! FLASH ! » hurlez-vous. Kowalski s'arrête. Rivera est au sol, mains sur les oreilles, en pleurs. Tout le monde vivant, mais quelque chose dans la pièce est brisé.",
+      "failure": "Vous chargez. Le BAR tire. Un de vos hommes se découpe dans l'encadrement de la porte et la balle le projette en arrière. « AMERICAN ! ON EST AMÉRICAINS ! » Trop tard. Rivera se précipite vers le corps. Votre propre soldat, abattu par les vôtres, parce que vous n'avez pas dit un mot avant de franchir cette porte."
+    },
+    "farmhouse_grenade": {
+      "text": "Balancer une grenade par la fenêtre, puis entrer",
+      "success": "Vous tirez la goupille. Henderson vous saisit le poignet. « Captain. CAPTAIN. Regardez le porche. » Sa voix est plate, urgente. « C'est du matériel du 506th. » Vous regardez. Il a raison. Vous remettez la goupille avec des doigts qui n'arrêtent pas de trembler. Henderson vient de vous éviter la pire erreur de votre vie.",
+      "partial": "La grenade passe par la fenêtre. L'explosion secoue les murs. Vous entrez dans la fumée et trouvez Rivera au sol, les oreilles en sang, la bouche ouverte sur un cri que vous n'entendez pas. Kowalski est hébété contre le mur du fond, le BAR arraché des mains. Tous les deux vivants — la grenade a atterri dans la pièce d'à côté. Votre médecin n'entend pas quand vous l'appelez.",
+      "failure": "La grenade explose dans la pièce principale. Vous entrez dans la fumée. Kowalski est mort là où il était assis — l'explosion l'a pris de plein fouet. Rivera est affalé contre le mur du fond, des éclats dans la poitrine, fixant l'aigle hurlant sur votre épaule. « Vous... » murmure-t-il. Vous venez de tuer votre propre tireur BAR avec une Gammon bomb."
+    },
+    "farmhouse_clicker_outside": {
+      "text": "Utiliser le clicker depuis le porche — écouter la réponse",
+      "success": "Un clic-clac depuis le porche. Silence. Puis de l'intérieur : clic-clac, clic-clac. La voix de Rivera, étouffée : « American ? S'il vous plaît, soyez américains. » Vous ouvrez la porte. Rivera et Kowalski. Vivants, armés, et le soulagement sur le visage de Rivera manque de vous briser.",
+      "partial": "Un clic. Rien — Rivera a perdu son clicker au largage. Vous essayez le verbal : « Flash. » Longue pause. Puis une voix à travers la porte, à peine audible : « Thunder. » La porte s'entrouvre. Le visage de Rivera, tiré et blême. « Captain ? Oh, Dieu merci. »",
+      "failure": "Un clic. Le bruit d'une arme qu'on arme à l'intérieur — une culasse qui coulisse. Pas de clicker, pas de réponse. Vous lancez « Flash. » Un long silence. Puis : « ...Thunder ? » Apeuré, incertain. Vous entrez lentement. Les mains de Rivera tremblent tellement qu'il ne peut pas tenir sa sacoche de soins."
+    },
+    "farmhouse_scout": {
+      "text": "Reconnaître le bâtiment d'abord — vérifier chaque fenêtre",
+      "success": "Vous contournez le bâtiment, dos contre la pierre. Par une fenêtre latérale : deux silhouettes en uniforme américain. Un brassard de médecin sur l'un, l'autre serrant un BAR. Vous tapez sur la vitre. « Flash. » « Thunder ! » Ils vous font entrer par la porte latérale.",
+      "partial": "Vous faites le tour de la ferme. Noir à l'intérieur — des formes, rien de clair. Mais les chaussures au sol ont des semelles américaines, pas des clous allemands. Vous tapez à la porte avec votre clicker et attendez. Ça prend du temps, mais le contact est établi. Rivera et Kowalski, vivants dans le noir.",
+      "failure": "Vingt-cinq minutes à ramper autour du bâtiment. Des formes derrière des vitres sales, rien de confirmé. Vous utilisez finalement le clicker à la porte d'entrée et ça marche en trente secondes. Une demi-heure perdue pour ce que le clicker aurait fait depuis le porche."
+    },
+    "farmhouse_skip": {
+      "text": "Ignorer la ferme — continuer vers le point de ralliement",
+      "success": "Vous passez devant la ferme sans vous arrêter. Henderson jette un regard en arrière. « C'étaient des nôtres, sir. » Peut-être. Peut-être pas. Le matériel sur le porche vous accompagne plus longtemps que ça ne devrait.",
+      "partial": "Vous avancez à travers le champ suivant. La ferme s'efface dans le gris. À mi-chemin, vous l'entendez — un clicker dans cette direction. Un clic. Faible. Vous êtes déjà en mouvement et vous ne faites pas demi-tour.",
+      "failure": "Vous partez. Henderson ne dit rien mais sa mâchoire est serrée. Malone marmonne quelque chose que vous ne saisissez pas. Vous avez laissé de possibles éléments amis dans une ferme obscure parce que vous aviez peur de ce qu'il y avait à l'intérieur. Les hommes l'ont vu."
+    }
+  }
+}

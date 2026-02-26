@@ -1,0 +1,77 @@
+{
+  "first_drop": {
+    "title": "Premier Saut",
+    "description": "Terminez votre première partie (victoire ou défaite).",
+    "icon": "🪂"
+  },
+  "lessons_of_war": {
+    "title": "Leçons de guerre",
+    "description": "Débloquez votre première leçon.",
+    "icon": "📖"
+  },
+  "rally_point": {
+    "title": "Point de ralliement",
+    "description": "Trouvez et ralliez 10 hommes ou plus dans l'Acte 1.",
+    "icon": "🏁"
+  },
+  "on_schedule": {
+    "title": "Dans les temps",
+    "description": "Remplissez chaque jalon de l'ordre de bataille dans les délais.",
+    "icon": "⏱️"
+  },
+  "conservation": {
+    "title": "Économie de munitions",
+    "description": "Terminez la partie avec plus de 40% de munitions restantes.",
+    "icon": "🎯"
+  },
+  "ghost": {
+    "title": "Fantôme",
+    "description": "Terminez l'Acte 1 sans faire monter l'alerte ennemie au-dessus de 25.",
+    "icon": "👻"
+  },
+  "knife_in_the_dark": {
+    "title": "Lame dans l'ombre",
+    "description": "Remportez le premier combat au couteau en solo.",
+    "icon": "🗡️"
+  },
+  "band_of_brothers": {
+    "title": "Frères d'armes",
+    "description": "Terminez les 24 heures complètes avec 15+ survivants.",
+    "icon": "🎖️"
+  },
+  "lead_from_the_front": {
+    "title": "En première ligne",
+    "description": "Choisissez la position « avant » dans chaque scène de combat et survivez.",
+    "icon": "⭐"
+  },
+  "tactical_genius": {
+    "title": "Génie tactique",
+    "description": "Terminez le jeu dès la première partie (sans leçons).",
+    "icon": "🧠"
+  },
+  "no_man_left_behind": {
+    "title": "Aucun homme abandonné",
+    "description": "Terminez le jeu avec zéro KIA (blessés autorisés).",
+    "icon": "🛡️"
+  },
+  "perfect_captain": {
+    "title": "Capitaine exemplaire",
+    "description": "Zéro KIA, tous les jalons à l'heure, alerte jamais au-dessus de 50, moral jamais en dessous de 50.",
+    "icon": "👑"
+  },
+  "armchair_general": {
+    "title": "Général de salon",
+    "description": "Terminez le jeu en choisissant toujours la position « arrière » — extrêmement difficile.",
+    "icon": "🪑"
+  },
+  "scholar_of_war": {
+    "title": "Érudit de guerre",
+    "description": "Débloquez chaque leçon sur l'ensemble de vos parties.",
+    "icon": "📚"
+  },
+  "immortal": {
+    "title": "Immortel",
+    "description": "Terminez 10 parties complètes.",
+    "icon": "♾️"
+  }
+}

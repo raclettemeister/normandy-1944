@@ -1,0 +1,59 @@
+{
+  "narrative": "Des pas devant vous — vingt mètres. Une silhouette dans la trouée de la haie, plus sombre que l'obscurité. Pas d'uniforme ni d'arme visible. Une main sur votre pistolet, l'autre sur le criquet dans votre poche de poitrine. Il y avait une procédure de reconnaissance au briefing. Vous vous en souvenez.",
+  "decisions": {
+    "contact_click_once": {
+      "text": "Actionner le criquet une fois et écouter la réponse",
+      "success": "Un clic-clac. Silence — puis clic-clac, clic-clac dans le noir. La silhouette avance : un PFC du 502nd, tremblant mais armé, largué à des kilomètres de sa DZ. « Bon Dieu, ce que je suis content de voir quelqu'un », souffle-t-il.",
+      "partial": "Un clic-clac. Un long silence — puis deux clics, hésitants, maladroits. Un Américain du 501st, très ébranlé, séparé de son stick. Il arrive à peine à tenir son criquet, mais c'est un homme de plus.",
+      "failure": "Un clic-clac, puis rien. La silhouette détale à travers la haie — vous apercevez un écusson du 101st avant qu'elle disparaisse. Trop paniquée pour répondre."
+    },
+    "contact_click_twice": {
+      "text": "Actionner le criquet deux fois et écouter la réponse",
+      "success": "Clic-clac, clic-clac. La silhouette se fige — c'est la réponse, pas le signal. Trente secondes de silence avant qu'il souffle « Flash ? » et que vous lâchiez « Thunder ». Il est américain, mais vous êtes restés à découvert une demi-minute à démêler le protocole.",
+      "partial": "Clic-clac, clic-clac. La silhouette recule lentement, puis s'enfuit à travers la haie. Vous avez donné la réponse au lieu du signal. Il n'a pas eu confiance.",
+      "failure": "Clic-clac, clic-clac. Un coup de feu déchire l'air — la lueur du tir aveuglante dans le noir, la balle siffle à votre oreille. Vous plongez au sol. Quand vous relevez la tête, il a disparu. Un Américain qui vous a tiré dessus parce que vous avez donné le mauvais signal."
+    },
+    "contact_click_three": {
+      "text": "Actionner le criquet trois fois en rafale",
+      "success": "Trois clics rapides. La silhouette se plaque au sol — vous entendez une culasse qu'on arme. « QUI VA LÀ ? » Une voix américaine, terrifiée. Vous lancez « Flash » et recevez « Thunder » en retour, mais il a failli vous tuer.",
+      "partial": "Trois clics. Une rafale — les balles claquent dans la haie au-dessus de vous tandis que vous vous écrasez dans la terre. Quand les tirs cessent, la silhouette a disparu. Allemand ou Américain, vous ne le saurez jamais.",
+      "failure": "Trois clics. La silhouette tire. Terre et cailloux vous giclent au visage quand la balle frappe le sol à côté de vous. Vous roulez derrière la haie, à moitié aveuglé. Tout le monde dans un rayon de cinq cents mètres a entendu ces coups de feu."
+    },
+    "contact_flash": {
+      "text": "Souffler « Flash » dans le noir et attendre",
+      "success": "« Flash. » Un temps. « Thunder. » Le soulagement manque de vous faire plier les genoux. Un PFC du 506th — votre propre régiment — sort de derrière un muret. Il est à vous désormais.",
+      "partial": "« Flash. » Silence. Puis, à peine audible : « …Thunder ? » Il trébuche vers vous — Américain, désorienté, peut-être commotionné par un atterrissage brutal. Il va vous ralentir, mais c'est une paire d'yeux supplémentaire.",
+      "failure": "« Flash. » Rien. Encore : « Flash. » La silhouette se retourne et s'enfonce dans le noir. Sans courir — en marchant. Allemand peut-être, ou un Américain sonné qui a oublié le code. Votre voix a résonné deux fois dans la nuit. Il faut bouger."
+    },
+    "contact_thunder": {
+      "text": "Souffler « Thunder » dans le noir et attendre",
+      "success": "« Thunder. » La silhouette penche la tête. Mauvais mot — c'est la réponse, pas le signal. Il souffle : « Flash ? » Vous répétez « Thunder ». Il s'approche en secouant la tête. « C'est à l'envers, mon gars. »",
+      "partial": "« Thunder. » Rien. La silhouette recule d'un pas. Deux minutes entières de face-à-face dans le noir avant qu'il souffle « Flash ? » et que vous réalisiez votre erreur. D'ici là, vous êtes restés à découvert bien trop longtemps.",
+      "failure": "« Thunder. » La silhouette se fige. Pas un mot. Puis elle disparaît dans la haie en courant. Il vous prend pour un Allemand — quel Américain donne la réponse en premier ?"
+    },
+    "contact_yell_flash": {
+      "text": "Hurler « Flash » à pleins poumons",
+      "success": "« FLASH ! » Votre voix brise le silence comme un coup de feu. « THUNDER ! » hurle la silhouette en retour, puis se reprend. « Nom de Dieu, baissez d'un ton. » Il est américain, mais chaque oreille du secteur vient de se tourner vers vous.",
+      "partial": "« FLASH ! » Le mot résonne contre les haies. La silhouette se plaque au sol. Au loin, une voix allemande aboie quelque chose. La silhouette rampe vers vous. « Vous essayez de nous faire tuer ? »",
+      "failure": "« FLASH ! » Silence — puis un Schmeisser ouvre le feu sur votre gauche. La silhouette détale. Vous plongez au sol tandis que les balles claquent au-dessus de vous. Quand ça s'arrête, vous êtes seul, et les Allemands savent exactement où vous êtes."
+    },
+    "contact_shoot": {
+      "text": "Dégainer votre pistolet et tirer sur la silhouette",
+      "success": "Vous tirez. La silhouette s'effondre. Vous vous précipitez — l'aigle hurlant sur son épaule. 101st. Américain. La balle a touché sa gourde. Il est vivant, et vous fixe avec une expression que vous porterez jusqu'à la fin de la guerre.",
+      "partial": "Vous tirez. Raté. La silhouette riposte. Vous tirez tous les deux à l'aveugle jusqu'à ce qu'il hurle « FLASH ! FLASH ! FLASH ! » Américain. Vous arrêtez. Il arrête. Vous vous retrouvez les mains tremblantes. Vous avez failli vous entre-tuer.",
+      "failure": "Vous tirez. La silhouette s'écroule. L'aigle hurlant. 101st. Il ne bouge plus. Vous avez tué un Américain — seul dans le noir, comme vous — et vous l'avez abattu."
+    },
+    "contact_freeze": {
+      "text": "Ne pas bouger — pas un geste, pas un bruit",
+      "success": "Vous retenez votre souffle. La silhouette reste là pendant ce qui semble une éternité, puis s'éloigne dans la haie. Sauf. Mais qui que ce fût, il aurait pu être des vôtres.",
+      "partial": "Vous vous figez. La silhouette se tourne vers vous — a-t-il entendu quelque chose ? Votre cœur cogne contre vos côtes. Puis il se détourne et disparaît. Sauf, mais seul.",
+      "failure": "Vous essayez de ne pas bouger mais votre botte glisse sur le gravier. La silhouette pivote. Une seconde de tension — puis elle détale. Disparue. Vous êtes debout dans le noir, le cœur battant, sans rien à en montrer."
+    },
+    "contact_retreat": {
+      "text": "Reculer à quatre pattes et se glisser par la trouée",
+      "success": "Vous reculez doucement, une main derrière vous tâtant la trouée. Lent. Silencieux. La silhouette ne se retourne pas. Vous vous glissez dans le noir. Vivant, mais toujours totalement seul.",
+      "partial": "Vous reculez. Une branche craque sous votre genou. La silhouette se retourne — mais vous êtes déjà passé. Vous entendez un chuchotement derrière vous, mais vous êtes parti.",
+      "failure": "Vous rampez en arrière et votre gourde heurte votre pistolet. La silhouette met un genou à terre — culasse. Vous vous figez. Une minute qui dure une éternité avant qu'il s'éloigne. Vous tremblez."
+    }
+  }
+}

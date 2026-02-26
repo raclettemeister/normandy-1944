@@ -1,0 +1,56 @@
+{
+  "henderson": {
+    "background": "Ancien contremaître d'usine. Le plus vieux de la section."
+  },
+  "malone": {
+    "background": "Ex-boxeur, bâti comme une armoire. Toujours en tête."
+  },
+  "park": {
+    "background": "Coréen-Américain, a dû se battre deux fois plus pour son grade. Calme, méthodique, redoutable."
+  },
+  "rivera": {
+    "background": "Voulait être médecin. Mains douces, nerfs d'acier sous le feu."
+  },
+  "kowalski": {
+    "background": "Polonais-Américain, bâti comme un bœuf. Porte le BAR comme d'autres portent un fusil."
+  },
+  "davis": {
+    "background": "Ancien opérateur télégraphe. Drôle, fait rire les gars. Trimballe 15 kg de radio sans broncher."
+  },
+  "doyle": {
+    "background": "Gamin de ferme, le plus jeune de la section. Volontaire, mort de trouille, cherche à faire ses preuves."
+  },
+  "webb": {
+    "background": "Beau parleur, toujours une cigarette au bec. A l'air paresseux mais a les meilleurs yeux de la section."
+  },
+  "ellis": {
+    "background": "Nerveux, intellectuel, lit des bouquins dans son trou. S'est engagé par devoir."
+  },
+  "washington": {
+    "background": "Débrouillard, dur, a grandi à la dure. Ne s'effraie pas facilement."
+  },
+  "caruso": {
+    "background": "Grande gueule, parle sans arrêt. Rend les sergents dingues mais les soldats l'adorent."
+  },
+  "mitchell": {
+    "background": "Discret, poli, écrit à sa mère tous les jours. Tireur d'élite au fusil."
+  },
+  "novak": {
+    "background": "1m93, ancien sidérurgiste. Porte les munitions de Kowalski. Simple, fiable, fort comme un bœuf."
+  },
+  "sullivan": {
+    "background": "Irlandais-Catholique, prie avant chaque mission. Superstitieux mais solide."
+  },
+  "bergman": {
+    "background": "Germano-Américain, sensible sur le sujet. Parle un peu allemand, ce qui peut servir."
+  },
+  "jenkins": {
+    "background": "Ancien guide de chasse. Connaît le terrain mieux que personne. Excellent pisteur."
+  },
+  "herrera": {
+    "background": "Rapide, ancien athlète de course. Maigre, nerveux, ne tient pas en place."
+  },
+  "palmer": {
+    "background": "Le râleur de service. Se plaint de tout. Mais quand ça tire, il se bat."
+  }
+}
