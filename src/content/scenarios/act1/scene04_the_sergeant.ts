@@ -320,8 +320,8 @@ export const scene04_the_sergeant: Scenario = {
 
   interlude: {
     type: "rest",
-    beat: "Henderson posts security while the new arrivals catch their breath. You take a knee and check your map by moonlight.",
-    context: "brief respite after first rally, cautious optimism",
+    beat: "You take a knee behind a low stone wall and spread the map across your thigh. Moonlight picks out the contour lines. Somewhere ahead, voices. You mark your position and fold the map away.",
+    context: "brief pause before potential contact, cautious anticipation",
     objectiveReminder: "Continue rallying. Secure enough men to move on the objective.",
   },
 };

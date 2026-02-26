@@ -304,6 +304,25 @@ export default function GameScreen({
         });
       }
 
+      if (scene.rally && !outcome.skipRally) {
+        const isLlm = narrativeService.getMode() === "llm";
+        if (isLlm) {
+          const activeRoster = gameState.roster.filter(s => s.status === "active");
+          narrativeService.generateRallyNarrative(
+            scene.rally.soldiers,
+            scene.rally.ammoGain,
+            scene.rally.moraleGain,
+            scene.sceneContext ?? "",
+            gameState,
+            activeRoster,
+            scene.rally.narrative,
+            outcome.context,
+          ).then(text => { setRallyNarrative(text); });
+        } else {
+          setRallyNarrative(scene.rally.narrative);
+        }
+      }
+
       setCaptainPosition("middle");
       setProcessing(false);
     },
@@ -337,31 +356,16 @@ export default function GameScreen({
       const nextActiveSoldierIds = nextActiveRoster.map(s => s.id);
       const nextRelationships = getActiveRelationships(nextActiveSoldierIds);
 
-      const [sceneText, rallyText] = await Promise.all([
-        narrativeService.generateSceneNarrative(
-          nextScene.sceneContext,
-          newState,
-          nextActiveRoster,
-          nextRelationships,
-          nextScene.narrative,
-          outcomeContext,
-        ),
-        nextScene.rally && !outcome.skipRally
-          ? narrativeService.generateRallyNarrative(
-              nextScene.rally.soldiers,
-              nextScene.rally.ammoGain,
-              nextScene.rally.moraleGain,
-              nextScene.sceneContext,
-              newState,
-              nextActiveRoster,
-              nextScene.rally.narrative,
-              outcomeContext,
-            )
-          : Promise.resolve(null),
-      ]);
+      const sceneText = await narrativeService.generateSceneNarrative(
+        nextScene.sceneContext,
+        newState,
+        nextActiveRoster,
+        nextRelationships,
+        nextScene.narrative,
+        outcomeContext,
+      );
 
       setSceneNarrative(sceneText);
-      if (rallyText) setRallyNarrative(rallyText);
     }
 
     setGeneratingScene(false);
@@ -633,12 +637,30 @@ export default function GameScreen({
       wikiUnlocks: referenceDecision?.outcome.wikiUnlocks ?? "",
     });
 
+    if (scene.rally && !outcome.skipRally) {
+      const isLlm = narrativeService.getMode() === "llm";
+      if (isLlm) {
+        const activeRoster = gameState.roster.filter(s => s.status === "active");
+        narrativeService.generateRallyNarrative(
+          scene.rally.soldiers,
+          scene.rally.ammoGain,
+          scene.rally.moraleGain,
+          scene.sceneContext ?? "",
+          gameState,
+          activeRoster,
+          scene.rally.narrative,
+          outcome.context,
+        ).then(text => { setRallyNarrative(text); });
+      } else {
+        setRallyNarrative(scene.rally.narrative);
+      }
+    }
+
     setCaptainPosition("middle");
     setProcessing(false);
   }, [scene, dmEvaluation, gameState, decisions, captainPosition, onGameOver, onVictory, narrativeService, trackDecision, getNewAchievements]);
 
   const narrative = sceneNarrative ?? scene?.narrative ?? "";
-  const rallyText = rallyNarrative ?? scene?.rally?.narrative ?? null;
 
   if (!scene) {
     return (
@@ -702,7 +724,7 @@ export default function GameScreen({
           <NarrativePanel
             narrative={narrative}
             outcomeText={outcomeText}
-            rallyText={null}
+            rallyText={rallyNarrative}
             isStreaming={isStreaming}
           />
           <div className="transition-prompt">
@@ -720,7 +742,7 @@ export default function GameScreen({
           <NarrativePanel
             narrative={narrative}
             outcomeText={null}
-            rallyText={rallyText}
+            rallyText={null}
             isStreaming={false}
             isLoading={generatingScene}
           />
