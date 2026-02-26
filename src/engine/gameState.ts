@@ -162,6 +162,16 @@ export function createInitialState(): GameState {
   };
 }
 
+const DEFAULT_REVEAL_TOKENS = 5;
+
+export function createInitialStateWithDifficulty(difficulty: Difficulty): GameState {
+  return {
+    ...createInitialState(),
+    difficulty,
+    revealTokensRemaining: difficulty === "medium" ? DEFAULT_REVEAL_TOKENS : 0,
+  };
+}
+
 export function applyRally(
   state: GameState,
   soldiers: Soldier[],

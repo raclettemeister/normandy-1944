@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   createInitialState,
+  createInitialStateWithDifficulty,
   getPhase,
   deriveCapabilities,
   getAlertStatus,
@@ -12,7 +13,7 @@ import {
   formatTime,
   promoteToSecondInCommand,
 } from "../../src/engine/gameState.ts";
-import type { Soldier, GameState } from "../../src/types/index.ts";
+import type { Soldier, GameState, Difficulty } from "../../src/types/index.ts";
 
 // ─── Helpers ──────────────────────────────────────────────────────
 
@@ -521,5 +522,25 @@ describe("createInitialState — difficulty fields", () => {
   it("includes currentPhase defaulting to situation", () => {
     const state = createInitialState();
     expect(state.currentPhase).toBe("situation");
+  });
+});
+
+describe("createInitialStateWithDifficulty", () => {
+  it("easy mode: 0 reveal tokens", () => {
+    const state = createInitialStateWithDifficulty("easy");
+    expect(state.difficulty).toBe("easy");
+    expect(state.revealTokensRemaining).toBe(0);
+  });
+
+  it("medium mode: 5 reveal tokens", () => {
+    const state = createInitialStateWithDifficulty("medium");
+    expect(state.difficulty).toBe("medium");
+    expect(state.revealTokensRemaining).toBe(5);
+  });
+
+  it("hardcore mode: 0 reveal tokens", () => {
+    const state = createInitialStateWithDifficulty("hardcore");
+    expect(state.difficulty).toBe("hardcore");
+    expect(state.revealTokensRemaining).toBe(0);
   });
 });
