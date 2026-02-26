@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { Achievement } from "../types/index.ts";
 
 interface AchievementPopupProps {
@@ -9,6 +10,7 @@ export default function AchievementPopup({
   achievement,
   onDismiss,
 }: AchievementPopupProps) {
+  const { t } = useTranslation("ui");
   return (
     <div
       className="achievement-popup"
@@ -18,7 +20,7 @@ export default function AchievementPopup({
     >
       <span className="achievement-popup__icon">{achievement.icon}</span>
       <div className="achievement-popup__info">
-        <span className="achievement-popup__label">Achievement Unlocked</span>
+        <span className="achievement-popup__label">{t("achievementUnlocked")}</span>
         <span className="achievement-popup__title">{achievement.title}</span>
         <span className="achievement-popup__desc">
           {achievement.description}

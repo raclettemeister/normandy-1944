@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import type { GameState, PlaythroughEvent } from "../types/index.ts";
 import { NarrativeService } from "../services/narrativeService.ts";
 import { getRelationshipsForSoldier } from "../content/relationships.ts";
@@ -37,6 +38,7 @@ export default function EpilogueScreen({
   narrativeService,
   eventLog,
 }: EpilogueScreenProps) {
+  const { t } = useTranslation("ui");
   const survived = finalState.roster.filter(
     (s) => s.status === "active"
   ).length;
@@ -80,7 +82,7 @@ export default function EpilogueScreen({
 
   return (
     <div className="epilogue-screen" data-testid="epilogue-screen">
-      <h2 className="epilogue-screen__title">After the War</h2>
+      <h2 className="epilogue-screen__title">{t("afterTheWar")}</h2>
 
       {captainSurvived ? (
         <div className="epilogue-soldier">
@@ -147,7 +149,7 @@ export default function EpilogueScreen({
           data-testid="restart-btn"
           onClick={onRestart}
         >
-          Begin Again
+          {t("beginAgain")}
         </button>
       </div>
     </div>

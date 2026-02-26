@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import type { Soldier } from "../types/index.ts";
 
 interface RosterPanelProps {
@@ -18,6 +19,7 @@ export default function RosterPanel({
   onNoteChange,
   onClose,
 }: RosterPanelProps) {
+  const { t } = useTranslation("ui");
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -39,9 +41,9 @@ export default function RosterPanel({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="overlay-header">
-          <span className="overlay-title">Platoon Roster</span>
+          <span className="overlay-title">{t("platoonRoster")}</span>
           <button className="overlay-close" onClick={onClose}>
-            ESC
+            {t("close")}
           </button>
         </div>
 

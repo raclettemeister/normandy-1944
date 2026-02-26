@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import type { Decision, CaptainPosition } from "../types/index.ts";
 
 interface DecisionPanelProps {
@@ -36,6 +37,7 @@ export default function DecisionPanel({
   onCaptainPositionChange,
   disabled,
 }: DecisionPanelProps) {
+  const { t } = useTranslation("ui");
   const shuffledDecisions = useMemo(() => {
     if (decisions.length === 0) return decisions;
     const seed = decisions.map(d => d.id).join(",");
@@ -55,7 +57,7 @@ export default function DecisionPanel({
 
       {isCombatScene && (
         <div className="captain-position" data-testid="captain-position">
-          <span className="captain-position__label">Your position:</span>
+          <span className="captain-position__label">{t("yourPosition")}</span>
           {POSITIONS.map((pos) => (
             <button
               key={pos}
@@ -67,7 +69,7 @@ export default function DecisionPanel({
               onClick={() => onCaptainPositionChange(pos)}
               disabled={disabled}
             >
-              {pos}
+              {t(pos)}
             </button>
           ))}
         </div>

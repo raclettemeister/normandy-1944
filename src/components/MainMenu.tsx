@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { loadAchievements } from "../engine/achievementTracker.ts";
 import { loadMeta, resetMeta } from "../engine/metaProgress.ts";
 import type { NarrativeMode, Difficulty } from "../types/index.ts";
@@ -17,16 +18,13 @@ export default function MainMenu({
   onAccessCodeValidated,
   narrativeMode,
 }: MainMenuProps) {
+  const { t } = useTranslation("ui");
   const achievements = loadAchievements();
   const meta = loadMeta();
   const lessons = meta.unlockedWikiEntries;
 
   const handleReset = () => {
-    if (
-      window.confirm(
-        "Reset all progress? This clears lessons and achievements."
-      )
-    ) {
+    if (window.confirm(t("resetConfirm"))) {
       resetMeta();
       window.location.reload();
     }
@@ -35,12 +33,8 @@ export default function MainMenu({
   return (
     <div className="main-menu" data-testid="main-menu">
       <LanguageSelector />
-      <h1 className="main-menu__title">Normandy 1944</h1>
-      <p className="main-menu__subtitle">
-        Night of June 5-6, 1944. You command 2nd Platoon, Easy Company, 506th
-        Parachute Infantry Regiment, 101st Airborne Division. Your men are
-        scattered across the Normandy countryside. The clock is ticking.
-      </p>
+      <h1 className="main-menu__title">{t("title")}</h1>
+      <p className="main-menu__subtitle">{t("subtitle")}</p>
 
       {apiUrl && narrativeMode !== "llm" && (
         <AccessCodeInput apiUrl={apiUrl} onValidated={onAccessCodeValidated} />
@@ -48,7 +42,7 @@ export default function MainMenu({
 
       {narrativeMode === "llm" && (
         <div className="main-menu__mode-badge" data-testid="narrative-mode-badge">
-          AI Narration Active
+          {t("aiNarrationActive")}
         </div>
       )}
 
@@ -94,7 +88,7 @@ export default function MainMenu({
 
         {(achievements.length > 0 || lessons.length > 0) && (
           <button className="btn" onClick={handleReset}>
-            Reset Progress
+            {t("resetProgress")}
           </button>
         )}
       </div>
@@ -102,8 +96,8 @@ export default function MainMenu({
       {achievements.length > 0 && (
         <div data-testid="achievement-gallery" style={{ marginTop: "1rem" }}>
           <span style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>
-            {achievements.length} achievement{achievements.length !== 1 ? "s" : ""} ·{" "}
-            {lessons.length} lesson{lessons.length !== 1 ? "s" : ""}
+            {t("achievementCount", { count: achievements.length })} ·{" "}
+            {t("lessonCount", { count: lessons.length })}
           </span>
         </div>
       )}

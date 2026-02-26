@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { GameState } from "../types/index.ts";
 import { formatTime, getAlertStatus } from "../engine/gameState.ts";
 
@@ -12,22 +13,24 @@ function moraleClass(morale: number): string {
 }
 
 export default function StatusPanel({ state }: StatusPanelProps) {
+  const { t } = useTranslation("game");
+  const { t: tUi } = useTranslation("ui");
   const isSolo = state.phase === "solo";
   const alertStatus = getAlertStatus(state.readiness);
 
   return (
     <div className="status-panel">
       <div className="status-item" data-testid="status-men">
-        <span className="status-label">Men</span>
+        <span className="status-label">{t("status.men")}</span>
         {isSolo ? (
-          <span className="status-value status-value--alone">ALONE</span>
+          <span className="status-value status-value--alone">{t("status.alone")}</span>
         ) : (
           <span className="status-value">{state.men}</span>
         )}
       </div>
 
       <div className="status-item" data-testid="status-ammo">
-        <span className="status-label">Ammo</span>
+        <span className="status-label">{t("status.ammo")}</span>
         <div className="progress-bar">
           <div
             className="progress-fill progress-fill--ammo"
@@ -38,7 +41,7 @@ export default function StatusPanel({ state }: StatusPanelProps) {
       </div>
 
       <div className="status-item" data-testid="status-morale">
-        <span className="status-label">Morale</span>
+        <span className="status-label">{t("status.morale")}</span>
         <div className="progress-bar">
           <div
             className={`progress-fill ${moraleClass(state.morale)}`}
@@ -49,15 +52,15 @@ export default function StatusPanel({ state }: StatusPanelProps) {
       </div>
 
       <div className="status-item" data-testid="status-readiness">
-        <span className="status-label">Enemy</span>
+        <span className="status-label">{t("status.enemy")}</span>
         <span className="status-value status-readiness">
-          {alertStatus} ({state.readiness})
+          {t(`alertStatus.${alertStatus.toLowerCase()}`)} ({state.readiness})
         </span>
       </div>
 
       <div className="status-item" data-testid="status-time">
         <span className="status-value status-value--time">
-          {formatTime(state.time)} hrs
+          {formatTime(state.time)} {t("status.timeUnit")}
         </span>
       </div>
 

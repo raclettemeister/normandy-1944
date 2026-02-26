@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { WikiCategory } from "../types/index.ts";
 import { WIKI_ENTRIES, getEntriesByCategory } from "../content/wiki.ts";
 
@@ -21,6 +22,7 @@ function isEntryVisible(entryId: string, alwaysAvailable: boolean, unlockedIds: 
 }
 
 export default function WikiPanel({ unlockedEntryIds, onClose }: WikiPanelProps) {
+  const { t } = useTranslation("ui");
   const [selectedCategory, setSelectedCategory] = useState<WikiCategory>("operation");
   const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
 
@@ -42,8 +44,8 @@ export default function WikiPanel({ unlockedEntryIds, onClose }: WikiPanelProps)
       <div className="overlay-backdrop" onClick={onClose}>
         <div className="overlay-panel wiki-panel" onClick={(e) => e.stopPropagation()}>
           <div className="overlay-header">
-            <span className="overlay-title">Field Manual</span>
-            <button className="overlay-close" onClick={onClose}>ESC</button>
+            <span className="overlay-title">{t("fieldManual")}</span>
+            <button className="overlay-close" onClick={onClose}>{t("close")}</button>
           </div>
           <div className="wiki-article">
             <button
@@ -71,8 +73,8 @@ export default function WikiPanel({ unlockedEntryIds, onClose }: WikiPanelProps)
     <div className="overlay-backdrop" onClick={onClose}>
       <div className="overlay-panel wiki-panel" onClick={(e) => e.stopPropagation()}>
         <div className="overlay-header">
-          <span className="overlay-title">Field Manual</span>
-          <button className="overlay-close" onClick={onClose}>ESC</button>
+          <span className="overlay-title">{t("fieldManual")}</span>
+          <button className="overlay-close" onClick={onClose}>{t("close")}</button>
         </div>
         <div className="wiki-layout">
           <nav className="wiki-categories">

@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import type {
   GameState,
   CaptainPosition,
@@ -76,6 +77,7 @@ export default function GameScreen({
   narrativeService,
   difficulty,
 }: GameScreenProps) {
+  const { t } = useTranslation("ui");
   const [gameState, setGameState] = useState<GameState>(() =>
     createInitialStateWithDifficulty(difficulty)
   );
@@ -690,21 +692,21 @@ export default function GameScreen({
             data-testid="orders-btn"
             onClick={() => setOverlay(overlay === "orders" ? null : "orders")}
           >
-            Orders
+            {t("orders")}
           </button>
           <button
             className="btn"
             data-testid="roster-btn"
             onClick={() => setOverlay(overlay === "roster" ? null : "roster")}
           >
-            Roster
+            {t("roster")}
           </button>
           <button
             className="btn"
             data-testid="wiki-btn"
             onClick={() => setOverlay(overlay === "wiki" ? null : "wiki")}
           >
-            Wiki
+            {t("wiki")}
           </button>
         </div>
       </header>
@@ -733,7 +735,7 @@ export default function GameScreen({
               onClick={handleContinue}
               disabled={isStreaming}
             >
-              {isStreaming ? "..." : "Continue..."}
+              {isStreaming ? "..." : t("continue")}
             </button>
           </div>
         </>

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { GameState } from "../types/index.ts";
 
 interface DeathReportProps {
@@ -15,6 +16,7 @@ export default function DeathReport({
   onRestart,
   onContinueToEpilogue,
 }: DeathReportProps) {
+  const { t } = useTranslation("ui");
   const kiaCount = finalState.roster.filter((s) => s.status === "KIA").length;
   const survived = finalState.roster.filter(
     (s) => s.status === "active"
@@ -22,7 +24,7 @@ export default function DeathReport({
 
   return (
     <div className="death-report" data-testid="game-over">
-      <div className="death-report__header">Killed in Action</div>
+      <div className="death-report__header">{t("killedInAction")}</div>
 
       <div className="death-narrative" data-testid="death-narrative">
         {deathNarrative}
@@ -47,7 +49,7 @@ export default function DeathReport({
 
       {lastLesson && (
         <div className="lesson-unlocked" data-testid="lesson-unlocked">
-          <div className="lesson-unlocked__header">Lesson Learned</div>
+          <div className="lesson-unlocked__header">{t("lessonLearnedHeader")}</div>
           <div className="lesson-unlocked__text">
             {lastLesson.replace(/_/g, " ")}
           </div>
@@ -57,7 +59,7 @@ export default function DeathReport({
       <div className="death-report__actions">
         {finalState.roster.length > 0 && (
           <button className="btn" onClick={onContinueToEpilogue}>
-            After the War
+            {t("afterTheWar")}
           </button>
         )}
         <button
@@ -65,7 +67,7 @@ export default function DeathReport({
           data-testid="restart-btn"
           onClick={onRestart}
         >
-          Try Again
+          {t("tryAgain")}
         </button>
       </div>
     </div>

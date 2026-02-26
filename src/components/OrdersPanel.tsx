@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { Milestone } from "../types/index.ts";
 
 interface OrdersPanelProps {
@@ -31,6 +32,8 @@ export default function OrdersPanel({
   milestones,
   onClose,
 }: OrdersPanelProps) {
+  const { t } = useTranslation("ui");
+  const { t: tGame } = useTranslation("game");
   return (
     <div className="overlay-backdrop" onClick={onClose}>
       <div
@@ -39,9 +42,9 @@ export default function OrdersPanel({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="overlay-header">
-          <span className="overlay-title">Battle Orders</span>
+          <span className="overlay-title">{t("battleOrders")}</span>
           <button className="overlay-close" onClick={onClose}>
-            ESC
+            {t("close")}
           </button>
         </div>
 
@@ -54,10 +57,10 @@ export default function OrdersPanel({
               <span className="milestone__desc">{m.description}</span>
               <span className="milestone__status">
                 {m.status === "achieved"
-                  ? "✓"
+                  ? tGame("milestoneStatus.achieved")
                   : m.status === "missed"
-                  ? "MISSED"
-                  : "—"}
+                  ? tGame("milestoneStatus.missed")
+                  : tGame("milestoneStatus.pending")}
               </span>
             </div>
           ))}
