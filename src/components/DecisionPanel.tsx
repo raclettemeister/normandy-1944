@@ -55,7 +55,7 @@ export default function DecisionPanel({
 
       {isCombatScene && (
         <div className="captain-position" data-testid="captain-position">
-          <span className="captain-position__label">Your position:</span>
+          <span className="captain-position__label">Votre position :</span>
           {POSITIONS.map((pos) => (
             <button
               key={pos}
@@ -67,7 +67,7 @@ export default function DecisionPanel({
               onClick={() => onCaptainPositionChange(pos)}
               disabled={disabled}
             >
-              {pos}
+              {pos === "front" ? "avant" : pos === "middle" ? "centre" : "arriere"}
             </button>
           ))}
         </div>

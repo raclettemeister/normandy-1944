@@ -102,7 +102,7 @@ describe("NarrativeService", () => {
         relationships: [],
         allSoldierStatuses: [],
       });
-      expect(result).toContain("killed in action");
+      expect(result).toContain("mort au combat");
       expect(result).toContain("Doyle");
     });
 
@@ -118,7 +118,7 @@ describe("NarrativeService", () => {
         relationships: [],
         allSoldierStatuses: [],
       });
-      expect(result).toContain("survived");
+      expect(result).toContain("survecu");
       expect(result).toContain("Henderson");
     });
   });

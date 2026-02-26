@@ -89,37 +89,37 @@ function createDefaultMilestones(): Milestone[] {
     {
       id: "rally_complete",
       time: "0400",
-      description: "Assembly complete",
+      description: "Ralliement termine",
       status: "pending",
     },
     {
       id: "move_to_objective",
       time: "0600",
-      description: "Move to objective area",
+      description: "Mouvement vers la zone objectif",
       status: "pending",
     },
     {
       id: "crossroads_secured",
       time: "0900",
-      description: "Crossroads SECURED",
+      description: "Carrefour SECURISE",
       status: "pending",
     },
     {
       id: "resupply",
       time: "1200",
-      description: "Resupply from beach elements",
+      description: "Ravitaillement depuis les elements de plage",
       status: "pending",
     },
     {
       id: "relief",
       time: "1800",
-      description: "Relief from 4th Infantry Division",
+      description: "Releve par la 4th Infantry Division",
       status: "pending",
     },
     {
       id: "end_operational_period",
       time: "0100",
-      description: "End of operational period",
+      description: "Fin de la periode operationnelle",
       status: "pending",
     },
   ];

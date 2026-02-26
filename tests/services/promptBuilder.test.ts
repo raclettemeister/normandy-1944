@@ -51,6 +51,7 @@ describe("buildNarrationPrompt", () => {
     });
     expect(prompt.system).toContain("Night landing");
     expect(prompt.system).toContain("Terse");
+    expect(prompt.system).toContain("French");
   });
 
   it("should include active roster with traits", () => {
@@ -113,9 +114,9 @@ describe("buildNarrationPrompt", () => {
       roster: [],
       relationships: [],
     });
-    expect(prompt.system).toContain("Men: 8/18");
-    expect(prompt.system).toContain("Ammo: 45%");
-    expect(prompt.system).toContain("Morale: 62");
+    expect(prompt.system).toContain("Hommes: 8/18");
+    expect(prompt.system).toContain("Munitions: 45%");
+    expect(prompt.system).toContain("Moral: 62");
   });
 });
 

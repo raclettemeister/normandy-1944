@@ -42,6 +42,34 @@ export function getScene(id: string): Scenario | undefined {
   return scenarioRegistry.get(id);
 }
 
+function narrativeAltMatches(key: string, state: GameState): boolean {
+  switch (key) {
+    case "solo":
+      return state.phase === "solo" || state.men <= 1;
+    case "squad":
+      return state.phase !== "solo" && state.men > 1;
+    case "hasSecondInCommand":
+      return !!state.secondInCommand?.alive;
+    case "low_morale":
+      return state.morale < 30;
+    default:
+      if (key in state.intel) {
+        return Boolean(state.intel[key as keyof GameState["intel"]]);
+      }
+      return state.wikiUnlocked.includes(key);
+  }
+}
+
+export function resolveSceneNarrative(scene: Scenario, state: GameState): string {
+  if (!scene.narrativeAlt) return scene.narrative;
+
+  for (const [key, text] of Object.entries(scene.narrativeAlt)) {
+    if (narrativeAltMatches(key, state)) return text;
+  }
+
+  return scene.narrative;
+}
+
 export function getAvailableDecisions(
   scene: Scenario,
   state: GameState

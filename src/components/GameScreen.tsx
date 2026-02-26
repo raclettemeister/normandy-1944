@@ -17,6 +17,7 @@ import {
   getScene,
   getAvailableDecisions,
   getSecondInCommandComment,
+  resolveSceneNarrative,
 } from "../engine/scenarioLoader.ts";
 import {
   calculateEffectiveScore,
@@ -52,6 +53,18 @@ interface PendingTransition {
   outcomeContext?: string;
   outcome: OutcomeNarrative;
   wikiUnlocks: string;
+}
+
+function buildFallbackRallyText(
+  rallySoldiers: GameState["roster"],
+  sceneFallback?: string,
+  isOverride = false
+): string {
+  if (!isOverride && sceneFallback) {
+    return sceneFallback;
+  }
+  const names = rallySoldiers.map((s) => `${s.rank} ${s.name}`).join(", ");
+  return `${names} rejoignent votre position dans l'obscurité.`;
 }
 
 export interface GameEndData {
@@ -151,8 +164,38 @@ export default function GameScreen({
   const secondInCommandComment = scene
     ? getSecondInCommandComment(scene, gameState, decisions)
     : null;
+  const resolvedNarrative = scene ? resolveSceneNarrative(scene, gameState) : "";
 
   const showingOutcome = pendingTransition !== null;
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!scene || sceneNarrative || pendingTransition || generatingScene) return;
+    if (narrativeService.getMode() !== "llm" || !scene.sceneContext) return;
+
+    setGeneratingScene(true);
+    const activeRoster = gameState.roster.filter((s) => s.status === "active");
+    const activeSoldierIds = activeRoster.map((s) => s.id);
+    const relationships = getActiveRelationships(activeSoldierIds);
+
+    narrativeService.generateSceneNarrative(
+      scene.sceneContext,
+      gameState,
+      activeRoster,
+      relationships,
+      resolvedNarrative,
+    ).then((sceneText) => {
+      if (!cancelled) setSceneNarrative(sceneText);
+    }).catch(() => {
+      // Fallback already handled by service.
+    }).finally(() => {
+      if (!cancelled) setGeneratingScene(false);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [scene, sceneNarrative, pendingTransition, generatingScene, narrativeService, gameState, resolvedNarrative]);
 
   const handleDecision = useCallback(
     async (decision: Decision, playerAction?: string) => {
@@ -226,7 +269,7 @@ export default function GameScreen({
           finalState: result.state,
           captainSurvived: true,
           deathNarrative:
-            "All your men are down. You are alone, with no way to complete the mission.",
+            "Tous vos hommes sont à terre. Vous êtes seul, sans moyen de mener la mission à terme.",
           lastLesson: decision.outcome.wikiUnlocks,
           newAchievements: getNewAchievements(result.state, false, "all_men_down"),
           eventLog: log.getAll(),
@@ -304,22 +347,28 @@ export default function GameScreen({
         });
       }
 
-      if (scene.rally && !outcome.skipRally) {
+      const rallyEvent = outcome.rallyOverride ?? scene.rally;
+      if (rallyEvent && !outcome.skipRally) {
+        const fallbackRallyText = buildFallbackRallyText(
+          rallyEvent.soldiers,
+          scene.rally?.narrative,
+          !!outcome.rallyOverride
+        );
         const isLlm = narrativeService.getMode() === "llm";
         if (isLlm) {
           const activeRoster = gameState.roster.filter(s => s.status === "active");
           narrativeService.generateRallyNarrative(
-            scene.rally.soldiers,
-            scene.rally.ammoGain,
-            scene.rally.moraleGain,
+            rallyEvent.soldiers,
+            rallyEvent.ammoGain,
+            rallyEvent.moraleGain,
             scene.sceneContext ?? "",
             gameState,
             activeRoster,
-            scene.rally.narrative,
+            fallbackRallyText,
             outcome.context,
           ).then(text => { setRallyNarrative(text); });
         } else {
-          setRallyNarrative(scene.rally.narrative);
+          setRallyNarrative(fallbackRallyText);
         }
       }
 
@@ -355,13 +404,14 @@ export default function GameScreen({
       const nextActiveRoster = newState.roster.filter(s => s.status === "active");
       const nextActiveSoldierIds = nextActiveRoster.map(s => s.id);
       const nextRelationships = getActiveRelationships(nextActiveSoldierIds);
+      const fallbackNarrative = resolveSceneNarrative(nextScene, newState);
 
       const sceneText = await narrativeService.generateSceneNarrative(
         nextScene.sceneContext,
         newState,
         nextActiveRoster,
         nextRelationships,
-        nextScene.narrative,
+        fallbackNarrative,
         outcomeContext,
       );
 
@@ -374,7 +424,7 @@ export default function GameScreen({
   const handleContinue = useCallback(async () => {
     if (!pendingTransition || isStreaming) return;
 
-    const { nextScene, outcome, outcomeContext } = pendingTransition;
+    const { nextScene, newState, outcome, outcomeContext } = pendingTransition;
 
     if (nextScene.interlude) {
       setOutcomeText(null);
@@ -383,7 +433,7 @@ export default function GameScreen({
       const isLlmMode = narrativeService.getMode() === "llm";
       if (isLlmMode) {
         setInterludeStreaming(true);
-        const activeRoster = gameState.roster.filter(s => s.status === "active");
+        const activeRoster = newState.roster.filter(s => s.status === "active");
         const activeSoldierIds = activeRoster.map(s => s.id);
         const relationships = getActiveRelationships(activeSoldierIds);
 
@@ -394,8 +444,8 @@ export default function GameScreen({
           previousOutcomeText: outcome.text,
           previousOutcomeContext: outcomeContext,
           nextSceneContext: nextScene.sceneContext ?? "",
-          nextSceneNarrative: nextScene.narrative,
-          gameState,
+          nextSceneNarrative: resolveSceneNarrative(nextScene, newState),
+          gameState: newState,
           roster: activeRoster,
           relationships,
           interludeType: nextScene.interlude.type,
@@ -413,7 +463,7 @@ export default function GameScreen({
     }
 
     await proceedToNextScene();
-  }, [pendingTransition, isStreaming, narrativeService, gameState, proceedToNextScene]);
+  }, [pendingTransition, isStreaming, narrativeService, proceedToNextScene]);
 
   const handleInterludeContinue = useCallback(async () => {
     if (interludeStreaming) return;
@@ -439,7 +489,7 @@ export default function GameScreen({
 
       const dmLayer = narrativeService.getDMLayer();
       if (!dmLayer) {
-        setFallbackMessage("Fall back on training, Captain.");
+        setFallbackMessage("Revenez aux fondamentaux, mon capitaine.");
         setForcedEasyMode(true);
         setCurrentPhase("plan");
         setProcessing(false);
@@ -464,7 +514,7 @@ export default function GameScreen({
       });
 
       if (!evaluation) {
-        setFallbackMessage("Fall back on training, Captain.");
+        setFallbackMessage("Revenez aux fondamentaux, mon capitaine.");
         setForcedEasyMode(true);
         setProcessing(false);
         return;
@@ -591,7 +641,7 @@ export default function GameScreen({
       onGameOver({
         finalState: result.state,
         captainSurvived: true,
-        deathNarrative: "All your men are down. You are alone, with no way to complete the mission.",
+        deathNarrative: "Tous vos hommes sont à terre. Vous êtes seul, sans moyen de mener la mission à terme.",
         lastLesson: referenceDecision?.outcome.wikiUnlocks,
         newAchievements: getNewAchievements(result.state, false, "all_men_down"),
         eventLog: log.getAll(),
@@ -637,22 +687,28 @@ export default function GameScreen({
       wikiUnlocks: referenceDecision?.outcome.wikiUnlocks ?? "",
     });
 
-    if (scene.rally && !outcome.skipRally) {
+    const rallyEvent = outcome.rallyOverride ?? scene.rally;
+    if (rallyEvent && !outcome.skipRally) {
+      const fallbackRallyText = buildFallbackRallyText(
+        rallyEvent.soldiers,
+        scene.rally?.narrative,
+        !!outcome.rallyOverride
+      );
       const isLlm = narrativeService.getMode() === "llm";
       if (isLlm) {
         const activeRoster = gameState.roster.filter(s => s.status === "active");
         narrativeService.generateRallyNarrative(
-          scene.rally.soldiers,
-          scene.rally.ammoGain,
-          scene.rally.moraleGain,
+          rallyEvent.soldiers,
+          rallyEvent.ammoGain,
+          rallyEvent.moraleGain,
           scene.sceneContext ?? "",
           gameState,
           activeRoster,
-          scene.rally.narrative,
+          fallbackRallyText,
           outcome.context,
         ).then(text => { setRallyNarrative(text); });
       } else {
-        setRallyNarrative(scene.rally.narrative);
+        setRallyNarrative(fallbackRallyText);
       }
     }
 
@@ -660,7 +716,7 @@ export default function GameScreen({
     setProcessing(false);
   }, [scene, dmEvaluation, gameState, decisions, captainPosition, onGameOver, onVictory, narrativeService, trackDecision, getNewAchievements]);
 
-  const narrative = sceneNarrative ?? scene?.narrative ?? "";
+  const narrative = sceneNarrative ?? resolvedNarrative;
 
   if (!scene) {
     return (
@@ -670,10 +726,11 @@ export default function GameScreen({
         </header>
         <StatusPanel state={gameState} />
         <div className="no-scenario">
-          <p>No scenarios loaded.</p>
+          <p>Aucun scénario chargé.</p>
           <p>
-            Awaiting deployment orders... The content agent has not yet written
-            Act 1 scenarios. Load scenario files to begin operations.
+            En attente des ordres de déploiement... Les scénarios de l'acte 1
+            ne sont pas encore disponibles. Chargez les fichiers de scénario
+            pour commencer l'opération.
           </p>
         </div>
       </div>
@@ -690,14 +747,14 @@ export default function GameScreen({
             data-testid="orders-btn"
             onClick={() => setOverlay(overlay === "orders" ? null : "orders")}
           >
-            Orders
+            Ordres
           </button>
           <button
             className="btn"
             data-testid="roster-btn"
             onClick={() => setOverlay(overlay === "roster" ? null : "roster")}
           >
-            Roster
+            Effectifs
           </button>
           <button
             className="btn"
@@ -733,7 +790,7 @@ export default function GameScreen({
               onClick={handleContinue}
               disabled={isStreaming}
             >
-              {isStreaming ? "..." : "Continue..."}
+              {isStreaming ? "..." : "Continuer..."}
             </button>
           </div>
         </>
@@ -759,7 +816,7 @@ export default function GameScreen({
                   )}
                   data-testid="situation-continue"
                 >
-                  Assess the Situation
+                  Evaluer la situation
                 </button>
               )}
 

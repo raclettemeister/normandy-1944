@@ -32,10 +32,10 @@ export default function AccessCodeInput({
       if (result.valid) {
         onValidated(trimmed);
       } else {
-        setError("Invalid access code.");
+        setError("Code d'acces invalide.");
       }
     } catch {
-      setError("Could not reach server. Playing in offline mode.");
+      setError("Serveur injoignable. Mode hors ligne active.");
     } finally {
       setLoading(false);
     }
@@ -44,7 +44,7 @@ export default function AccessCodeInput({
   return (
     <form className="access-code-form" onSubmit={handleSubmit} data-testid="access-code-form">
       <label className="access-code-form__label" htmlFor="access-code">
-        Access Code <span className="access-code-form__optional">(optional — enables AI narration)</span>
+        Code d'acces <span className="access-code-form__optional">(optionnel — active la narration IA)</span>
       </label>
       <div className="access-code-form__row">
         <input
@@ -53,7 +53,7 @@ export default function AccessCodeInput({
           type="text"
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          placeholder="Enter access code"
+          placeholder="Entrez le code d'acces"
           disabled={loading}
           data-testid="access-code-input"
           autoComplete="off"
@@ -64,7 +64,7 @@ export default function AccessCodeInput({
           disabled={loading || !code.trim()}
           data-testid="access-code-submit"
         >
-          {loading ? "Validating..." : "Activate"}
+          {loading ? "Validation..." : "Activer"}
         </button>
       </div>
       {error && (

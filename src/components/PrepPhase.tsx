@@ -46,7 +46,7 @@ export default function PrepPhase({
       <div className="prep-phase__header">
         <h3>Preparation</h3>
         <span className="prep-phase__time-cost">
-          Time spent: {totalTimeCost} min
+          Temps consomme : {totalTimeCost} min
         </span>
       </div>
 
@@ -83,7 +83,7 @@ export default function PrepPhase({
         onClick={() => onPrepComplete(totalTimeCost)}
         data-testid="prep-continue"
       >
-        {conversations.length === 0 ? "Skip Prep — Go Straight to Plan" : "Proceed to Plan"}
+        {conversations.length === 0 ? "Ignorer la preparation — passer au plan" : "Passer au plan"}
       </button>
     </div>
   );

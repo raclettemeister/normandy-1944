@@ -32,12 +32,12 @@ export default function BriefingPhase({
   return (
     <div className="briefing-phase" data-testid="briefing-phase">
       <div className="briefing-phase__header">
-        <h3>{hasSoldiers ? "Team Briefing" : "Your Assessment"}</h3>
+        <h3>{hasSoldiers ? "Briefing d'equipe" : "Votre evaluation"}</h3>
       </div>
 
       {playerPlanText && (
         <div className="briefing-phase__player-plan">
-          <span className="briefing-phase__plan-label">Your orders:</span>
+          <span className="briefing-phase__plan-label">Vos ordres :</span>
           <p className="briefing-phase__plan-text">{playerPlanText}</p>
         </div>
       )}
@@ -69,7 +69,7 @@ export default function BriefingPhase({
           disabled={disabled}
           data-testid="briefing-revise"
         >
-          Revise Plan
+          Revoir le plan
         </button>
         <button
           className="btn btn--primary"
@@ -77,7 +77,7 @@ export default function BriefingPhase({
           disabled={disabled}
           data-testid="briefing-commit"
         >
-          Execute
+          Executer
         </button>
       </div>
     </div>

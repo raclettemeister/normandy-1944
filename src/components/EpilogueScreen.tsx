@@ -18,15 +18,15 @@ function generateDefaultEpilogue(
 ): string {
   switch (status) {
     case "active":
-      return `${name} survived the war. He returned to ${hometown} and lived a quiet life. He rarely spoke about what happened in Normandy.`;
+      return `${name} a survecu a la guerre. Il est retourne a ${hometown} et a mene une vie discrete. Il parlait rarement de la Normandie.`;
     case "wounded":
-      return `${name} was evacuated to a field hospital in England. After months of recovery, he was sent home to ${hometown}. He walked with a limp for the rest of his life.`;
+      return `${name} a ete evacue vers un hopital de campagne en Angleterre. Apres des mois de convalescence, il a ete renvoye a ${hometown}. Il a garde une claudication toute sa vie.`;
     case "KIA":
-      return `${name} was killed in action near Sainte-Marie-du-Mont on June 6, 1944. He is buried at the Normandy American Cemetery in Colleville-sur-Mer, France. His family in ${hometown} received his posthumous Purple Heart.`;
+      return `${name} est mort au combat pres de Sainte-Marie-du-Mont le 6 juin 1944. Il repose au cimetiere americain de Normandie a Colleville-sur-Mer. Sa famille a ${hometown} a recu sa Purple Heart a titre posthume.`;
     case "missing":
-      return `${name} was captured by German forces on June 6. He spent months as a POW before being liberated in 1945. He returned to ${hometown} and never spoke about the camp.`;
+      return `${name} a ete capture par les forces allemandes le 6 juin. Il a passe des mois en captivite avant sa liberation en 1945. Il est revenu a ${hometown} et n'a jamais parle du camp.`;
     default:
-      return `${name} served with distinction.`;
+      return `${name} a servi avec distinction.`;
   }
 }
 
@@ -80,38 +80,37 @@ export default function EpilogueScreen({
 
   return (
     <div className="epilogue-screen" data-testid="epilogue-screen">
-      <h2 className="epilogue-screen__title">After the War</h2>
+      <h2 className="epilogue-screen__title">Apres-guerre</h2>
 
       {captainSurvived ? (
         <div className="epilogue-soldier">
-          <div className="epilogue-soldier__name">The Captain</div>
+          <div className="epilogue-soldier__name">Le capitaine</div>
           <div className="epilogue-soldier__text">
-            He led 2nd Platoon through 24 hours of combat in Normandy.{" "}
-            {survived} of his {total} men survived the day. He went on to fight
-            through Carentan, Market Garden, and the Bulge. He carried the names
-            of the men he lost for the rest of his life.
+            Il a mene le 2e peloton pendant 24 heures de combat en Normandie.{" "}
+            {survived} de ses {total} hommes ont survecu a la journee. Il a
+            ensuite combattu a Carentan, Market Garden et dans les Ardennes. Il
+            a porte les noms des hommes perdus jusqu'a la fin de sa vie.
           </div>
         </div>
       ) : (
         <div className="epilogue-soldier">
-          <div className="epilogue-soldier__name">The Captain</div>
+          <div className="epilogue-soldier__name">Le capitaine</div>
           <div className="epilogue-soldier__text">
-            He was killed in action near Sainte-Marie-du-Mont on June 6, 1944.
+            Il est mort au combat pres de Sainte-Marie-du-Mont le 6 juin 1944.
             {finalState.secondInCommand && (
               <>
-                {" "}
-                Command passed to {finalState.secondInCommand.soldier.rank}{" "}
+                {" "}Le commandement est passe a {finalState.secondInCommand.soldier.rank}{" "}
                 {finalState.secondInCommand.soldier.name}.
               </>
             )}{" "}
-            {survived} of {total} men survived the day.
+            {survived} de {total} hommes ont survecu a la journee.
           </div>
         </div>
       )}
 
       {loading && (
         <div className="epilogue-loading" data-testid="epilogue-loading">
-          Generating epilogues...
+          Generation des epilogues...
         </div>
       )}
 
@@ -133,12 +132,12 @@ export default function EpilogueScreen({
 
       <div className="epilogue-screen__footer">
         <p className="epilogue-memorial">
-          In memory of the men who fought and died in Normandy, June 6, 1944.
+          A la memoire des hommes qui ont combattu et sont morts en Normandie, le 6 juin 1944.
         </p>
         <div data-testid="run-statistics" style={{ marginBottom: "1.5rem" }}>
           <p style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
-            Scenes visited: {finalState.scenesVisited.length} · Lessons
-            learned: {finalState.wikiUnlocked.length} · Final men:{" "}
+            Scenes visitees : {finalState.scenesVisited.length} · Lecons
+            retenues : {finalState.wikiUnlocked.length} · Hommes restants :{" "}
             {finalState.men}
           </p>
         </div>
@@ -147,7 +146,7 @@ export default function EpilogueScreen({
           data-testid="restart-btn"
           onClick={onRestart}
         >
-          Begin Again
+          Recommencer la campagne
         </button>
       </div>
     </div>

@@ -18,7 +18,7 @@ export default function AchievementPopup({
     >
       <span className="achievement-popup__icon">{achievement.icon}</span>
       <div className="achievement-popup__info">
-        <span className="achievement-popup__label">Achievement Unlocked</span>
+        <span className="achievement-popup__label">Succes debloque</span>
         <span className="achievement-popup__title">{achievement.title}</span>
         <span className="achievement-popup__desc">
           {achievement.description}

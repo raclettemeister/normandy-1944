@@ -55,7 +55,7 @@ export default function PlanPhase({
   return (
     <div className="plan-phase" data-testid="plan-phase">
       <div className="plan-phase__header">
-        <h3>Your Plan</h3>
+        <h3>Votre plan</h3>
       </div>
 
       {showPromptInput && (
@@ -67,7 +67,7 @@ export default function PlanPhase({
             initialText={initialPromptText}
           />
           {showDecisions && (
-            <div className="decision-separator">or choose a predefined action</div>
+            <div className="decision-separator">ou choisissez une action predefinie</div>
           )}
         </>
       )}
@@ -79,13 +79,13 @@ export default function PlanPhase({
           disabled={disabled}
           data-testid="reveal-decisions-btn"
         >
-          Reveal Decisions ({revealTokensRemaining} tokens left)
+          Reveler les decisions ({revealTokensRemaining} jetons restants)
         </button>
       )}
 
       {isCombatScene && (
         <div className="plan-phase__captain-position" data-testid="captain-position-selector">
-          <span>Your position:</span>
+          <span>Votre position :</span>
           {(["front", "middle", "rear"] as const).map((pos) => (
             <button
               key={pos}
@@ -93,7 +93,7 @@ export default function PlanPhase({
               onClick={() => onCaptainPositionChange(pos)}
               disabled={disabled}
             >
-              {pos}
+              {pos === "front" ? "avant" : pos === "middle" ? "centre" : "arriere"}
             </button>
           ))}
         </div>

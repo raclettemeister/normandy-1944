@@ -28,7 +28,7 @@ export default function InterludeScreen({
         )}
         {objectiveReminder && (
           <div className="interlude-objective">
-            <span className="interlude-objective__label">Objective:</span>
+            <span className="interlude-objective__label">Objectif :</span>
             {" "}{objectiveReminder}
           </div>
         )}
@@ -39,7 +39,7 @@ export default function InterludeScreen({
           onClick={onContinue}
           disabled={isStreaming}
         >
-          {isStreaming ? "..." : "Continue"}
+          {isStreaming ? "..." : "Continuer"}
         </button>
       </div>
     </div>

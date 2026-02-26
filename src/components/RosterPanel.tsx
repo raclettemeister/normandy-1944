@@ -12,6 +12,19 @@ function formatRole(role: string): string {
   return role.replace(/_/g, " ");
 }
 
+function formatStatus(status: Soldier["status"]): string {
+  switch (status) {
+    case "active":
+      return "actif";
+    case "wounded":
+      return "blesse";
+    case "KIA":
+      return "MIA";
+    case "missing":
+      return "disparu";
+  }
+}
+
 export default function RosterPanel({
   roster,
   rosterNotes,
@@ -39,7 +52,7 @@ export default function RosterPanel({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="overlay-header">
-          <span className="overlay-title">Platoon Roster</span>
+          <span className="overlay-title">Effectifs du peloton</span>
           <button className="overlay-close" onClick={onClose}>
             ESC
           </button>
@@ -47,7 +60,7 @@ export default function RosterPanel({
 
         {roster.length === 0 ? (
           <p className="wiki-empty">
-            No soldiers rallied yet. You are alone in the dark.
+            Aucun soldat rallie pour l'instant. Vous etes seul dans la nuit.
           </p>
         ) : (
           <div className="roster-list">
@@ -68,12 +81,12 @@ export default function RosterPanel({
                     <span
                       className={`roster-soldier__status roster-soldier__status--${s.status}`}
                     >
-                      {s.status}
+                      {formatStatus(s.status)}
                     </span>
                     <button
                       className={`roster-note-toggle ${hasNote ? "roster-note-toggle--active" : ""}`}
                       onClick={() => setExpandedId(isExpanded ? null : s.id)}
-                      title={hasNote ? "Edit note" : "Add note"}
+                      title={hasNote ? "Modifier la note" : "Ajouter une note"}
                     >
                       ✎
                     </button>
@@ -83,7 +96,7 @@ export default function RosterPanel({
                       className="roster-note-input"
                       defaultValue={rosterNotes[s.id] ?? ""}
                       onChange={(e) => handleNoteChange(s.id, e.target.value)}
-                      placeholder="Personal observations..."
+                      placeholder="Observations personnelles..."
                       rows={3}
                       autoFocus
                     />

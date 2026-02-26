@@ -6,6 +6,7 @@ import type {
   Soldier,
   SoldierRelationship,
   PlaythroughEvent,
+  GameLanguage,
 } from "../types/index.ts";
 import { buildDMEvaluationPrompt } from "./promptBuilder.ts";
 
@@ -30,9 +31,11 @@ export interface DMEvaluateInput {
 
 export class DMLayer {
   private callLLM: LLMCallFn;
+  private language: GameLanguage;
 
-  constructor(callLLM: LLMCallFn) {
+  constructor(callLLM: LLMCallFn, language: GameLanguage = "fr") {
     this.callLLM = callLLM;
+    this.language = language;
   }
 
   async evaluatePrompt(input: DMEvaluateInput): Promise<DMEvaluation | null> {
@@ -50,7 +53,7 @@ export class DMLayer {
         relationships: input.relationships,
         recentEvents: input.recentEvents,
         wikiUnlocked: input.wikiUnlocked,
-      });
+      }, this.language);
 
       const raw = await this.callLLM(prompt.system, prompt.userMessage, 800);
       return this.parseResponse(raw);

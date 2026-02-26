@@ -4,6 +4,7 @@ import type {
   SoldierRelationship,
   Decision,
   PlaythroughEvent,
+  GameLanguage,
 } from '../types';
 import { getAlertStatus, formatTime } from '../engine/gameState.ts';
 
@@ -50,18 +51,25 @@ export interface EpiloguePromptInput {
 
 const TONE_GUIDE = `Terse, military, present tense, second person. No melodrama, no purple prose. Write like a combat memoir — Ambrose, not Tolkien. Concrete military language. Never use "strategic" or "tactical." Maximum specificity: name weapons, terrain, distances. Reference soldiers by name when they act.`;
 
+function languageDirective(language: GameLanguage): string {
+  if (language === "fr") {
+    return "Produce ALL player-facing prose in French. Keep military abbreviations (BAR, DZ, KIA, OPORD) as-is when appropriate.";
+  }
+  return "Produce all prose in English.";
+}
+
 function formatGameState(state: GameState): string {
   const alert = getAlertStatus(state.readiness);
-  return `Men: ${state.men}/18, Ammo: ${state.ammo}%, Morale: ${state.morale}, Enemy: ${alert}, Time: ${formatTime(state.time)}, Phase: ${state.phase}`;
+  return `Hommes: ${state.men}/18, Munitions: ${state.ammo}%, Moral: ${state.morale}, Ennemi: ${alert}, Heure: ${formatTime(state.time)}, Phase: ${state.phase}`;
 }
 
 function formatRoster(roster: Soldier[]): string {
-  if (roster.length === 0) return "No active soldiers.";
+  if (roster.length === 0) return "Aucun soldat actif.";
   return roster.map(s => {
-    const traits = s.traits.length > 0 ? s.traits.join("/") : "no traits";
+    const traits = s.traits.length > 0 ? s.traits.join("/") : "aucun trait";
     const notes: string[] = [];
-    if (s.traits.includes("green")) notes.push("FIRST COMBAT");
-    if (s.status === "wounded") notes.push("WOUNDED");
+    if (s.traits.includes("green")) notes.push("PREMIER COMBAT");
+    if (s.status === "wounded") notes.push("BLESSE");
     const suffix = notes.length > 0 ? ` — ${notes.join(", ")}` : "";
     return `- ${s.rank} ${s.name} (${s.role}, ${traits})${suffix}`;
   }).join("\n");
@@ -70,19 +78,22 @@ function formatRoster(roster: Soldier[]): string {
 function formatRelationships(relationships: SoldierRelationship[]): string {
   if (relationships.length === 0) return "";
   const lines = relationships.map(r => {
-    const target = r.targetId === "everyone" ? "everyone" : r.targetId;
+    const target = r.targetId === "everyone" ? "tous" : r.targetId;
     return `${r.soldierId} → ${target} (${r.type}): ${r.detail}`;
   });
-  return `\n[RELATIONSHIPS]\n${lines.join("\n")}`;
+  return `\n[RELATIONS]\n${lines.join("\n")}`;
 }
 
 function formatCasualties(casualties?: Soldier[]): string {
   if (!casualties || casualties.length === 0) return "";
   const lines = casualties.map(c => `${c.rank} ${c.name}: ${c.status}`);
-  return `\nCasualties: ${lines.join(", ")}.`;
+  return `\nPertes: ${lines.join(", ")}.`;
 }
 
-export function buildNarrationPrompt(input: NarrationPromptInput): PromptPair {
+export function buildNarrationPrompt(
+  input: NarrationPromptInput,
+  language: GameLanguage = "fr"
+): PromptPair {
   const isSceneEntry = !input.outcomeContext;
 
   const instructions = isSceneEntry
@@ -101,6 +112,9 @@ You are the narrator of a WWII tactical text game set during D-Day.
 
 [TONE GUIDE]
 ${TONE_GUIDE}
+
+[LANGUAGE]
+${languageDirective(language)}
 
 [GAME STATE]
 ${formatGameState(input.gameState)}
@@ -141,7 +155,10 @@ ${input.sceneContext}`;
   return { system, userMessage: userMessage.trim() };
 }
 
-export function buildRallyPrompt(input: RallyPromptInput): PromptPair {
+export function buildRallyPrompt(
+  input: RallyPromptInput,
+  language: GameLanguage = "fr"
+): PromptPair {
   const soldierList = input.rallySoldiers.map(s => {
     const traits = s.traits.length > 0 ? s.traits.join("/") : "no traits";
     return `- ${s.rank} ${s.name} (${s.role}, ${traits}): ${s.background}`;
@@ -152,6 +169,9 @@ You are the narrator of a WWII tactical text game set during D-Day.
 
 [TONE GUIDE]
 ${TONE_GUIDE}
+
+[LANGUAGE]
+${languageDirective(language)}
 
 [GAME STATE]
 ${formatGameState(input.gameState)}
@@ -174,16 +194,22 @@ Maximum 100 words.`;
   return { system, userMessage };
 }
 
-export function buildClassificationPrompt(input: ClassificationPromptInput): PromptPair {
+export function buildClassificationPrompt(
+  input: ClassificationPromptInput,
+  language: GameLanguage = "fr"
+): PromptPair {
   const system = `[ROLE]
 You are a tactical advisor evaluating a player's proposed action in a WWII game.
+
+[LANGUAGE]
+${languageDirective(language)}
 
 [INSTRUCTIONS]
 Evaluate the player's proposed action against the available decisions.
 Return JSON only — no markdown, no explanation outside the JSON:
 {
   "matchedDecision": "<id of the closest existing decision>",
-  "tier": "<suicidal|reckless|mediocre|sound|excellent>",
+  "tier": "<suicidal|reckless|mediocre|sound|excellent|masterful>",
   "reasoning": "<one sentence explaining why>"
 }
 The tier should reflect the tactical quality of the player's plan given the situation.
@@ -244,7 +270,10 @@ Players use speech-to-text and type under pressure. Be charitable:
 - Grammatical errors, fragments, or rough phrasing → evaluate the tactical IDEA, not the writing quality.
 Only penalize if the meaning is genuinely ambiguous or the player clearly names someone/something that has no plausible match.`;
 
-export function buildDMEvaluationPrompt(input: DMEvaluationPromptInput): PromptPair {
+export function buildDMEvaluationPrompt(
+  input: DMEvaluationPromptInput,
+  language: GameLanguage = "fr"
+): PromptPair {
   const anchorLines = input.decisions.map((d) => {
     const s = d.outcome.success;
     const f = d.outcome.failure;
@@ -271,6 +300,9 @@ You are the DM (Dungeon Master) of a WWII tactical text game. You evaluate the p
 
 [TONE GUIDE]
 ${TONE_GUIDE}
+
+[LANGUAGE]
+${languageDirective(language)}
 
 ${TIER_DEFINITIONS}
 
@@ -307,11 +339,17 @@ ${anchors}${recentSection}${lessonsSection}
   return { system, userMessage };
 }
 
-export function buildEpiloguePrompt(input: EpiloguePromptInput): PromptPair {
+export function buildEpiloguePrompt(
+  input: EpiloguePromptInput,
+  language: GameLanguage = "fr"
+): PromptPair {
   const system = `[ROLE]
 You are writing the "After the War" epilogue for soldiers in a WWII game.
 Write in past tense, third person. Factual, restrained, moving. Like the
 closing text of a documentary — no melodrama, just lives lived.
+
+[LANGUAGE]
+${languageDirective(language)}
 
 [INSTRUCTIONS]
 Write 3-5 sentences about what happened to this soldier after D-Day.
@@ -364,12 +402,18 @@ export interface InterludePromptInput {
   interludeType: "movement" | "rest" | "transition";
 }
 
-export function buildInterludePrompt(input: InterludePromptInput): PromptPair {
+export function buildInterludePrompt(
+  input: InterludePromptInput,
+  language: GameLanguage = "fr"
+): PromptPair {
   const system = `[ROLE]
 You are the narrator of a WWII tactical text game set during D-Day. You are writing a TRANSITION MOMENT — a brief, atmospheric bridge between two scenes.
 
 [TONE GUIDE]
 ${TONE_GUIDE}
+
+[LANGUAGE]
+${languageDirective(language)}
 
 [GAME STATE]
 ${formatGameState(input.gameState)}

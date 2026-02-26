@@ -150,6 +150,7 @@ export const scene04_the_sergeant: Scenario = {
         success: {
           text: "The stone clicks off the far side of the wall. Voices go silent. Then: 'Who's there? Flash.' Henderson. You answer 'Thunder.' It works — just took longer than it needed to.",
           context: "Tossed pebble. Caused alert but Henderson challenged verbally. Rally made with extra delay.",
+          timeCost: 30,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 2,
@@ -158,6 +159,7 @@ export const scene04_the_sergeant: Scenario = {
         partial: {
           text: "The stone lands. Dead silence. Weapons being readied. Two full minutes before a whisper: 'If you're American, use your goddamn clicker.' You do. Henderson: 'Would've been nice to start with that, sir.'",
           context: "Pebble caused two-minute armed standoff. Had to use clicker anyway. Rally made but time wasted, trust strained.",
+          timeCost: 30,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 1,
@@ -166,6 +168,7 @@ export const scene04_the_sergeant: Scenario = {
         failure: {
           text: "The pebble lands and Malone opens fire at the sound. You flatten yourself into the dirt. Henderson shouts cease fire. Ten minutes of chaos before you make contact with the clicker. Doyle is crying. Malone won't look at you.",
           context: "Pebble triggered Malone to fire. Ten minutes of chaos. Rally made but squad traumatized. Doyle breaking down.",
+          timeCost: 30,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -3,
@@ -186,6 +189,11 @@ export const scene04_the_sergeant: Scenario = {
         success: {
           text: "The shot cracks the night open. Voices scatter — running in every direction. 'FLASH!' you shout. 'THUNDER!' Henderson, fifty meters away and moving farther. Malone and Doyle are gone — bolted into the dark. Henderson finds you alone. 'A signal shot, sir? In Normandy?'",
           context: "Signal shot scattered everyone. Malone and Doyle bolted — lost. Only Henderson recovered. Partial rally, ammo spent.",
+          rallyOverride: {
+            soldiers: [byId('henderson')],
+            ammoGain: 5,
+            moraleGain: 3,
+          },
           menLost: 0,
           ammoSpent: -1,
           moraleChange: -3,
@@ -194,6 +202,11 @@ export const scene04_the_sergeant: Scenario = {
         partial: {
           text: "The shot echoes off the hedgerows. Pandemonium — running, shouting, a German voice barking in the distance. You find Henderson crouching behind the wall, alone. Malone and Doyle scattered. 'Captain. I've got nothing kind to say about what you just did.'",
           context: "Signal shot caused pandemonium. German voice in distance. Malone and Doyle scattered, lost. Henderson only.",
+          rallyOverride: {
+            soldiers: [byId('henderson')],
+            ammoGain: 5,
+            moraleGain: 3,
+          },
           menLost: 0,
           ammoSpent: -1,
           moraleChange: -6,
@@ -221,6 +234,7 @@ export const scene04_the_sergeant: Scenario = {
         success: {
           text: "A hundred meters through the bocage, belly-crawling the last twenty. From the new angle: three men. American helmets. Paratrooper boots. A Thompson — NCO weapon. You use the clicker. Henderson answers.",
           context: "Circled wide, observed from new angle. Confirmed American helmets, paratrooper boots, Thompson. Clean clicker rally.",
+          timeCost: 30,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 4,
@@ -229,6 +243,7 @@ export const scene04_the_sergeant: Scenario = {
         partial: {
           text: "Twenty-five minutes through dense hedgerow. Shapes in the dark — details gone. American, probably. You use the clicker. Two clicks back. Henderson, Malone, Doyle. 'Where the hell have you been, Captain? We've been here an hour.'",
           context: "25-minute flanking circuit. Could not confirm IDs visually. Clicker resolved it. Rally made but time burned.",
+          timeCost: 30,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 3,
@@ -237,6 +252,7 @@ export const scene04_the_sergeant: Scenario = {
         failure: {
           text: "You circle too wide. Thirty-five minutes. When you reach the spot, they've moved. Another ten minutes tracking before Henderson's clicker finds you. You've burned nearly an hour.",
           context: "Circled too wide — 45 minutes total. Group had moved. Henderson's clicker found you. Nearly an hour wasted.",
+          timeCost: 30,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 1,
@@ -291,6 +307,7 @@ export const scene04_the_sergeant: Scenario = {
         success: {
           text: "Five minutes against the wall. '...assembly area should be...' American English. Not textbook — real Boston vowels. That's Malone. Henderson corrects him quietly. You click. They respond instantly.",
           context: "Listened five minutes. Confirmed American accents, identified Malone's voice. Clicker rally instant. Clean approach.",
+          timeCost: 20,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 5,
@@ -299,6 +316,7 @@ export const scene04_the_sergeant: Scenario = {
         partial: {
           text: "Five minutes of listening. Indistinct voices. One of them laughs — something about the Red Sox. American. Probably. You use the clicker. Two clicks back. Henderson, Malone, Doyle.",
           context: "Listened five minutes. Voices indistinct but cultural cues suggest American. Clicker confirmed. Rally made.",
+          timeCost: 20,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 4,
@@ -307,6 +325,7 @@ export const scene04_the_sergeant: Scenario = {
         failure: {
           text: "Five minutes and the words blur in the dark. Accents, cadence — nothing clear. You use the clicker anyway. Henderson responds. But you've been crouching here too long. Your knees ache and the clock has moved.",
           context: "Listened five minutes, couldn't confirm identity. Used clicker anyway — worked. Time burned for no intelligence gain.",
+          timeCost: 20,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 2,

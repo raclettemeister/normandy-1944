@@ -6,6 +6,7 @@ import type {
   Decision,
   ClassificationResult,
   PlaythroughEvent,
+  GameLanguage,
 } from '../types';
 import {
   buildNarrationPrompt,
@@ -19,6 +20,7 @@ import { DMLayer } from './dmLayer.ts';
 interface NarrativeServiceConfig {
   apiUrl: string;
   accessCode: string;
+  language?: GameLanguage;
 }
 
 interface OutcomeNarrativeInput {
@@ -53,13 +55,19 @@ export class NarrativeService {
   private accessCode: string;
   private mode: NarrativeMode;
   private dmLayer: DMLayer | null;
+  private language: GameLanguage;
 
   constructor(config: NarrativeServiceConfig) {
     this.apiUrl = config.apiUrl;
     this.accessCode = config.accessCode;
+    this.language = config.language ?? "fr";
     this.mode = config.apiUrl && config.accessCode ? "llm" : "hardcoded";
     this.dmLayer = this.mode === "llm"
-      ? new DMLayer((system, userMessage, maxTokens) => this.callLLM(system, userMessage, maxTokens))
+      ? new DMLayer(
+          (system, userMessage, maxTokens) =>
+            this.callLLM(system, userMessage, maxTokens),
+          this.language
+        )
       : null;
   }
 
@@ -86,7 +94,7 @@ export class NarrativeService {
         gameState: input.gameState,
         roster: input.roster,
         relationships: input.relationships,
-      });
+      }, this.language);
 
       const text = await this.callLLM(prompt.system, prompt.userMessage, 300, input.onChunk);
       return text || input.outcomeText;
@@ -114,7 +122,7 @@ export class NarrativeService {
         gameState,
         roster,
         relationships,
-      });
+      }, this.language);
       const text = await this.callLLM(prompt.system, prompt.userMessage, 300, onChunk);
       return text || fallbackText;
     } catch (e) {
@@ -144,7 +152,7 @@ export class NarrativeService {
         previousOutcomeContext,
         gameState,
         roster,
-      });
+      }, this.language);
       const text = await this.callLLM(prompt.system, prompt.userMessage, 300);
       return text || fallbackText;
     } catch (e) {
@@ -163,7 +171,7 @@ export class NarrativeService {
         decisions: input.decisions,
         playerText: input.playerText,
         gameState: input.gameState,
-      });
+      }, this.language);
 
       const text = await this.callLLM(prompt.system, prompt.userMessage, 150);
       if (!text) return null;
@@ -192,7 +200,7 @@ export class NarrativeService {
     }
 
     try {
-      const prompt = buildEpiloguePrompt(input);
+      const prompt = buildEpiloguePrompt(input, this.language);
       const text = await this.callLLM(prompt.system, prompt.userMessage, 200);
       return text || this.getDefaultEpilogue(input.soldier);
     } catch (e) {
@@ -242,7 +250,7 @@ export class NarrativeService {
     }
 
     try {
-      const prompt = buildInterludePrompt(input);
+      const prompt = buildInterludePrompt(input, this.language);
       const text = await this.callLLM(prompt.system, prompt.userMessage, 200, input.onChunk);
       return text || input.beat;
     } catch {
@@ -253,13 +261,13 @@ export class NarrativeService {
   private getDefaultEpilogue(soldier: Soldier): string {
     switch (soldier.status) {
       case "KIA":
-        return `${soldier.rank} ${soldier.name} was killed in action during Operation Overlord. He was ${soldier.age} years old, from ${soldier.hometown}.`;
+        return `${soldier.rank} ${soldier.name} est mort au combat pendant l'opération Overlord. Il avait ${soldier.age} ans et venait de ${soldier.hometown}.`;
       case "wounded":
-        return `${soldier.rank} ${soldier.name} was evacuated after being wounded in Normandy. He recovered stateside and was discharged in 1945.`;
+        return `${soldier.rank} ${soldier.name} a été évacué après avoir été blessé en Normandie. Il a récupéré aux États-Unis et a été démobilisé en 1945.`;
       case "missing":
-        return `${soldier.rank} ${soldier.name} was reported missing in action during the Normandy campaign. His fate remained unknown.`;
+        return `${soldier.rank} ${soldier.name} a été déclaré disparu au combat pendant la campagne de Normandie. Son destin est resté inconnu.`;
       default:
-        return `${soldier.rank} ${soldier.name} survived the Normandy campaign and continued to serve through the European theater.`;
+        return `${soldier.rank} ${soldier.name} a survécu à la campagne de Normandie et a continué à servir sur le théâtre européen.`;
     }
   }
 
