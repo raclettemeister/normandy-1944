@@ -9,6 +9,7 @@ import type {
 } from '../types';
 import {
   buildNarrationPrompt,
+  buildRallyPrompt,
   buildClassificationPrompt,
   buildEpiloguePrompt,
 } from './promptBuilder.ts';
@@ -90,6 +91,7 @@ export class NarrativeService {
     roster: Soldier[],
     relationships: SoldierRelationship[],
     fallbackText: string,
+    previousOutcomeContext?: string,
     onChunk?: (text: string) => void,
   ): Promise<string> {
     if (this.mode !== "llm") return fallbackText;
@@ -97,11 +99,41 @@ export class NarrativeService {
     try {
       const prompt = buildNarrationPrompt({
         sceneContext,
+        previousOutcomeContext: previousOutcomeContext,
         gameState,
         roster,
         relationships,
       });
       const text = await this.callLLM(prompt.system, prompt.userMessage, 300, onChunk);
+      return text || fallbackText;
+    } catch {
+      return fallbackText;
+    }
+  }
+
+  async generateRallyNarrative(
+    rallySoldiers: Soldier[],
+    ammoGain: number,
+    moraleGain: number,
+    sceneContext: string,
+    gameState: GameState,
+    roster: Soldier[],
+    fallbackText: string,
+    previousOutcomeContext?: string,
+  ): Promise<string> {
+    if (this.mode !== "llm") return fallbackText;
+
+    try {
+      const prompt = buildRallyPrompt({
+        rallySoldiers,
+        ammoGain,
+        moraleGain,
+        sceneContext,
+        previousOutcomeContext,
+        gameState,
+        roster,
+      });
+      const text = await this.callLLM(prompt.system, prompt.userMessage, 300);
       return text || fallbackText;
     } catch {
       return fallbackText;

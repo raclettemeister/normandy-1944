@@ -32,7 +32,7 @@ export default function FreeTextInput({
         type="text"
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="Or describe what you do..."
+        placeholder="What do you do?"
         disabled={disabled || loading}
         data-testid="free-text-input"
         maxLength={200}

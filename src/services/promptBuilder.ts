@@ -15,12 +15,23 @@ export interface PromptPair {
 export interface NarrationPromptInput {
   sceneContext: string;
   outcomeContext?: string;
+  previousOutcomeContext?: string;
   playerAction?: string;
   casualties?: Soldier[];
   captainHit?: boolean;
   gameState: GameState;
   roster: Soldier[];
   relationships: SoldierRelationship[];
+}
+
+export interface RallyPromptInput {
+  rallySoldiers: Soldier[];
+  ammoGain: number;
+  moraleGain: number;
+  sceneContext: string;
+  previousOutcomeContext?: string;
+  gameState: GameState;
+  roster: Soldier[];
 }
 
 export interface ClassificationPromptInput {
@@ -72,7 +83,20 @@ function formatCasualties(casualties?: Soldier[]): string {
 }
 
 export function buildNarrationPrompt(input: NarrationPromptInput): PromptPair {
-  const system = `[ROLE]
+  const isSceneEntry = !input.outcomeContext;
+
+  const instructions = isSceneEntry
+    ? `Write 2-4 sentences setting the scene.${input.previousOutcomeContext ? " Account for what just happened — the player is transitioning from the previous situation." : ""}
+Reference the environment, threats, and sensory details.
+Do not reference game mechanics (scores, percentages, tiers).
+Maximum 80 words.`
+    : `Write 2-4 sentences describing this outcome.
+Reference specific soldiers by name when they act.
+If a soldier was wounded or killed, reference their relationships.
+Do not reference game mechanics (scores, percentages, tiers).
+Maximum 80 words.`;
+
+  let system = `[ROLE]
 You are the narrator of a WWII tactical text game set during D-Day.
 
 [TONE GUIDE]
@@ -86,14 +110,13 @@ ${formatRoster(input.roster)}
 ${formatRelationships(input.relationships)}
 
 [SCENE CONTEXT]
-${input.sceneContext}
+${input.sceneContext}`;
 
-[INSTRUCTIONS]
-Write 2-4 sentences describing this outcome.
-Reference specific soldiers by name when they act.
-If a soldier was wounded or killed, reference their relationships.
-Do not reference game mechanics (scores, percentages, tiers).
-Maximum 80 words.`;
+  if (input.previousOutcomeContext) {
+    system += `\n\n[PREVIOUS OUTCOME — what just happened]\n${input.previousOutcomeContext}`;
+  }
+
+  system += `\n\n[INSTRUCTIONS]\n${instructions}`;
 
   let userMessage = "";
 
@@ -110,10 +133,45 @@ Maximum 80 words.`;
   }
 
   if (!userMessage) {
-    userMessage = "Narrate the scene as described in the context.";
+    userMessage = isSceneEntry
+      ? "Narrate the scene entry. Ground it in the current situation and what just happened."
+      : "Narrate the scene as described in the context.";
   }
 
   return { system, userMessage: userMessage.trim() };
+}
+
+export function buildRallyPrompt(input: RallyPromptInput): PromptPair {
+  const soldierList = input.rallySoldiers.map(s => {
+    const traits = s.traits.length > 0 ? s.traits.join("/") : "no traits";
+    return `- ${s.rank} ${s.name} (${s.role}, ${traits}): ${s.background}`;
+  }).join("\n");
+
+  const system = `[ROLE]
+You are the narrator of a WWII tactical text game set during D-Day.
+
+[TONE GUIDE]
+${TONE_GUIDE}
+
+[GAME STATE]
+${formatGameState(input.gameState)}
+
+[SCENE CONTEXT]
+${input.sceneContext}${input.previousOutcomeContext ? `\n\n[PREVIOUS OUTCOME — what just happened]\n${input.previousOutcomeContext}` : ""}
+
+[SOLDIERS RALLYING]
+${soldierList}
+
+[INSTRUCTIONS]
+Write 3-5 sentences describing these soldiers joining the captain.
+Show each soldier's personality through how they arrive and react.
+Account for the current situation — if things just went badly, the rally should reflect that tension.
+Do not reference game mechanics.
+Maximum 100 words.`;
+
+  const userMessage = `${input.rallySoldiers.length} soldiers rally to the captain: ${input.rallySoldiers.map(s => s.name).join(", ")}. They bring ammo and raise morale. Narrate their arrival.`;
+
+  return { system, userMessage };
 }
 
 export function buildClassificationPrompt(input: ClassificationPromptInput): PromptPair {

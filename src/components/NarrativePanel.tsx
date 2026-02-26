@@ -5,6 +5,7 @@ interface NarrativePanelProps {
   outcomeText: string | null;
   rallyText: string | null;
   isStreaming?: boolean;
+  isLoading?: boolean;
 }
 
 export default function NarrativePanel({
@@ -12,12 +13,17 @@ export default function NarrativePanel({
   outcomeText,
   rallyText,
   isStreaming = false,
+  isLoading = false,
 }: NarrativePanelProps) {
   return (
     <div className="narrative-panel">
-      <div className="narrative-text" data-testid="narrative">
-        {narrative}
-      </div>
+      {isLoading ? (
+        <div className="narrative-loading" data-testid="narrative-loading">...</div>
+      ) : (
+        <div className="narrative-text" data-testid="narrative">
+          {narrative}
+        </div>
+      )}
       {outcomeText && (
         <div className="outcome-text" data-testid="outcome-narrative">
           {isStreaming ? (

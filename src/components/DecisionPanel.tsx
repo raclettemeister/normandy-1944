@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import type { Decision, CaptainPosition } from "../types/index.ts";
 
 interface DecisionPanelProps {
@@ -12,6 +13,20 @@ interface DecisionPanelProps {
 
 const POSITIONS: CaptainPosition[] = ["front", "middle", "rear"];
 
+function seededShuffle<T>(items: T[], seed: string): T[] {
+  const shuffled = [...items];
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = ((hash << 5) - hash + seed.charCodeAt(i)) | 0;
+  }
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    hash = ((hash << 5) - hash + i) | 0;
+    const j = ((hash >>> 0) % (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 export default function DecisionPanel({
   decisions,
   onDecision,
@@ -21,6 +36,12 @@ export default function DecisionPanel({
   onCaptainPositionChange,
   disabled,
 }: DecisionPanelProps) {
+  const shuffledDecisions = useMemo(() => {
+    if (decisions.length === 0) return decisions;
+    const seed = decisions.map(d => d.id).join(",");
+    return seededShuffle(decisions, seed);
+  }, [decisions]);
+
   return (
     <div className="decision-panel">
       {secondInCommandComment && (
@@ -53,7 +74,7 @@ export default function DecisionPanel({
       )}
 
       <div className="decision-list">
-        {decisions.map((d) => (
+        {shuffledDecisions.map((d) => (
           <button
             key={d.id}
             className="decision-btn"

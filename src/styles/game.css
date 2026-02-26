@@ -284,6 +284,35 @@
   padding: 3rem 1rem;
 }
 
+/* ─── Transition Prompt ──────────────────────────────────────────── */
+
+.transition-prompt {
+  padding: 2rem 0 1.5rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.transition-prompt__btn {
+  font-size: 1rem;
+  padding: 0.8rem 2.5rem;
+  letter-spacing: 0.05em;
+}
+
+.narrative-loading {
+  font-family: var(--font-narrative);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 1rem 0;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
 /* ─── Decision Panel ─────────────────────────────────────────────── */
 
 .decision-panel {
@@ -889,15 +918,24 @@
 .free-text-form {
   display: flex;
   gap: 0.5rem;
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px dashed var(--border);
+  margin-bottom: 0.75rem;
+}
+
+.decision-separator {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px dashed var(--border);
 }
 
 .free-text-form__input {
   flex: 1;
   font-family: var(--font-narrative);
-  font-size: 0.9rem;
+  font-size: 1rem;
   background: var(--bg-tertiary);
   color: var(--text-primary);
   border: 1px solid var(--border);

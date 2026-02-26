@@ -5,6 +5,8 @@ import type {
   Decision,
   Achievement,
   PlaythroughEvent,
+  Scenario,
+  OutcomeNarrative,
 } from "../types/index.ts";
 import { createInitialState } from "../engine/gameState.ts";
 import {
@@ -35,6 +37,15 @@ import AchievementPopup from "./AchievementPopup";
 
 type Overlay = "orders" | "roster" | "wiki" | "lessons" | null;
 
+interface PendingTransition {
+  nextSceneId: string;
+  nextScene: Scenario;
+  newState: GameState;
+  outcomeContext?: string;
+  outcome: OutcomeNarrative;
+  lessonUnlocked: string;
+}
+
 export interface GameEndData {
   finalState: GameState;
   captainSurvived: boolean;
@@ -57,12 +68,16 @@ export default function GameScreen({
 }: GameScreenProps) {
   const [gameState, setGameState] = useState<GameState>(createInitialState);
   const [outcomeText, setOutcomeText] = useState<string | null>(null);
+  const [sceneNarrative, setSceneNarrative] = useState<string | null>(null);
+  const [rallyNarrative, setRallyNarrative] = useState<string | null>(null);
   const [captainPosition, setCaptainPosition] =
     useState<CaptainPosition>("middle");
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [processing, setProcessing] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
   const [classifyingFreeText, setClassifyingFreeText] = useState(false);
+  const [pendingTransition, setPendingTransition] = useState<PendingTransition | null>(null);
+  const [generatingScene, setGeneratingScene] = useState(false);
   const [pendingAchievement, setPendingAchievement] =
     useState<Achievement | null>(null);
   const eventLogRef = useRef(new EventLog());
@@ -72,6 +87,8 @@ export default function GameScreen({
   const secondInCommandComment = scene
     ? getSecondInCommandComment(scene, gameState, decisions)
     : null;
+
+  const showingOutcome = pendingTransition !== null;
 
   const handleDecision = useCallback(
     async (decision: Decision, playerAction?: string) => {
@@ -169,9 +186,33 @@ export default function GameScreen({
         return;
       }
 
+      // Phase 1: Show outcome on current scene, store transition for later
       setOutcomeText(outcome.text);
 
-      if (narrativeService.getMode() === "llm" && outcome.context) {
+      const newState = {
+        ...result.state,
+        currentScene: nextSceneId,
+        scenesVisited: [...result.state.scenesVisited, scene.id],
+        lessonsUnlocked: [
+          ...new Set([
+            ...result.state.lessonsUnlocked,
+            decision.outcome.lessonUnlocked,
+          ]),
+        ],
+      };
+
+      setPendingTransition({
+        nextSceneId,
+        nextScene,
+        newState,
+        outcomeContext: outcome.context,
+        outcome,
+        lessonUnlocked: decision.outcome.lessonUnlocked,
+      });
+
+      const isLlmMode = narrativeService.getMode() === "llm";
+
+      if (isLlmMode && outcome.context) {
         setIsStreaming(true);
         const activeSoldierIds = gameState.roster
           .filter(s => s.status === "active")
@@ -198,27 +239,64 @@ export default function GameScreen({
         });
       }
 
-      setGameState({
-        ...result.state,
-        currentScene: nextSceneId,
-        scenesVisited: [...result.state.scenesVisited, scene.id],
-        lessonsUnlocked: [
-          ...new Set([
-            ...result.state.lessonsUnlocked,
-            decision.outcome.lessonUnlocked,
-          ]),
-        ],
-      });
-
       setCaptainPosition("middle");
       setProcessing(false);
     },
     [scene, gameState, captainPosition, processing, onGameOver, onVictory, narrativeService]
   );
 
+  const handleContinue = useCallback(async () => {
+    if (!pendingTransition || isStreaming) return;
+
+    const { nextScene, newState, outcomeContext, outcome } = pendingTransition;
+    const isLlmMode = narrativeService.getMode() === "llm";
+
+    setGeneratingScene(true);
+    setOutcomeText(null);
+    setSceneNarrative(null);
+    setRallyNarrative(null);
+
+    setGameState(newState);
+    setPendingTransition(null);
+
+    if (isLlmMode && nextScene.sceneContext) {
+      const nextActiveRoster = newState.roster.filter(s => s.status === "active");
+      const nextActiveSoldierIds = nextActiveRoster.map(s => s.id);
+      const nextRelationships = getActiveRelationships(nextActiveSoldierIds);
+
+      const [sceneText, rallyText] = await Promise.all([
+        narrativeService.generateSceneNarrative(
+          nextScene.sceneContext,
+          newState,
+          nextActiveRoster,
+          nextRelationships,
+          nextScene.narrative,
+          outcomeContext,
+        ),
+        nextScene.rally && !outcome.skipRally
+          ? narrativeService.generateRallyNarrative(
+              nextScene.rally.soldiers,
+              nextScene.rally.ammoGain,
+              nextScene.rally.moraleGain,
+              nextScene.sceneContext,
+              newState,
+              nextActiveRoster,
+              nextScene.rally.narrative,
+              outcomeContext,
+            )
+          : Promise.resolve(null),
+      ]);
+
+      setSceneNarrative(sceneText);
+      if (rallyText) setRallyNarrative(rallyText);
+    }
+
+    setGeneratingScene(false);
+  }, [pendingTransition, isStreaming, narrativeService]);
+
   const handleFreeText = useCallback(
     async (playerText: string) => {
-      if (!scene || processing) return;
+      if (!scene || processing || showingOutcome) return;
       setClassifyingFreeText(true);
 
       const classification = await narrativeService.classifyPlayerAction({
@@ -237,11 +315,11 @@ export default function GameScreen({
 
       handleDecision(matched, playerText);
     },
-    [scene, processing, narrativeService, decisions, gameState, handleDecision]
+    [scene, processing, showingOutcome, narrativeService, decisions, gameState, handleDecision]
   );
 
-  const narrative = scene?.narrative ?? "";
-  const rallyText = scene?.rally?.narrative ?? null;
+  const narrative = sceneNarrative ?? scene?.narrative ?? "";
+  const rallyText = rallyNarrative ?? scene?.rally?.narrative ?? null;
 
   if (!scene) {
     return (
@@ -301,29 +379,59 @@ export default function GameScreen({
 
       <StatusPanel state={gameState} />
 
-      <NarrativePanel
-        narrative={narrative}
-        outcomeText={outcomeText}
-        rallyText={rallyText}
-        isStreaming={isStreaming}
-      />
+      {showingOutcome ? (
+        <>
+          <NarrativePanel
+            narrative={narrative}
+            outcomeText={outcomeText}
+            rallyText={null}
+            isStreaming={isStreaming}
+          />
+          <div className="transition-prompt">
+            <button
+              className="btn btn--primary transition-prompt__btn"
+              onClick={handleContinue}
+              disabled={isStreaming}
+            >
+              {isStreaming ? "..." : "Continue..."}
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <NarrativePanel
+            narrative={narrative}
+            outcomeText={null}
+            rallyText={rallyText}
+            isStreaming={false}
+            isLoading={generatingScene}
+          />
 
-      <DecisionPanel
-        decisions={decisions}
-        onDecision={handleDecision}
-        secondInCommandComment={secondInCommandComment}
-        isCombatScene={!!scene.combatScene}
-        captainPosition={captainPosition}
-        onCaptainPositionChange={setCaptainPosition}
-        disabled={processing || isStreaming}
-      />
+          {!generatingScene && (
+            <>
+              {narrativeService.getMode() === "llm" && (
+                <>
+                  <FreeTextInput
+                    onSubmit={handleFreeText}
+                    disabled={processing}
+                    loading={classifyingFreeText}
+                  />
+                  <div className="decision-separator">or choose an action</div>
+                </>
+              )}
 
-      {narrativeService.getMode() === "llm" && (
-        <FreeTextInput
-          onSubmit={handleFreeText}
-          disabled={processing || isStreaming}
-          loading={classifyingFreeText}
-        />
+              <DecisionPanel
+                decisions={decisions}
+                onDecision={handleDecision}
+                secondInCommandComment={secondInCommandComment}
+                isCombatScene={!!scene.combatScene}
+                captainPosition={captainPosition}
+                onCaptainPositionChange={setCaptainPosition}
+                disabled={processing}
+              />
+            </>
+          )}
+        </>
       )}
 
       {overlay === "orders" && (
