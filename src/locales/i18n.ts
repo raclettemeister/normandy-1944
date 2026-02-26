@@ -2,7 +2,9 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import enUi from './en/ui.json';
+import enGame from './en/game.json';
 import frUi from './fr/ui.json';
+import frGame from './fr/game.json';
 
 const STORAGE_KEY = 'normandy1944_language';
 
@@ -19,8 +21,8 @@ function getDefaultLanguage(): string {
 
 i18n.use(initReactI18next).init({
   resources: {
-    en: { ui: enUi },
-    fr: { ui: frUi },
+    en: { ui: enUi, game: enGame },
+    fr: { ui: frUi, game: frGame },
   },
   lng: getDefaultLanguage(),
   fallbackLng: 'en',

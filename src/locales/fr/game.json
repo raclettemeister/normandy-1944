@@ -1,0 +1,32 @@
+{
+  "status": {
+    "men": "Hommes",
+    "ammo": "Munitions",
+    "morale": "Moral",
+    "enemy": "Ennemi",
+    "alone": "SEUL",
+    "timeUnit": "h"
+  },
+  "alertStatus": {
+    "confused": "CONFUS",
+    "alerted": "EN ALERTE",
+    "organized": "ORGANISÉ",
+    "fortified": "FORTIFIÉ"
+  },
+  "soldierStatus": {
+    "active": "Actif",
+    "wounded": "Blessé",
+    "KIA": "KIA",
+    "missing": "Disparu"
+  },
+  "milestoneStatus": {
+    "achieved": "✓",
+    "pending": "—",
+    "missed": "MANQUÉ"
+  },
+  "phase": {
+    "solo": "Solo",
+    "squad": "Escouade",
+    "platoon": "Section"
+  }
+}
