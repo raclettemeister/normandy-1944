@@ -22,6 +22,7 @@
 
 .app {
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-ui);
@@ -71,6 +72,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  min-height: 100dvh;
   padding: 2rem;
   text-align: center;
   gap: 2rem;
@@ -186,6 +188,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-height: 100dvh;
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
@@ -743,6 +746,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  min-height: 100dvh;
   padding: 2rem;
   text-align: center;
   max-width: 640px;
@@ -803,6 +807,7 @@
 
 .epilogue-screen {
   min-height: 100vh;
+  min-height: 100dvh;
   padding: 2rem 1rem;
   max-width: 640px;
   margin: 0 auto;
@@ -1130,15 +1135,19 @@
   .status-panel {
     font-size: 0.72rem;
     gap: 0.5rem;
+    overflow-x: auto;
   }
 
   .progress-bar {
-    width: 50px;
+    width: 40px;
   }
 
   .toolbar .btn {
     font-size: 0.6rem;
     padding: 0.25rem 0.4rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
   }
 
   .narrative-text {
@@ -1148,11 +1157,88 @@
   .decision-btn {
     font-size: 0.8rem;
     padding: 0.5rem 0.75rem;
+    min-height: 44px;
+  }
+
+  .overlay-backdrop {
+    padding: 0.5rem;
   }
 
   .overlay-panel {
-    max-height: 90vh;
+    max-height: 95vh;
+    max-height: 95dvh;
+    max-width: 100%;
     padding: 1rem;
+  }
+
+  .overlay-close {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wiki-panel {
+    max-width: 100%;
+  }
+
+  .wiki-layout {
+    min-height: auto;
+  }
+
+  .wiki-entries {
+    max-height: none;
+  }
+
+  .roster-soldier {
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+    padding: 0.6rem 0;
+  }
+
+  .roster-soldier__role {
+    width: 100%;
+    order: 3;
+    font-size: 0.7rem;
+  }
+
+  .roster-soldier__rank {
+    min-width: auto;
+  }
+
+  .roster-soldier__status {
+    min-width: auto;
+    margin-left: auto;
+  }
+
+  .milestone {
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+  }
+
+  .milestone__desc {
+    min-width: 0;
+  }
+
+  .milestone__time {
+    min-width: auto;
+  }
+
+  .achievement-popup {
+    right: 0.5rem;
+    left: 0.5rem;
+    max-width: none;
+  }
+
+  .captain-position__option {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .wiki-category-btn {
+    min-height: 44px;
   }
 }
 
