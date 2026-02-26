@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import type {
   GameState,
@@ -149,11 +149,18 @@ export default function GameScreen({
     t.maxReadiness = Math.max(t.maxReadiness, state.readiness);
   }, []);
 
-  const scene = getScene(gameState.currentScene);
-  const decisions = scene ? getAvailableDecisions(scene, gameState) : [];
-  const secondInCommandComment = scene
-    ? getSecondInCommandComment(scene, gameState, decisions)
-    : null;
+  const scene = useMemo(
+    () => getScene(gameState.currentScene),
+    [gameState.currentScene]
+  );
+  const decisions = useMemo(
+    () => (scene ? getAvailableDecisions(scene, gameState) : []),
+    [scene, gameState]
+  );
+  const secondInCommandComment = useMemo(
+    () => (scene ? getSecondInCommandComment(scene, gameState, decisions) : null),
+    [scene, gameState, decisions]
+  );
 
   const showingOutcome = pendingTransition !== null;
 

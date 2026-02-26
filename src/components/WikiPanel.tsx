@@ -42,7 +42,7 @@ export default function WikiPanel({ unlockedEntryIds, onClose }: WikiPanelProps)
   if (selectedEntry && isEntryVisible(selectedEntry.id, selectedEntry.alwaysAvailable, unlockedEntryIds)) {
     return (
       <div className="overlay-backdrop" onClick={onClose}>
-        <div className="overlay-panel wiki-panel" onClick={(e) => e.stopPropagation()}>
+        <div className="overlay-panel wiki-panel" data-testid="wiki-panel" onClick={(e) => e.stopPropagation()}>
           <div className="overlay-header">
             <span className="overlay-title">{t("fieldManual")}</span>
             <button className="overlay-close" onClick={onClose}>{t("close")}</button>
@@ -71,7 +71,7 @@ export default function WikiPanel({ unlockedEntryIds, onClose }: WikiPanelProps)
 
   return (
     <div className="overlay-backdrop" onClick={onClose}>
-      <div className="overlay-panel wiki-panel" onClick={(e) => e.stopPropagation()}>
+      <div className="overlay-panel wiki-panel" data-testid="wiki-panel" onClick={(e) => e.stopPropagation()}>
         <div className="overlay-header">
           <span className="overlay-title">{t("fieldManual")}</span>
           <button className="overlay-close" onClick={onClose}>{t("close")}</button>

@@ -1,10 +1,8 @@
 import { describe, it, expect } from "vitest";
 import type {
   Scenario,
-  Decision,
   PlatoonCapabilities,
   IntelFlags,
-  GamePhase,
 } from "../../src/types/index.ts";
 
 // ─── Validation Types ─────────────────────────────────────────────
@@ -35,8 +33,6 @@ const VALID_INTEL_KEYS: (keyof IntelFlags)[] = [
   "knowsPatrolRoute",
   "friendlyContact",
 ];
-
-const VALID_PHASES: GamePhase[] = ["solo", "squad", "platoon"];
 
 // ─── Rule 1: Every nextScene/nextSceneOnFailure points to valid ID
 

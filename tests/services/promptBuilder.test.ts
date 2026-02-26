@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import {
   buildNarrationPrompt,
   buildClassificationPrompt,
@@ -6,7 +6,7 @@ import {
   buildDMEvaluationPrompt,
 } from "../../src/services/promptBuilder.ts";
 import { createInitialState } from "../../src/engine/gameState.ts";
-import type { GameState, Soldier, SoldierRelationship, Decision } from "../../src/types/index.ts";
+import type { GameState, Soldier, Decision } from "../../src/types/index.ts";
 
 function makeMinimalGameState(overrides: Partial<GameState> = {}): GameState {
   return { ...createInitialState(), men: 5, morale: 60, ammo: 50, ...overrides };

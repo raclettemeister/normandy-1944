@@ -13,6 +13,7 @@ export default function StreamingText({
 }: StreamingTextProps) {
   const [displayedText, setDisplayedText] = useState("");
   const indexRef = useRef(0);
+  const showCursor = isStreaming || displayedText.length < text.length;
 
   useEffect(() => {
     if (!text) {
@@ -44,7 +45,7 @@ export default function StreamingText({
   return (
     <span className={`streaming-text ${className}`} data-testid="streaming-text">
       {displayedText}
-      {(isStreaming || indexRef.current < text.length) && (
+      {showCursor && (
         <span className="streaming-cursor" data-testid="streaming-cursor">
           &#9608;
         </span>

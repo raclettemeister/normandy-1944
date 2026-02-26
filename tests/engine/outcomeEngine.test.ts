@@ -17,7 +17,6 @@ import type {
   Decision,
   TacticalTier,
   Soldier,
-  CaptainPosition,
   Scenario,
   OutcomeNarrative,
 } from "../../src/types/index.ts";
