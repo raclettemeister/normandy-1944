@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import type {
   GameState,
   CaptainPosition,
@@ -26,7 +26,7 @@ import {
   processSceneTransition,
 } from "../engine/outcomeEngine.ts";
 import { deriveBalanceEnvelope } from "../engine/balanceEnvelope.ts";
-import { unlockLesson } from "../engine/lessonTracker.ts";
+import { unlockWikiEntry, migrateFromLegacy } from "../engine/metaProgress.ts";
 import { getActiveRelationships } from "../content/relationships.ts";
 import { NarrativeService } from "../services/narrativeService.ts";
 import { EventLog } from "../services/eventLog.ts";
@@ -97,6 +97,8 @@ export default function GameScreen({
   const [fallbackMessage, setFallbackMessage] = useState<string | null>(null);
   const [lastPlayerText, setLastPlayerText] = useState<string>("");
 
+  useEffect(() => { migrateFromLegacy(); }, []);
+
   const scene = getScene(gameState.currentScene);
   const decisions = scene ? getAvailableDecisions(scene, gameState) : [];
   const secondInCommandComment = scene
@@ -123,7 +125,7 @@ export default function GameScreen({
       const outcome = decision.outcome[tier];
       const result = processSceneTransition(gameState, scene, outcome, pos);
 
-      unlockLesson(decision.outcome.lessonUnlocked);
+      unlockWikiEntry(decision.outcome.lessonUnlocked);
 
       const log = eventLogRef.current;
 
@@ -444,7 +446,7 @@ export default function GameScreen({
     const result = processSceneTransition(gameState, scene, outcome, pos);
 
     if (referenceDecision) {
-      unlockLesson(referenceDecision.outcome.lessonUnlocked);
+      unlockWikiEntry(referenceDecision.outcome.lessonUnlocked);
     }
 
     if (result.casualties.length > 0) {

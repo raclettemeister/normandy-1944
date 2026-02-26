@@ -1,5 +1,5 @@
 import { loadAchievements } from "../engine/achievementTracker.ts";
-import { loadLessons, resetLessons } from "../engine/lessonTracker.ts";
+import { loadMeta, resetMeta } from "../engine/metaProgress.ts";
 import type { NarrativeMode, Difficulty } from "../types/index.ts";
 import AccessCodeInput from "./AccessCodeInput";
 
@@ -17,7 +17,8 @@ export default function MainMenu({
   narrativeMode,
 }: MainMenuProps) {
   const achievements = loadAchievements();
-  const lessons = loadLessons();
+  const meta = loadMeta();
+  const lessons = meta.unlockedWikiEntries;
 
   const handleReset = () => {
     if (
@@ -25,8 +26,7 @@ export default function MainMenu({
         "Reset all progress? This clears lessons and achievements."
       )
     ) {
-      resetLessons();
-      localStorage.removeItem("normandy1944_achievements");
+      resetMeta();
       window.location.reload();
     }
   };

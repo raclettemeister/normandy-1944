@@ -10,7 +10,7 @@ import type {
   Difficulty,
   TacticalPhase,
 } from "../types/index.ts";
-import { loadLessons } from "./lessonTracker.ts";
+import { loadMeta } from "./metaProgress.ts";
 
 export function clamp(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, value));
@@ -151,7 +151,7 @@ export function createInitialState(): GameState {
     roster: [],
     secondInCommand: null,
     milestones: createDefaultMilestones(),
-    lessonsUnlocked: loadLessons(),
+    lessonsUnlocked: loadMeta().unlockedWikiEntries,
     scenesVisited: [],
     currentScene: "act1_landing",
     phase: "solo",

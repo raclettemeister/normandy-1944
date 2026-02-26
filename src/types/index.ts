@@ -313,13 +313,12 @@ export interface Lesson {
 // ─── Wiki ──────────────────────────────────────────────────────────
 
 export type WikiCategory =
-  | "weapon_us"
-  | "weapon_german"
-  | "equipment"
-  | "tactic"
-  | "unit"
-  | "terrain"
-  | "vehicle";
+  | "operation"
+  | "your_unit"
+  | "weapons_equipment"
+  | "enemy_forces"
+  | "terrain_landmarks"
+  | "tactics_learned";
 
 export interface WikiEntry {
   id: string;
@@ -328,6 +327,8 @@ export interface WikiEntry {
   shortDescription: string;
   fullDescription: string;
   tacticalNote?: string;
+  alwaysAvailable: boolean;
+  unlockedBy?: string[];
 }
 
 // ─── Achievements ──────────────────────────────────────────────────
@@ -448,4 +449,15 @@ export interface AccessCode {
   currentUses: number;
   active: boolean;
   label?: string;
+}
+
+// ─── Meta-Progression ─────────────────────────────────────────────
+
+export interface MetaProgress {
+  unlockedWikiEntries: string[];
+  rosterNotes: Record<string, string>;
+  completedRuns: number;
+  bestRun: { act: number; scene: string; time: string } | null;
+  difficultyUnlocked: string[];
+  achievements: string[];
 }
