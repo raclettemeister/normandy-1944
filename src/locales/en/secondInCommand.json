@@ -1,0 +1,48 @@
+{
+  "veteran": {
+    "low_ammo": "Captain, we're burning through ammo. Might want to think about conserving for the objective.",
+    "low_morale": "The men are shaky, Captain. We need a win — something to steady them.",
+    "low_men": "We're down to a handful, sir. Not enough for a proper assault. Maybe we find another way.",
+    "high_readiness": "They're dug in now, sir. This won't be easy. We need to be smart about our approach.",
+    "time_surplus": "We're ahead of schedule. Could use the time to scout the approach.",
+    "bad_decision_suicidal": "With all due respect, sir — that's suicide. There has to be another way.",
+    "bad_decision_reckless": "Sir, that's risky. Real risky. I'd want a better plan before committing the men."
+  },
+  "green": {
+    "low_ammo": "Uh... we don't have a lot of bullets, sir.",
+    "low_morale": "The guys seem pretty scared, sir.",
+    "low_men": "There's... not many of us left, Captain.",
+    "high_readiness": "Sounds like a lot of shooting up ahead, sir.",
+    "time_surplus": "What do we do now, sir?",
+    "bad_decision_suicidal": "Yes sir, whatever you say.",
+    "bad_decision_reckless": "If you say so, sir."
+  },
+  "scenes": {
+    "act1_the_patrol": {
+      "patrol_l_ambush": "Good position, sir. I'll take the second element. On your signal.",
+      "patrol_linear_ambush": "One-sided, sir? Better than nothing. But some'll get away down the bridge.",
+      "patrol_knife": "That's... optimistic, Captain. You knife one, the other three hear it.",
+      "patrol_open_fire": "No setup, sir? Just... shooting?",
+      "patrol_charge": "Captain — you are not serious. A bayonet charge? Against four men with submachine guns?",
+      "patrol_rocks": "Rocks, sir? These aren't children.",
+      "patrol_animal_sounds": "Sir... you want to moo at them?",
+      "patrol_let_pass": "Those papers, sir. If they get back to their CP, they'll know where every DZ is. That's going to hurt us.",
+      "patrol_decoy": "Who are you sending out there, sir?"
+    },
+    "act1_the_farmhouse": {
+      "farmhouse_stack_clear": "I'll take point. Standard two-man stack. We clear left on entry.",
+      "farmhouse_two_element": "Malone and I take the front. You cover the back with Doyle.",
+      "farmhouse_rush": "Slow down, Captain. We don't know who's in there. Could be ours.",
+      "farmhouse_grenade": "Sir, that's paratrooper gear on the porch. Those could be our people inside. Hold fire.",
+      "farmhouse_clicker_outside": "Smart. Let the clicker do the talking.",
+      "farmhouse_scout": "Take your time. I'll hold the tree line.",
+      "farmhouse_skip": "Captain, that's paratrooper gear on the porch. Somebody's in there."
+    },
+    "act1_scene07": {
+      "road_scouts_forward": "Good call, sir. I'll keep the rest quiet until they signal.",
+      "road_hedgerow_route": "Slow but safe. I'll put Malone on rear security.",
+      "road_straight_through": "Captain, those tire tracks are fresh. I wouldn't walk into that.",
+      "road_open_field": "Sir, there's no cover out there. If there's a patrol..."
+    }
+  }
+}

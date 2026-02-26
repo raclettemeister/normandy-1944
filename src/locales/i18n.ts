@@ -10,6 +10,10 @@ import enScene04 from './en/scenes/act1_scene04.json';
 import enScene05 from './en/scenes/act1_scene05.json';
 import enScene06 from './en/scenes/act1_scene06.json';
 import enScene07 from './en/scenes/act1_scene07.json';
+import enSoldiers from './en/soldiers.json';
+import enOrders from './en/orders.json';
+import enAchievements from './en/achievements.json';
+import enSecondInCommand from './en/secondInCommand.json';
 import frUi from './fr/ui.json';
 import frGame from './fr/game.json';
 
@@ -38,7 +42,7 @@ function getDefaultLanguage(): string {
 
 i18n.use(initReactI18next).init({
   resources: {
-    en: { ui: enUi, game: enGame, scenes: enScenes },
+    en: { ui: enUi, game: enGame, scenes: enScenes, soldiers: enSoldiers, orders: enOrders, achievements: enAchievements, secondInCommand: enSecondInCommand },
     fr: { ui: frUi, game: frGame },
   },
   lng: getDefaultLanguage(),

@@ -1,0 +1,11 @@
+{
+  "opord": "OPERATION ALBANY — 506th PIR, 2nd PLATOON, EASY COMPANY\nCLASSIFICATION: SECRET\nDATE: 5 JUNE 1944\n\nMISSION: Secure causeway exit at Sainte-Marie-du-Mont\nto enable linkup with seaborne forces landing Utah\nBeach at H-Hour.\n\nTIMELINE:\n  0100 — Drop on DZ C. Rally at assembly area.\n  0400 — Assembly complete. Move to objective area.\n  0600 — H-HOUR. Beach landings begin.\n  0900 — Crossroads SECURED. Establish perimeter.\n  1200 — Resupply expected from beach elements.\n  1800 — Relief from 4th Infantry Division.\n  0100 — End of operational period.\n\nCOMMANDER'S INTENT: Speed is critical. Every hour of\ndelay gives the enemy time to organize. Strike while\nthey are confused. The men landing on that beach are\ncounting on us.",
+  "milestones": {
+    "rally_complete": "Assembly complete",
+    "move_to_objective": "Move to objective area",
+    "crossroads_secured": "Crossroads SECURED",
+    "resupply": "Resupply from beach elements",
+    "relief": "Relief from 4th Infantry Division",
+    "end_operational_period": "End of operational period"
+  }
+}

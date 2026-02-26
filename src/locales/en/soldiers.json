@@ -1,0 +1,56 @@
+{
+  "henderson": {
+    "background": "Former factory foreman. Oldest man in the platoon."
+  },
+  "malone": {
+    "background": "Ex-boxer, built like a fire hydrant. Leads from the front."
+  },
+  "park": {
+    "background": "Korean-American, had to fight twice as hard for his rank. Quiet, methodical, deadly."
+  },
+  "rivera": {
+    "background": "Wanted to be a doctor. Gentle hands, steel nerves under fire."
+  },
+  "kowalski": {
+    "background": "Polish-American, built like an ox. Carries the BAR like other men carry rifles."
+  },
+  "davis": {
+    "background": "Former telegraph operator. Funny, keeps the men laughing. Carries 30 pounds of radio without complaining."
+  },
+  "doyle": {
+    "background": "Farm kid, youngest in the platoon. Eager, scared, trying to prove himself."
+  },
+  "webb": {
+    "background": "Smooth talker, always has a cigarette. Looks lazy but has the best eyes in the platoon."
+  },
+  "ellis": {
+    "background": "Nervous, intellectual, reads books in his foxhole. Joined because he felt he had to."
+  },
+  "washington": {
+    "background": "Street-smart, tough, grew up hard. Doesn't scare easy."
+  },
+  "caruso": {
+    "background": "Loud, brash, talks constantly. Drives the sergeants crazy but the privates love him."
+  },
+  "mitchell": {
+    "background": "Quiet, polite, writes letters to his mother every day. Dead shot with a rifle."
+  },
+  "novak": {
+    "background": "6'4\", former steelworker. Carries ammunition for Kowalski. Simple, dependable, strong as an ox."
+  },
+  "sullivan": {
+    "background": "Irish-Catholic, prays before every mission. Superstitious but dependable."
+  },
+  "bergman": {
+    "background": "German-American, sensitive about it. Speaks some German, which could be useful."
+  },
+  "jenkins": {
+    "background": "Former hunting guide. Knows the outdoors better than anyone. Excellent tracker."
+  },
+  "herrera": {
+    "background": "Fast runner, former track star. Skinny, wiry, never stops moving."
+  },
+  "palmer": {
+    "background": "The complainer. Bitches about everything. But when the bullets fly, he fights."
+  }
+}

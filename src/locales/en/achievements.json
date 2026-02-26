@@ -1,0 +1,77 @@
+{
+  "first_drop": {
+    "title": "First Drop",
+    "description": "Complete your first playthrough (win or lose).",
+    "icon": "🪂"
+  },
+  "lessons_of_war": {
+    "title": "Lessons of War",
+    "description": "Unlock your first lesson.",
+    "icon": "📖"
+  },
+  "rally_point": {
+    "title": "Rally Point",
+    "description": "Find and rally 10 or more men in Act 1.",
+    "icon": "🏁"
+  },
+  "on_schedule": {
+    "title": "On Schedule",
+    "description": "Complete every battle order milestone on time.",
+    "icon": "⏱️"
+  },
+  "conservation": {
+    "title": "Conservation",
+    "description": "Finish the game with ammo above 40%.",
+    "icon": "🎯"
+  },
+  "ghost": {
+    "title": "Ghost",
+    "description": "Complete Act 1 without raising enemy readiness above 25.",
+    "icon": "👻"
+  },
+  "knife_in_the_dark": {
+    "title": "Knife in the Dark",
+    "description": "Win the first solo knife fight.",
+    "icon": "🗡️"
+  },
+  "band_of_brothers": {
+    "title": "Band of Brothers",
+    "description": "Complete the full 24 hours with 15+ men surviving.",
+    "icon": "🎖️"
+  },
+  "lead_from_the_front": {
+    "title": "Lead from the Front",
+    "description": "Choose \"front\" position in every combat scene and survive.",
+    "icon": "⭐"
+  },
+  "tactical_genius": {
+    "title": "Tactical Genius",
+    "description": "Complete the game on first playthrough (no lessons).",
+    "icon": "🧠"
+  },
+  "no_man_left_behind": {
+    "title": "No Man Left Behind",
+    "description": "Complete the game with zero KIA (wounded allowed).",
+    "icon": "🛡️"
+  },
+  "perfect_captain": {
+    "title": "Perfect Captain",
+    "description": "Zero KIA, all milestones on time, readiness never above 50, morale never below 50.",
+    "icon": "👑"
+  },
+  "armchair_general": {
+    "title": "Armchair General",
+    "description": "Complete the game always choosing \"rear\" position — extremely difficult.",
+    "icon": "🪑"
+  },
+  "scholar_of_war": {
+    "title": "Scholar of War",
+    "description": "Unlock every single lesson across all playthroughs.",
+    "icon": "📚"
+  },
+  "immortal": {
+    "title": "Immortal",
+    "description": "Complete 10 full playthroughs.",
+    "icon": "♾️"
+  }
+}
