@@ -1,0 +1,38 @@
+{
+  "narrative": "Wet grass underfoot, solid ground. Bocage country — the hedgerows rise six feet, packed earth and root, every field a box you can't see out of. The briefing maps showed the DZ near Sainte-Marie-du-Mont. Could be anywhere now. No compass, no stars through the overcast. You need to find north.",
+  "narrativeAlt": {
+    "hasCompass": "Wet grass underfoot, solid ground. Bocage country — the hedgerows rise six feet, packed earth and root, every field a box you can't see out of. The briefing maps showed the DZ near Sainte-Marie-du-Mont, but that could be anywhere now. You pull the compass from your leg pocket. The luminous dial settles — north. But north of where?"
+  },
+  "decisions": {
+    "north_compass_terrain": {
+      "text": "Use your compass and match terrain to the briefing maps",
+      "success": "Compass north. A church steeple to the northeast — cross-reference the briefing map you memorized. Sainte-Marie-du-Mont. Two klicks southwest of the DZ. You know where to go.",
+      "partial": "The compass gives you north, but nothing on the ground matches the briefing. Either the map was wrong or you're further from the DZ than you thought. A direction, not a position.",
+      "failure": "The compass gives you north and nothing else. Every hedgerow looks identical in the dark. You have a bearing — you're guessing at everything else."
+    },
+    "north_stars": {
+      "text": "Look for the North Star through gaps in the cloud cover",
+      "success": "A gap in the clouds — the Big Dipper, pointer stars leading to Polaris. You wait for a second gap to confirm. Same answer. You have a bearing.",
+      "partial": "The clouds are thick. You catch a glimpse — maybe Polaris, maybe not. You pick a direction based on your best guess. Seventy percent sure.",
+      "failure": "The clouds won't break. Twenty minutes staring at a gray-black sky. Your neck aches. You're no closer to knowing which way is north."
+    },
+    "north_follow_gunfire": {
+      "text": "Head toward the gunfire — that's where the action is",
+      "success": "You pick the loudest direction and move. Fifteen minutes of hedgerow climbing, then a road sign. Can't read it in the dark, but the road gives you a line of travel.",
+      "partial": "You move toward the shooting but the sound bounces off the hedgerows. Fifteen minutes and you're not sure you've walked straight. Then the gunfire stops.",
+      "failure": "The noise leads you to the edge of a village — German helmets in the firelight. You freeze, back away, circle wide. Fifteen minutes in the wrong direction."
+    },
+    "north_just_walk": {
+      "text": "Pick a direction and start walking — standing still is dying",
+      "success": "You push through one hedgerow, then another, then another. Every field identical. After twenty-five minutes you stumble onto a dirt track. Something to follow.",
+      "partial": "Hedgerow, field, hedgerow, field. Twenty-five minutes and you might have walked in a circle. Your boots are soaked. You're no closer to knowing where you are.",
+      "failure": "Twenty-five minutes blundering through the bocage. You trip a stone wall and land in a cow field. When you get up — German voices, close. You press flat against the hedgerow and don't breathe until they pass."
+    },
+    "north_search_supplies": {
+      "text": "Search the area for supply bundles — parachutes should be visible",
+      "success": "White silk in a tree. You pull the canister down — rifle ammunition, K-rations, two extra bandoliers. The rounds are dry. You load them and keep moving.",
+      "partial": "Thirty minutes searching turns up one equipment chute — mostly clothing and a broken radio. One box of .30 cal at the bottom. Better than nothing.",
+      "failure": "Thirty minutes crawling through wet fields in the dark. Nothing. The supply bundles could be anywhere in a square mile. Time burned, noise made, nothing gained."
+    }
+  }
+}

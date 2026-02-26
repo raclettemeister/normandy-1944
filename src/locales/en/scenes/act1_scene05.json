@@ -1,0 +1,69 @@
+{
+  "narrative": "You spot them before they spot you. Four Germans at a stone bridge over a drainage canal. A Feldwebel hunches over papers spread on the bridge wall, reading by shielded torchlight. One soldier guards a French civilian with bound hands. If those papers reach the German command post, they'll know where every drop zone is. The Feldwebel barks an order — they're getting ready to move.",
+  "narrativeAlt": {
+    "squad": "Henderson crawls up beside you. He studies the bridge for ten seconds. 'Papers,' he whispers. 'That's bad for us if those get through, Captain.' A pause. 'But we've got the mission to think about. Your call.'",
+    "solo": "You're alone. Four Germans. You have a pistol, a knife, and two grenades. The math isn't good."
+  },
+  "decisions": {
+    "patrol_l_ambush": {
+      "text": "Set an L-shaped ambush — two teams, crossfire",
+      "success": "Two elements in position. You wait until the Germans cluster near the Feldwebel, then signal. Converging fire from two angles — ten seconds and it's over. Four dead, zero friendly. You pull the papers from the Feldwebel's body. Patrol routes, unit dispositions. Gold.",
+      "partial": "Ambush fires. Three Germans drop. The fourth runs — Malone chases, fires, drops him thirty meters out. But return fire nicked Doyle's arm. Not serious, but he's bleeding. You get the papers. The French civilian is shaking but alive.",
+      "failure": "Doyle fires early. The Germans scatter before your fire teams converge. A confused firefight in the dark. Two dead, two escaped toward the village. You recover some papers but they'll report contact. Doyle won't stop shaking."
+    },
+    "patrol_linear_ambush": {
+      "text": "Line everyone up and fire from here — on my mark",
+      "success": "Your men line the hedgerow. Signal. A volley rips into the Germans — three drop immediately. The fourth crawls behind the bridge wall and fires back. Henderson flanks and finishes it. You get the papers.",
+      "partial": "The volley drops two. Two others run — one escapes, one is hit fifty meters out. Papers scattered. You find half of them. The escaped German will report contact.",
+      "failure": "Linear fire doesn't cover the far side of the bridge. Three Germans escape. They fire as they run. A round hits the wall next to your head. The Feldwebel grabbed the papers."
+    },
+    "patrol_knife": {
+      "text": "Crawl up and knife the rear sentry, then rush them",
+      "success": "You crawl to within arm's reach. The knife goes in clean — hand over the mouth, blade between the ribs. He sags. The others don't notice. Your men close the distance. A short, vicious fight at close range. It works. Barely.",
+      "partial": "The knife goes in but the German screams. Everything goes loud. Close-range firefight at the bridge. Two dead, one surrendering, one escaped. Your hands are covered in blood. Doyle throws up.",
+      "failure": "Your boot kicks a stone. The sentry turns. You struggle — the knife misses. He screams. The other three open fire. Your men fire back. A chaotic mess. You take a casualty."
+    },
+    "patrol_open_fire": {
+      "text": "Open fire right now — hit them before they move",
+      "success": "You fire. Your men fire. The Germans drop — surprised, caught in the open. But it cost you. A lot of ammunition for a messy result. You grab the papers.",
+      "partial": "Shots everywhere. Two Germans down. Two running. One makes it to the dark. Papers soaked in canal water — half illegible. Ammo burned for a partial result.",
+      "failure": "You fire. They fire back. Everyone shooting into darkness. When it stops, one German is dead, three escaped, and you've used nearly all your ammunition. Papers gone."
+    },
+    "patrol_charge": {
+      "text": "Fix bayonets — we charge them across the open ground",
+      "success": "By some miracle the charge closes the distance before they react. The fight is short and savage. Four Germans dead. You look at your men. Doyle is staring at his bayonet. The violence of it settles on everyone like a weight.",
+      "partial": "Running through open ground. A Schmeisser opens up. Someone goes down. You reach the bridge — hand-to-hand. Ugly. You win. Barely. One of your men is hit.",
+      "failure": "They hear you coming. The Schmeisser tears into your line at twenty meters. Two men go down before you close. The fight at the bridge is a slaughter — theirs and yours. You survive. Some of your men don't."
+    },
+    "patrol_rocks": {
+      "text": "Throw rocks toward the canal to draw them off",
+      "success": "Rocks splash in the canal. One German looks up. The rest don't move — a splash during an invasion means nothing to them. When you finally open fire, you've lost the element of complete surprise. It works, but the rocks added nothing.",
+      "partial": "The rocks hit the bridge. A German investigates. But your flank position isn't ready — you rushed the setup. A sloppy engagement. Two dead, two escaped. Papers partially recovered.",
+      "failure": "The Germans hear the rocks and go to alert. Garrison troops, but not stupid. When you try to flank, they're already in cover. A firefight — messy, costly, loud."
+    },
+    "patrol_animal_sounds": {
+      "text": "Make cow sounds to lure one away from the group",
+      "success": "You make a noise. One German mutters and walks toward the hedgerow, rifle raised. You jump him — a struggle, you put him down. But the noise alerts the others. What started as a ruse turns into a firefight you didn't plan for.",
+      "partial": "Your cow impression is not convincing. The German says something to the Feldwebel. Two men sent to investigate. They find you. Close-range firefight. Messy.",
+      "failure": "You moo. The Feldwebel barks an order. All four Germans fan out toward your position with weapons raised. They're not investigating livestock — they're clearing a suspected ambush position. You've given away your location for nothing."
+    },
+    "patrol_let_pass": {
+      "text": "Let them pass — we can't risk a fight right now",
+      "success": "You watch them leave. The Feldwebel folds the papers into his case. They march the civilian down the road and disappear. No shots fired. Henderson watches them go. 'We'll pay for that later, Captain.'",
+      "partial": "They move out. One German glances your direction — you freeze. He keeps walking. The French civilian looks over his shoulder toward the hedgerow, as if he knows you're there. You let him go too.",
+      "failure": "They leave. You breathe. Five minutes later, a truck engine starts in the distance. They had a vehicle. Those papers are already on the way to the CP. Henderson says nothing. He doesn't have to."
+    },
+    "patrol_solo_steal": {
+      "text": "Crawl through the drainage ditch and steal the map case",
+      "success": "You slide into the drainage canal. Cold water to your waist. The Feldwebel left the map case on the bridge wall while he briefs his men. You reach up. Fingers close on the leather strap. Pull it under and crawl back the way you came. They won't notice for ten minutes.",
+      "partial": "The canal is shallower than you thought. Ripples. The guard looks toward the water — you freeze, half-submerged. An agonizing minute. He looks away. You grab the case but knock it against stone. Shouting. Bullets hit the water around you. You make it to the hedgerow with the case.",
+      "failure": "The canal is too shallow. You can't stay submerged. A German sees movement in the water and fires. You scramble backward, rounds snapping past. No case. Your position is known. You need to move."
+    },
+    "patrol_decoy": {
+      "text": "Send one man as decoy, then hit them from the flank",
+      "success": "Doyle runs along the hedgerow — visible, making noise. The Germans turn. You open fire. Two down before they react. The Feldwebel grabs for the papers — Henderson puts a round through his hand. Papers secured. Doyle makes it back, gasping.",
+      "partial": "Doyle runs. The Germans fire at him — tracers chasing him through the dark. You engage from the flank. Two down. Two escape. Doyle is hit. Round through the calf. 'I'm okay,' he says. He's not okay.",
+      "failure": "Doyle runs. A burst catches him at twenty meters. He goes down hard. You open fire but the Germans are already in cover. A firefight you didn't want, and Doyle isn't moving."
+    }
+  }
+}
