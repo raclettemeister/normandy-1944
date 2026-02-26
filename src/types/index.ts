@@ -130,7 +130,7 @@ export type CommentTrigger =
 
 // ─── Tactical Tiers ────────────────────────────────────────────────
 
-export type TacticalTier = "suicidal" | "reckless" | "mediocre" | "sound" | "excellent";
+export type TacticalTier = "suicidal" | "reckless" | "mediocre" | "sound" | "excellent" | "masterful";
 
 export const TIER_BASE_SCORES: Record<TacticalTier, number> = {
   suicidal: 5,
@@ -138,6 +138,7 @@ export const TIER_BASE_SCORES: Record<TacticalTier, number> = {
   mediocre: 45,
   sound: 70,
   excellent: 90,
+  masterful: 105,
 };
 
 // ─── Outcome Engine ────────────────────────────────────────────────

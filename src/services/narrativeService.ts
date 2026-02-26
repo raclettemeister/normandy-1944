@@ -158,7 +158,7 @@ export class NarrativeService {
       const parsed = JSON.parse(text) as ClassificationResult;
       if (!parsed.matchedDecision || !parsed.tier) return null;
 
-      const validTiers = ["suicidal", "reckless", "mediocre", "sound", "excellent"];
+      const validTiers = ["suicidal", "reckless", "mediocre", "sound", "excellent", "masterful"];
       if (!validTiers.includes(parsed.tier)) return null;
 
       const validDecision = input.decisions.some(d => d.id === parsed.matchedDecision);
