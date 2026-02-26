@@ -1,0 +1,8 @@
+{
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "install": "npm install && npx playwright install chromium",
+  "start": "npm install && npx playwright install chromium",
+  "agentCanUpdateSnapshot": true
+}
