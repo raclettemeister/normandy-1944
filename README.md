@@ -22,28 +22,63 @@ Your mission: rally your men, navigate to the objective, and survive.
 
 Act 1, Scenes 1-6: The Drop. Landing, orientation, first contact, rallying your platoon sergeant, a German patrol encounter, and a farmhouse clearing.
 
-## Running Locally
+## Quick Start
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open `http://localhost:5173/` in your browser.
+Game runs at http://localhost:5173/normandy-1944/
 
-## Building
+## Run Tests
+
+```bash
+npm test
+```
+
+216 tests across 10 test files.
+
+## Production Build
 
 ```bash
 npm run build
 ```
 
-Output goes to `dist/`.
+Output in `dist/`. Deployed to GitHub Pages automatically on push to `main`.
 
 ## Tech Stack
 
-- React 19 + TypeScript
-- Vite
-- Zero external game dependencies — pure state machine driven by JSON scenario data
+- Frontend: React 19, TypeScript 5.9, Vite 7
+- Testing: Vitest 4
+- Backend: Cloudflare Workers (LLM proxy, access code validation)
+- Deployment: GitHub Pages (frontend), Cloudflare Workers (backend)
+
+## Architecture
+
+```
+src/
+├── types/          — TypeScript interfaces (GameState, Scenario, Soldier, etc.)
+├── engine/         — Game logic (outcome engine, state management, roster, battle orders)
+├── components/     — React UI (GameScreen, NarrativePanel, DecisionPanel, etc.)
+├── content/        — Game content (scenarios, relationships, wiki entries)
+├── services/       — LLM integration (narrative service, DM layer, prompt builder)
+└── styles/         — CSS
+
+tests/              — Vitest test suites (engine, content validation, services, integration)
+worker/             — Cloudflare Worker (Anthropic API proxy + access code validation)
+docs/               — Game spec, design docs, implementation plans, scene writing guides
+```
+
+## Documentation
+
+- [Game Specification](docs/GAME_SPEC.md) — Complete game design
+- [Design Documents](docs/plans/) — Architecture decisions, implementation plans
+- [Scene Writing Guides](docs/scenes/) — Per-scene narrative and decision guides
+
+## AI Narration
+
+The game supports two modes: offline (default) and AI mode with an access code. In offline mode, pre-authored narrative and outcomes are used. AI mode uses an LLM to generate dynamic narrative and decisions; it degrades gracefully if the service is unavailable or the access code is invalid.
 
 ## License
 
