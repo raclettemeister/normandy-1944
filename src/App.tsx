@@ -1,3 +1,4 @@
+import './locales/i18n';
 import { useState, useCallback, useMemo } from "react";
 import type { GameState, Achievement, PlaythroughEvent, Difficulty } from "./types/index.ts";
 import MainMenu from "./components/MainMenu";

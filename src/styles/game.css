@@ -31,6 +31,38 @@
   flex-direction: column;
 }
 
+/* ─── Language Selector ──────────────────────────────────────────── */
+
+.language-selector {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.language-selector__btn {
+  background: transparent;
+  border: 1px solid var(--text-muted);
+  color: var(--text-muted);
+  padding: 0.3rem 1rem;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+}
+
+.language-selector__btn:hover {
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+}
+
+.language-selector__btn--active {
+  color: var(--text-primary);
+  border-color: var(--accent-gold);
+  background: rgba(255, 255, 255, 0.05);
+}
+
 /* ─── Main Menu ──────────────────────────────────────────────────── */
 
 .main-menu {

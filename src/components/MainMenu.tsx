@@ -2,6 +2,7 @@ import { loadAchievements } from "../engine/achievementTracker.ts";
 import { loadMeta, resetMeta } from "../engine/metaProgress.ts";
 import type { NarrativeMode, Difficulty } from "../types/index.ts";
 import AccessCodeInput from "./AccessCodeInput";
+import LanguageSelector from "./LanguageSelector";
 
 interface MainMenuProps {
   onStartGame: (difficulty: Difficulty) => void;
@@ -33,6 +34,7 @@ export default function MainMenu({
 
   return (
     <div className="main-menu" data-testid="main-menu">
+      <LanguageSelector />
       <h1 className="main-menu__title">Normandy 1944</h1>
       <p className="main-menu__subtitle">
         Night of June 5-6, 1944. You command 2nd Platoon, Easy Company, 506th
