@@ -32,6 +32,10 @@ export interface GameState {
 
   phase: GamePhase;
   act: 1 | 2 | 3;
+
+  difficulty: Difficulty;
+  revealTokensRemaining: number;
+  currentPhase: TacticalPhase;
 }
 
 // ─── Platoon Capabilities ──────────────────────────────────────────

@@ -506,3 +506,20 @@ describe("promoteToSecondInCommand", () => {
     expect(result).toBeNull();
   });
 });
+
+describe("createInitialState — difficulty fields", () => {
+  it("includes difficulty defaulting to easy", () => {
+    const state = createInitialState();
+    expect(state.difficulty).toBe("easy");
+  });
+
+  it("includes revealTokensRemaining defaulting to 0", () => {
+    const state = createInitialState();
+    expect(state.revealTokensRemaining).toBe(0);
+  });
+
+  it("includes currentPhase defaulting to situation", () => {
+    const state = createInitialState();
+    expect(state.currentPhase).toBe("situation");
+  });
+});

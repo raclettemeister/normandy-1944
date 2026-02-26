@@ -7,6 +7,8 @@ import type {
   AmmoState,
   Milestone,
   EnemyReadiness,
+  Difficulty,
+  TacticalPhase,
 } from "../types/index.ts";
 import { loadLessons } from "./lessonTracker.ts";
 
@@ -154,6 +156,9 @@ export function createInitialState(): GameState {
     currentScene: "act1_landing",
     phase: "solo",
     act: 1,
+    difficulty: "easy" as Difficulty,
+    revealTokensRemaining: 0,
+    currentPhase: "situation" as TacticalPhase,
   };
 }
 
