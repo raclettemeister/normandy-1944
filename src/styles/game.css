@@ -563,7 +563,56 @@
 .roster-soldier__status--KIA { color: var(--danger-light); }
 .roster-soldier__status--missing { color: var(--text-muted); }
 
-/* ─── (Lesson Journal removed — merged into Wiki) ────────────────── */
+/* ─── Roster Notes ──────────────────────────────────────────────── */
+
+.roster-soldier-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.roster-note-toggle {
+  font-size: 0.8rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 0.3rem;
+  transition: color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.roster-note-toggle:hover {
+  color: var(--accent-gold);
+}
+
+.roster-note-toggle--active {
+  color: var(--accent-gold-dim);
+}
+
+.roster-note-input {
+  width: 100%;
+  min-height: 3rem;
+  font-family: var(--font-narrative);
+  font-size: 0.85rem;
+  font-style: italic;
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-top: none;
+  padding: 0.5rem 0.6rem;
+  resize: vertical;
+  box-sizing: border-box;
+  margin-bottom: 0.25rem;
+}
+
+.roster-note-input:focus {
+  outline: none;
+  border-color: var(--accent-gold-dim);
+}
+
+.roster-note-input::placeholder {
+  color: var(--text-muted);
+}
 
 /* ─── Death Report ───────────────────────────────────────────────── */
 

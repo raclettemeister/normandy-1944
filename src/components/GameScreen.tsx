@@ -27,7 +27,7 @@ import {
   processSceneTransition,
 } from "../engine/outcomeEngine.ts";
 import { deriveBalanceEnvelope } from "../engine/balanceEnvelope.ts";
-import { unlockWikiEntry, migrateFromLegacy, loadMeta } from "../engine/metaProgress.ts";
+import { unlockWikiEntry, migrateFromLegacy, loadMeta, setRosterNote } from "../engine/metaProgress.ts";
 import { checkAchievements, unlockAchievement } from "../engine/achievementTracker.ts";
 import { getActiveRelationships } from "../content/relationships.ts";
 import { NarrativeService } from "../services/narrativeService.ts";
@@ -122,8 +122,8 @@ export default function GameScreen({
       menRallied: state.roster.length,
       maxMen: Math.max(tracker.maxMen, state.men),
       minMorale: Math.min(tracker.minMorale, state.morale),
-      maxReadiness: Math.max(tracker.maxReadiness, state.enemyReadiness),
-      allMilestonesOnTime: state.milestones.every(m => m.status !== "failed"),
+      maxReadiness: Math.max(tracker.maxReadiness, state.readiness),
+      allMilestonesOnTime: state.milestones.every(m => m.status !== "missed"),
       zeroKIA: kiaCount === 0,
       zeroCasualties: kiaCount === 0 && woundedCount === 0,
     };
@@ -138,7 +138,7 @@ export default function GameScreen({
     t.positions.push(pos);
     t.maxMen = Math.max(t.maxMen, state.men);
     t.minMorale = Math.min(t.minMorale, state.morale);
-    t.maxReadiness = Math.max(t.maxReadiness, state.enemyReadiness);
+    t.maxReadiness = Math.max(t.maxReadiness, state.readiness);
   }, []);
 
   const scene = getScene(gameState.currentScene);
@@ -742,6 +742,10 @@ export default function GameScreen({
       {overlay === "roster" && (
         <RosterPanel
           roster={gameState.roster}
+          rosterNotes={loadMeta().rosterNotes}
+          onNoteChange={(soldierId, note) => {
+            setRosterNote(soldierId, note);
+          }}
           onClose={() => setOverlay(null)}
         />
       )}
