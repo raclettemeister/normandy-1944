@@ -149,7 +149,7 @@ export const scene04_the_sergeant: Scenario = {
       outcome: {
         success: {
           text: "Le caillou claque de l'autre cote du mur. Les voix se taisent. Puis : 'Qui est la? Flash.' Henderson. Vous repondez 'Thunder.' Ca marche — a juste pris plus longtemps que necessaire.",
-          context: "Caillou lance. A cause une alerte mais Henderson a defie verbalement. Rassemblement fait avec retard supplementaire.",
+          context: "Caillou lance. Provoque une alerte, mais Henderson force un defi verbal. Rassemblement etabli avec retard.",
           timeCost: 30,
           menLost: 0,
           ammoSpent: 0,
@@ -158,7 +158,7 @@ export const scene04_the_sergeant: Scenario = {
         },
         partial: {
           text: "Le caillou atterrit. Silence de mort. Armes en preparation. Deux longues minutes avant un chuchotement : 'Si vous etes Americain, utilisez votre satane clicker.' Vous le faites. Henderson : 'Ca aurait ete bien de commencer par la, mon capitaine.'",
-          context: "Caillou a cause un face-a-face arme de deux minutes. Du utiliser le clicker de toute facon. Rassemblement fait mais temps perdu, confiance ebranlee.",
+          context: "Caillou lance, face-a-face arme pendant deux minutes. Oblige d'utiliser le clicker de toute facon. Rassemblement etabli, mais temps perdu et confiance ebranlee.",
           timeCost: 30,
           menLost: 0,
           ammoSpent: 0,

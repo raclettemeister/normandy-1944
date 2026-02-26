@@ -7,9 +7,9 @@ export const scene03_first_contact: Scenario = {
   timeCost: 15,
   combatScene: false,
 
-  sceneContext: "Trouee dans la haie. Silhouette non identifiee a vingt metres, plus sombre que l'obscurite. Pas d'uniforme ni d'arme visibles. Clicker disponible. Procedure de reconnaissance : un clic defi, deux clics reponse.",
+  sceneContext: "Trouee dans la haie. Silhouette non identifiee a vingt metres, plus noire que la nuit. Pas d'uniforme ni d'arme visibles. Clicker disponible. Procedure de reconnaissance : un clic defi, deux clics reponse.",
 
-  narrative: "Des pas devant — vingt metres. Une silhouette dans la trouee de la haie, plus sombre que l'obscurite. Pas d'uniforme ni d'arme visibles. Une main sur votre pistolet, l'autre sur le clicker dans la poche de poitrine. Il y avait une procedure de reconnaissance dans le briefing. Vous vous en souvenez.",
+  narrative: "Des pas devant — vingt metres. Une silhouette dans la trouee de la haie, plus noire que la nuit. Pas d'uniforme ni d'arme visibles. Une main sur votre pistolet, l'autre sur le clicker dans la poche de poitrine. Une procedure de reconnaissance etait prevue au briefing. Vous vous en souvenez.",
   decisions: [
     {
       id: "contact_click_once",
@@ -17,7 +17,7 @@ export const scene03_first_contact: Scenario = {
       tier: "excellent",
       outcome: {
         success: {
-          text: "Un clic-clac. Silence — puis clic-clac, clic-clac depuis l'obscurite. La silhouette s'avance : un soldat de la 502e, tremblant mais arme, tombe a des kilometres de sa zone de saut. 'Mon Dieu, content de voir quelqu'un,' chuchote-t-il.",
+          text: "Un clic-clac. Silence — puis clic-clac, clic-clac depuis l'obscurite. La silhouette s'avance : un soldat de la 502e, tremblant mais arme, tombe a des kilometres de sa zone de saut. 'Bon Dieu, content de voir quelqu'un,' chuchote-t-il.",
           context: "Defi clicker correct. Reponse appropriee recue. Gagne un soldat egaré de la 502e, arme.",
           menLost: 0, menGained: 1,
           ammoSpent: 0,
@@ -25,8 +25,8 @@ export const scene03_first_contact: Scenario = {
           readinessChange: 0
         },
         partial: {
-          text: "Un clic-clac. Une longue pause — puis deux clics, hesitants, maladroits. Un Americain de la 501e, tres secoue, separe de son stick. Il tient a peine son clicker, mais c'est un corps de plus.",
-          context: "Defi correct, reponse hesitante. Gagne un parachutiste secoue de la 501e. Faible preparation mais main-d'oeuvre supplementaire.",
+          text: "Un clic-clac. Une longue pause — puis deux clics, hesitants, maladroits. Un Americain de la 501e, tres secoue, separe de son stick. Il tient a peine son clicker, mais c'est un fusil de plus.",
+          context: "Defi correct, reponse hesitante. Rallie un parachutiste secoue de la 501e. Faible preparation, mais effectif supplementaire.",
           menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: 3,
@@ -151,7 +151,7 @@ export const scene03_first_contact: Scenario = {
       outcome: {
         success: {
           text: "'Thunder.' La silhouette penche la tete. Mauvais mot — c'est la reponse, pas le defi. Il chuchote : 'Flash?' Vous dites 'Thunder' encore. Il s'approche en secouant la tete. 'Tu t'es trompe de sens, mon pote.'",
-          context: "Donne la reponse au lieu du defi. Confusion resolue. Gagne un parachutiste mais a l'air incompetent.",
+          context: "Donne la reponse au lieu du defi. Confusion resolue. Rallie un parachutiste, mais vous passez pour un amateur.",
           menLost: 0, menGained: 1,
           ammoSpent: 0,
           moraleChange: -1,

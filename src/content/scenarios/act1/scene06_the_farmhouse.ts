@@ -147,7 +147,7 @@ export const scene06_the_farmhouse: Scenario = {
         },
         partial: {
           text: "Vous defoncez la porte. Le BAR tire — la balle frappe le mur a un pouce de votre tete, poussiere de platre dans les yeux. 'FLASH! FLASH!' vous hurlez. Kowalski s'arrete. Rivera est par terre, mains sur les oreilles, en pleurs. Tout le monde vivant, mais quelque chose dans la piece est casse.",
-          context: "Entre en force, BAR a tire. Quasi-accident sur le capitaine — balle dans le mur. Rivera s'effondre. Rassemblement fait mais escouade psychologiquement endommagee.",
+          context: "Entree en force, BAR ouvre le feu. Quasi-accident sur le capitaine — balle dans le mur. Rivera craque. Rassemblement etabli, mais escouade psychologiquement atteinte.",
           menLost: 0,
           ammoSpent: -3,
           moraleChange: -5,

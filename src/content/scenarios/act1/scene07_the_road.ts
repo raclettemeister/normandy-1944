@@ -82,7 +82,7 @@ export const scene07_the_road: Scenario = {
         },
         failure: {
           text: "Vous vous perdez dans le bocage. Les haies se ressemblent toutes dans le noir. Quarante minutes gaspillees avant de retrouver la route et devoir traverser l'intersection exposee de toute facon. Le point de rassemblement est la, mais vous avez brule du temps que vous n'aviez pas.",
-          context: "Perdu dans le bocage. 40 minutes gaspillees. Du traverser l'intersection exposee de toute facon. Point de rassemblement atteint mais temps significatif brule.",
+          context: "Perdu dans le bocage. 40 minutes gaspillees. Oblige de traverser l'intersection exposee de toute facon. Point de rassemblement atteint, mais temps critique perdu.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 0,
@@ -106,7 +106,7 @@ export const scene07_the_road: Scenario = {
           readinessChange: 3
         },
         partial: {
-          text: "A mi-chemin de l'intersection, des phares apparaissent sur la route est — un vehicule allemand, qui roule vite. Vous vous plaquez dans le fosse. Il passe sans s'arreter, mais vous etes face contre la boue normande le coeur dans la gorge. Le point de rassemblement est proche. Vous vous precipitez sur les cent derniers metres.",
+          text: "A mi-chemin de l'intersection, des phares apparaissent sur la route est — un vehicule allemand lance a vive allure. Vous vous plaquez dans le fosse. Il passe sans s'arreter, mais vous etes face contre la boue normande, le coeur dans la gorge. Le point de rassemblement est proche. Vous avalez les cent derniers metres en courant.",
           context: "Traverse l'intersection. Vehicule allemand apparu a mi-traversee — cache dans le fosse. Vehicule passe. Precipite les 100 derniers metres jusqu'au point de rassemblement.",
           menLost: 0,
           ammoSpent: 0,

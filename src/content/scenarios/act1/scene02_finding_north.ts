@@ -66,7 +66,7 @@ export const scene02_finding_north: Scenario = {
           readinessChange: 0,
         },
         partial: {
-          text: "Les nuages sont epais. Vous apercevez quelque chose — peut-etre Polaris, peut-etre pas. Vous choisissez une direction selon votre meilleure estimation. Soixante-dix pour cent sur.",
+          text: "Les nuages sont epais. Vous apercevez quelque chose — peut-etre Polaris, peut-etre pas. Vous choisissez une direction selon votre meilleure estimation. Vous n'etes sur qu'a soixante-dix pour cent.",
           context: "Breve trouee. Observation possible de Polaris, faible confiance. Cap etabli au mieux.",
           menLost: 0,
           ammoSpent: 0,
@@ -108,7 +108,7 @@ export const scene02_finding_north: Scenario = {
         },
         failure: {
           text: "Le bruit vous mene au bord d'un village — casques allemands dans la lueur du feu. Vous vous figez, reculez, contournez large. Quinze minutes dans la mauvaise direction.",
-          context: "Suivi les coups de feu jusqu'au bord d'un village occupe par les Allemands. Du retraiter et contourner. 15 minutes perdues mauvaise direction.",
+          context: "Poursuite des coups de feu jusqu'au bord d'un village occupe par les Allemands. Repli obligatoire puis contournement. 15 minutes perdues dans la mauvaise direction.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -6,
@@ -141,7 +141,7 @@ export const scene02_finding_north: Scenario = {
         },
         failure: {
           text: "Vingt-cinq minutes a errer dans le bocage. Vous trebuchez sur un mur de pierre et atterrissez dans un pre a vaches. Quand vous vous relevez — des voix allemandes, proches. Vous vous plaquez contre la haie et ne respirez plus jusqu'a ce qu'ils passent.",
-          context: "25 minutes a errer dans le bocage. Presque tombe sur une patrouille allemande. Du se cacher. Temps et energie gaspilles.",
+          context: "25 minutes a errer dans le bocage. Contact presque etabli avec une patrouille allemande. Oblige de se cacher. Temps et energie gaspilles.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -8,

@@ -41,7 +41,7 @@ export const scene01_landing: Scenario = {
         },
         failure: {
           text: "Vous tatonnez avec votre harnais. Quelque chose tombe du filet — un petit plouf, puis plus rien. Vos doigts cherchent dans l'eau mais c'est perdu. Le froid gagne.",
-          context: "Verification ratee dans l'eau. Perdu un piece d'equipement. Froid croissant, dexterite en baisse.",
+          context: "Verification ratee dans l'eau. Perte d'une piece d'equipement. Froid croissant, dexterite en baisse.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -2,
@@ -90,7 +90,7 @@ export const scene01_landing: Scenario = {
       tier: "reckless",
       outcome: {
         success: {
-          text: "Vous poussez a travers l'eau vers la berge la plus proche. La boue accroche vos bottes. Vous vous hissez sur la terre ferme, trempe et haletant — mais vous ne savez pas dans quelle direction vous faites face.",
+          text: "Vous poussez vers la berge la plus proche. La boue accroche vos bottes. Vous vous hissez sur la terre ferme, trempe, a bout de souffle — sans savoir dans quelle direction vous faites face.",
           context: "Precipite vers la terre ferme. Atteint la berge mais completement desoriente. Aucune evaluation faite.",
           menLost: 0,
           ammoSpent: 0,

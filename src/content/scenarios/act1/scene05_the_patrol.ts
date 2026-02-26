@@ -166,7 +166,7 @@ export const scene05_the_patrol: Scenario = {
             "Vous rampez a portee de bras. Le couteau entre proprement — main sur la bouche, lame entre les cotes. " +
             "Il s'affaisse. Les autres ne remarquent pas. Vos hommes ferment la distance. " +
             "Un combat court et vicieux a courte portee. Ca marche. De justesse.",
-          context: "Meurtre au couteau sur la sentinelle — silencieux. Combat a courte portee a elimine les trois restants. Papiers recuperes. A peine propre.",
+          context: "Elimination au couteau sur la sentinelle — silencieuse. Combat a courte portee contre les trois restants. Papiers recuperes. Victoire sale.",
           menLost: 0,
           ammoSpent: -3,
           moraleChange: 2,
