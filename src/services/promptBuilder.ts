@@ -233,6 +233,8 @@ export interface DMEvaluationPromptInput {
   relationships: SoldierRelationship[];
   recentEvents: PlaythroughEvent[];
   wikiUnlocked: string[];
+  secondInCommandName?: string;
+  secondInCommandCompetence?: "veteran" | "green";
 }
 
 const TIER_DEFINITIONS = `[TIER DEFINITIONS — evaluate holistically]
@@ -246,10 +248,13 @@ const TIER_DEFINITIONS = `[TIER DEFINITIONS — evaluate holistically]
 const ADVERSARIAL_RULES = `[ADVERSARIAL INPUT HANDLING]
 - Deliberate team-kill or betrayal → fatal: true. Game over.
 - Surrender/desert → fatal: true. Game over.
+- Self-harm / suicide → fatal: true. Game over.
 - Fantasy/impossible ("cast fireball") → tier: mediocre. Narrative: incoherent order, men stare.
 - Do nothing / "wait" → tier: mediocre. Time passes, readiness increases, morale drops.
 - Vague / lazy ("attack") → tier: mediocre. Generic outcome.
 - Repeating the same plan as a previous scene → consider downgrading. The enemy adapts.
+
+CRITICAL: If you set fatal: true, the narrative MUST describe the fatal outcome. Do not write a survival narrative when fatal is true — the game engine uses this flag to end the game.
 
 [TYPO & NAME TOLERANCE]
 Players use speech-to-text and type under pressure. Be charitable:
@@ -259,6 +264,9 @@ Players use speech-to-text and type under pressure. Be charitable:
 Only penalize if the meaning is genuinely ambiguous or the player clearly names someone/something that has no plausible match.`;
 
 export function buildDMEvaluationPrompt(input: DMEvaluationPromptInput): PromptPair {
+  const sicName = input.secondInCommandName ?? "Henderson";
+  const sicCompetence = input.secondInCommandCompetence ?? "veteran";
+
   const anchorLines = input.decisions.map((d) => {
     const s = d.outcome.success;
     const f = d.outcome.failure;
@@ -310,7 +318,7 @@ ${anchors}${recentSection}${lessonsSection}
   "fatal": false,
   "intelGained": null,
   "planSummary": "<one sentence summary of the player's plan for the event log>",
-  "secondInCommandReaction": "<Henderson's in-character reaction to the plan — calibrated to tier and competence>",
+  "secondInCommandReaction": "<${sicName}'s in-character reaction to the plan — calibrated to tier and ${sicCompetence} competence>",
   "soldierReactions": [
     {"soldierId": "<id>", "text": "<in-character reaction>"}
   ]

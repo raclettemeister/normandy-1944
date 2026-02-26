@@ -442,6 +442,11 @@ export default function GameScreen({
 
       const dmLayer = narrativeService.getDMLayer();
       if (!dmLayer) {
+        if (difficulty === "hardcore") {
+          setFallbackMessage("Comms down, Captain. Try again.");
+          setProcessing(false);
+          return;
+        }
         setFallbackMessage("Fall back on training, Captain.");
         setForcedEasyMode(true);
         setCurrentPhase("plan");
@@ -464,9 +469,16 @@ export default function GameScreen({
         relationships,
         recentEvents,
         wikiUnlocked: gameState.wikiUnlocked,
+        secondInCommandName: gameState.secondInCommand?.soldier.name,
+        secondInCommandCompetence: gameState.secondInCommand?.competence,
       });
 
       if (!evaluation) {
+        if (difficulty === "hardcore") {
+          setFallbackMessage("Comms down, Captain. Try again.");
+          setProcessing(false);
+          return;
+        }
         setFallbackMessage("Fall back on training, Captain.");
         setForcedEasyMode(true);
         setProcessing(false);
@@ -487,7 +499,7 @@ export default function GameScreen({
       setCurrentPhase("briefing");
       setProcessing(false);
     },
-    [scene, gameState, decisions, narrativeService]
+    [scene, gameState, decisions, narrativeService, difficulty]
   );
 
   const handleRevealTokenUsed = useCallback(() => {
@@ -620,7 +632,18 @@ export default function GameScreen({
       return;
     }
 
-    setOutcomeText(dmEvaluation.narrative);
+    const fullNarrative = dmEvaluation.narrative;
+    setIsStreaming(true);
+    setOutcomeText("");
+    let charIndex = 0;
+    const streamInterval = setInterval(() => {
+      charIndex = Math.min(charIndex + 3, fullNarrative.length);
+      setOutcomeText(fullNarrative.slice(0, charIndex));
+      if (charIndex >= fullNarrative.length) {
+        clearInterval(streamInterval);
+        setIsStreaming(false);
+      }
+    }, 16);
 
     const newState = {
       ...result.state,
@@ -830,6 +853,8 @@ export default function GameScreen({
                 <BriefingPhase
                   playerPlanText={lastPlayerText}
                   secondInCommandReaction={dmEvaluation.secondInCommandReaction}
+                  secondInCommandName={gameState.secondInCommand?.soldier.name ?? "Henderson"}
+                  dmReasoning={dmEvaluation.reasoning}
                   soldierReactions={dmEvaluation.soldierReactions}
                   roster={gameState.roster.filter((s) => s.status === "active")}
                   hasSecondInCommand={gameState.secondInCommand !== null}

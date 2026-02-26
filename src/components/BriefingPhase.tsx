@@ -3,6 +3,8 @@ import type { SoldierReaction, Soldier } from "../types/index.ts";
 interface BriefingPhaseProps {
   playerPlanText: string;
   secondInCommandReaction: string;
+  secondInCommandName: string;
+  dmReasoning?: string;
   soldierReactions: SoldierReaction[];
   roster: Soldier[];
   hasSecondInCommand: boolean;
@@ -19,6 +21,8 @@ function getSoldierName(roster: Soldier[], soldierId: string): string {
 export default function BriefingPhase({
   playerPlanText,
   secondInCommandReaction,
+  secondInCommandName,
+  dmReasoning,
   soldierReactions,
   roster,
   hasSecondInCommand,
@@ -28,6 +32,7 @@ export default function BriefingPhase({
 }: BriefingPhaseProps) {
   const hasSoldiers = roster.length > 0;
   const hasReactions = (hasSecondInCommand && secondInCommandReaction) || soldierReactions.length > 0;
+  const showSoloAssessment = !hasSoldiers && dmReasoning;
 
   return (
     <div className="briefing-phase" data-testid="briefing-phase">
@@ -46,7 +51,7 @@ export default function BriefingPhase({
         <div className="briefing-phase__reactions">
           {hasSecondInCommand && secondInCommandReaction && (
             <div className="briefing-reaction briefing-reaction--2ic">
-              <span className="briefing-reaction__speaker">Henderson:</span>
+              <span className="briefing-reaction__speaker">{secondInCommandName}:</span>
               <span className="briefing-reaction__text">{secondInCommandReaction}</span>
             </div>
           )}
@@ -59,6 +64,13 @@ export default function BriefingPhase({
               <span className="briefing-reaction__text">{reaction.text}</span>
             </div>
           ))}
+        </div>
+      )}
+
+      {showSoloAssessment && (
+        <div className="briefing-phase__solo-assessment">
+          <span className="briefing-reaction__speaker">Your instinct:</span>
+          <span className="briefing-reaction__text">{dmReasoning}</span>
         </div>
       )}
 

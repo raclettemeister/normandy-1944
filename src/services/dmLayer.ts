@@ -26,6 +26,8 @@ export interface DMEvaluateInput {
   relationships: SoldierRelationship[];
   recentEvents: PlaythroughEvent[];
   wikiUnlocked: string[];
+  secondInCommandName?: string;
+  secondInCommandCompetence?: "veteran" | "green";
 }
 
 export class DMLayer {
@@ -50,6 +52,8 @@ export class DMLayer {
         relationships: input.relationships,
         recentEvents: input.recentEvents,
         wikiUnlocked: input.wikiUnlocked,
+        secondInCommandName: input.secondInCommandName,
+        secondInCommandCompetence: input.secondInCommandCompetence,
       });
 
       const raw = await this.callLLM(prompt.system, prompt.userMessage, 800);
