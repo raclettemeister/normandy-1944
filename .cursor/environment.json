@@ -1,0 +1,5 @@
+{
+  "install": "npm install && npx playwright install chromium",
+  "update": "npm install && npx playwright install chromium",
+  "start": "npm install && npx playwright install chromium"
+}
