@@ -21,6 +21,7 @@ interface PlanPhaseProps {
   onCaptainPositionChange: (pos: CaptainPosition) => void;
   disabled: boolean;
   loading: boolean;
+  sceneId: string;
 }
 
 export default function PlanPhase({
@@ -37,6 +38,7 @@ export default function PlanPhase({
   onCaptainPositionChange,
   disabled,
   loading,
+  sceneId,
 }: PlanPhaseProps) {
   const [decisionsRevealed, setDecisionsRevealed] = useState(false);
 
@@ -108,6 +110,7 @@ export default function PlanPhase({
           captainPosition={captainPosition}
           onCaptainPositionChange={onCaptainPositionChange}
           disabled={disabled}
+          sceneId={sceneId}
         />
       )}
     </div>

@@ -10,6 +10,7 @@ interface DecisionPanelProps {
   captainPosition: CaptainPosition;
   onCaptainPositionChange: (pos: CaptainPosition) => void;
   disabled: boolean;
+  sceneId: string;
 }
 
 const POSITIONS: CaptainPosition[] = ["front", "middle", "rear"];
@@ -36,8 +37,10 @@ export default function DecisionPanel({
   captainPosition,
   onCaptainPositionChange,
   disabled,
+  sceneId,
 }: DecisionPanelProps) {
   const { t } = useTranslation("ui");
+  const { t: tScenes } = useTranslation("scenes");
   const shuffledDecisions = useMemo(() => {
     if (decisions.length === 0) return decisions;
     const seed = decisions.map(d => d.id).join(",");
@@ -84,7 +87,7 @@ export default function DecisionPanel({
             onClick={() => onDecision(d)}
             disabled={disabled}
           >
-            {d.text}
+            {tScenes(`${sceneId}.decisions.${d.id}.text`, { defaultValue: d.text })}
           </button>
         ))}
       </div>

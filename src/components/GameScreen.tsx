@@ -78,6 +78,7 @@ export default function GameScreen({
   difficulty,
 }: GameScreenProps) {
   const { t } = useTranslation("ui");
+  const { t: tScenes } = useTranslation("scenes");
   const [gameState, setGameState] = useState<GameState>(() =>
     createInitialStateWithDifficulty(difficulty)
   );
@@ -662,7 +663,26 @@ export default function GameScreen({
     setProcessing(false);
   }, [scene, dmEvaluation, gameState, decisions, captainPosition, onGameOver, onVictory, narrativeService, trackDecision, getNewAchievements]);
 
-  const narrative = sceneNarrative ?? scene?.narrative ?? "";
+  const localizedNarrative = (() => {
+    if (!scene) return "";
+    const sceneId = gameState.currentScene;
+    if (scene.narrativeAlt) {
+      for (const altKey of Object.keys(scene.narrativeAlt)) {
+        const conditionMet =
+          gameState.wikiUnlocked.includes(altKey) ||
+          (altKey === "hasCompass" && gameState.wikiUnlocked.includes("hasCompass")) ||
+          (altKey === "hasSecondInCommand" && gameState.secondInCommand !== null) ||
+          (altKey === "solo" && gameState.secondInCommand === null) ||
+          (altKey === "squad" && gameState.phase !== "solo") ||
+          (altKey === "low_morale" && gameState.morale < 30);
+        if (conditionMet) {
+          return tScenes(`${sceneId}.narrativeAlt.${altKey}`, { defaultValue: scene.narrativeAlt[altKey] });
+        }
+      }
+    }
+    return tScenes(`${sceneId}.narrative`, { defaultValue: scene.narrative });
+  })();
+  const narrative = sceneNarrative ?? localizedNarrative;
 
   if (!scene) {
     return (
@@ -801,6 +821,7 @@ export default function GameScreen({
                     onCaptainPositionChange={setCaptainPosition}
                     disabled={processing}
                     loading={processing}
+                    sceneId={gameState.currentScene}
                   />
                 </>
               )}
