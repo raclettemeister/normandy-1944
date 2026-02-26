@@ -14,7 +14,6 @@ function moraleClass(morale: number): string {
 
 export default function StatusPanel({ state }: StatusPanelProps) {
   const { t } = useTranslation("game");
-  const { t: tUi } = useTranslation("ui");
   const isSolo = state.phase === "solo";
   const alertStatus = getAlertStatus(state.readiness);
 
