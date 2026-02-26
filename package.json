@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
-    "i18n:status": "npx tsx scripts/i18n-status.ts"
+    "i18n:status": "npx tsx scripts/i18n-status.ts",
+    "i18n:translate": "npx tsx scripts/translate-draft.ts"
   },
   "dependencies": {
     "i18next": "^25.8.13",
