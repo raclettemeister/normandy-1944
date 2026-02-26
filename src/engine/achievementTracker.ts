@@ -214,7 +214,7 @@ function evaluateCondition(
       );
 
     case "all_lessons_unlocked":
-      return history.lessonsUnlocked.length >= 30;
+      return history.wikiUnlocked.length >= 30;
 
     case "men_count":
       return condition.comparison === "gte"

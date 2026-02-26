@@ -53,7 +53,7 @@ function isDecisionVisible(decision: Decision, state: GameState): boolean {
   const cond = decision.visibleIf;
   if (!cond) return true;
 
-  if (cond.hasLesson && !state.lessonsUnlocked.includes(cond.hasLesson)) {
+  if (cond.hasLesson && !state.wikiUnlocked.includes(cond.hasLesson)) {
     return false;
   }
 

@@ -151,7 +151,7 @@ export function createInitialState(): GameState {
     roster: [],
     secondInCommand: null,
     milestones: createDefaultMilestones(),
-    lessonsUnlocked: loadMeta().unlockedWikiEntries,
+    wikiUnlocked: loadMeta().unlockedWikiEntries,
     scenesVisited: [],
     currentScene: "act1_landing",
     phase: "solo",

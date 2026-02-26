@@ -89,7 +89,8 @@ export class NarrativeService {
 
       const text = await this.callLLM(prompt.system, prompt.userMessage, 300, input.onChunk);
       return text || input.outcomeText;
-    } catch {
+    } catch (e) {
+      console.warn("generateOutcomeNarrative failed, using fallback:", e);
       return input.outcomeText;
     }
   }
@@ -115,7 +116,8 @@ export class NarrativeService {
       });
       const text = await this.callLLM(prompt.system, prompt.userMessage, 300, onChunk);
       return text || fallbackText;
-    } catch {
+    } catch (e) {
+      console.warn("generateSceneNarrative failed, using fallback:", e);
       return fallbackText;
     }
   }
@@ -144,7 +146,8 @@ export class NarrativeService {
       });
       const text = await this.callLLM(prompt.system, prompt.userMessage, 300);
       return text || fallbackText;
-    } catch {
+    } catch (e) {
+      console.warn("generateRallyNarrative failed, using fallback:", e);
       return fallbackText;
     }
   }
@@ -176,7 +179,8 @@ export class NarrativeService {
       }
 
       return parsed;
-    } catch {
+    } catch (e) {
+      console.warn("classifyPlayerAction failed:", e);
       return null;
     }
   }
@@ -190,7 +194,8 @@ export class NarrativeService {
       const prompt = buildEpiloguePrompt(input);
       const text = await this.callLLM(prompt.system, prompt.userMessage, 200);
       return text || this.getDefaultEpilogue(input.soldier);
-    } catch {
+    } catch (e) {
+      console.warn("generateEpilogue failed, using fallback:", e);
       return this.getDefaultEpilogue(input.soldier);
     }
   }

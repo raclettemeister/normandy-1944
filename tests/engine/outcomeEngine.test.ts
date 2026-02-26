@@ -55,7 +55,7 @@ function makeDecision(overrides: Partial<Decision> = {}): Decision {
         moraleChange: -15,
         readinessChange: 10,
       },
-      lessonUnlocked: "test_lesson",
+      wikiUnlocks: "test_lesson",
       nextScene: "test_next",
     },
     ...overrides,

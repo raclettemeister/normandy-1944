@@ -138,7 +138,7 @@ export default function EpilogueScreen({
         <div data-testid="run-statistics" style={{ marginBottom: "1.5rem" }}>
           <p style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
             Scenes visited: {finalState.scenesVisited.length} · Lessons
-            learned: {finalState.lessonsUnlocked.length} · Final men:{" "}
+            learned: {finalState.wikiUnlocked.length} · Final men:{" "}
             {finalState.men}
           </p>
         </div>

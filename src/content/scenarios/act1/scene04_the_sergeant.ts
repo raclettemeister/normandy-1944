@@ -70,7 +70,7 @@ export const scene04_the_sergeant: Scenario = {
           moraleChange: 4,
           readinessChange: 1
         },
-        lessonUnlocked: "rally_procedures",
+        wikiUnlocks: "rally_procedures",
         nextScene: "act1_the_patrol"
       }
     },
@@ -103,7 +103,7 @@ export const scene04_the_sergeant: Scenario = {
           moraleChange: 3,
           readinessChange: 5
         },
-        lessonUnlocked: "rally_procedures",
+        wikiUnlocks: "rally_procedures",
         nextScene: "act1_the_patrol"
       }
     },
@@ -137,7 +137,7 @@ export const scene04_the_sergeant: Scenario = {
           moraleChange: -8,
           readinessChange: 8
         },
-        lessonUnlocked: "rally_procedures",
+        wikiUnlocks: "rally_procedures",
         nextScene: "act1_the_patrol"
       }
     },
@@ -171,7 +171,7 @@ export const scene04_the_sergeant: Scenario = {
           moraleChange: -3,
           readinessChange: 5
         },
-        lessonUnlocked: "rally_procedures",
+        wikiUnlocks: "rally_procedures",
         nextScene: "act1_the_patrol"
       }
     },
@@ -208,7 +208,7 @@ export const scene04_the_sergeant: Scenario = {
           readinessChange: 15,
           skipRally: true,
         },
-        lessonUnlocked: "rally_procedures",
+        wikiUnlocks: "rally_procedures",
         nextScene: "act1_the_patrol"
       }
     },
@@ -242,7 +242,7 @@ export const scene04_the_sergeant: Scenario = {
           moraleChange: 1,
           readinessChange: 4
         },
-        lessonUnlocked: "rally_procedures",
+        wikiUnlocks: "rally_procedures",
         nextScene: "act1_the_patrol"
       }
     },
@@ -278,7 +278,7 @@ export const scene04_the_sergeant: Scenario = {
           readinessChange: 0,
           skipRally: true,
         },
-        lessonUnlocked: "rally_procedures",
+        wikiUnlocks: "rally_procedures",
         nextScene: "act1_the_patrol"
       }
     },
@@ -312,7 +312,7 @@ export const scene04_the_sergeant: Scenario = {
           moraleChange: 2,
           readinessChange: 2
         },
-        lessonUnlocked: "rally_procedures",
+        wikiUnlocks: "rally_procedures",
         nextScene: "act1_the_patrol"
       }
     }

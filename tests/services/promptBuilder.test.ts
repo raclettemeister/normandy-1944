@@ -34,7 +34,7 @@ function makeDecision(overrides: Partial<Decision> & { id: string }): Decision {
       success: { text: "Ok", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
       partial: { text: "Meh", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
       failure: { text: "Bad", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
-      lessonUnlocked: "test",
+      wikiUnlocks: "test",
       nextScene: "test",
     },
     ...overrides,
@@ -209,7 +209,7 @@ describe("buildDMEvaluationPrompt", () => {
       roster: [makeSoldier({ id: "henderson", name: "Henderson", traits: ["veteran"] })],
       relationships: [],
       recentEvents: [],
-      lessonsUnlocked: [],
+      wikiUnlocked: [],
     });
     expect(prompt.system).toContain("ANCHOR DECISIONS");
     expect(prompt.system).toContain("patrol_l_ambush");
@@ -227,7 +227,7 @@ describe("buildDMEvaluationPrompt", () => {
       roster: [],
       relationships: [],
       recentEvents: [],
-      lessonsUnlocked: [],
+      wikiUnlocked: [],
     });
     expect(prompt.system).toContain("masterful");
     expect(prompt.system).toContain("tactically coherent");
@@ -245,7 +245,7 @@ describe("buildDMEvaluationPrompt", () => {
       recentEvents: [
         { sceneId: "s1", type: "plan_summary", soldierIds: [], description: "Player used L-ambush at the crossroads" },
       ],
-      lessonsUnlocked: [],
+      wikiUnlocked: [],
     });
     expect(prompt.system).toContain("L-ambush at the crossroads");
   });
@@ -259,7 +259,7 @@ describe("buildDMEvaluationPrompt", () => {
       roster: [],
       relationships: [],
       recentEvents: [],
-      lessonsUnlocked: [],
+      wikiUnlocked: [],
     });
     expect(prompt.userMessage).toContain("Henderson take the BAR to the wall");
   });
@@ -274,7 +274,7 @@ describe("buildDMEvaluationPrompt", () => {
           success: { text: "ok", menLost: 0, ammoSpent: 5, moraleChange: 5, readinessChange: 2 },
           partial: { text: "ok", menLost: 1, ammoSpent: 10, moraleChange: -5, readinessChange: 5 },
           failure: { text: "ok", menLost: 2, ammoSpent: 15, moraleChange: -15, readinessChange: 10 },
-          lessonUnlocked: "test",
+          wikiUnlocks: "test",
           nextScene: "test",
         },
       }),
@@ -287,7 +287,7 @@ describe("buildDMEvaluationPrompt", () => {
       roster: [],
       relationships: [],
       recentEvents: [],
-      lessonsUnlocked: [],
+      wikiUnlocked: [],
     });
     expect(prompt.system).toContain("success: 0 casualties");
     expect(prompt.system).toContain("failure: 2 casualties");

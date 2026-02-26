@@ -21,7 +21,7 @@ function makeDecision(overrides: Partial<Decision> & { id: string }): Decision {
       success: { text: "ok", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
       partial: { text: "ok", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
       failure: { text: "ok", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
-      lessonUnlocked: "test", nextScene: "test",
+      wikiUnlocks: "test", nextScene: "test",
     },
     ...overrides,
   };
@@ -49,7 +49,7 @@ describe("DMLayer", () => {
       roster: [makeSoldier({ id: "henderson" })],
       relationships: [],
       recentEvents: [],
-      lessonsUnlocked: [],
+      wikiUnlocked: [],
     });
 
     expect(result).not.toBeNull();
@@ -69,7 +69,7 @@ describe("DMLayer", () => {
       roster: [],
       relationships: [],
       recentEvents: [],
-      lessonsUnlocked: [],
+      wikiUnlocked: [],
     });
     expect(result).toBeNull();
   });
@@ -85,7 +85,7 @@ describe("DMLayer", () => {
       roster: [],
       relationships: [],
       recentEvents: [],
-      lessonsUnlocked: [],
+      wikiUnlocked: [],
     });
     expect(result).toBeNull();
   });
@@ -109,7 +109,7 @@ describe("DMLayer", () => {
       roster: [],
       relationships: [],
       recentEvents: [],
-      lessonsUnlocked: [],
+      wikiUnlocked: [],
     });
     expect(result).toBeNull();
   });
@@ -125,7 +125,7 @@ describe("DMLayer", () => {
       roster: [],
       relationships: [],
       recentEvents: [],
-      lessonsUnlocked: [],
+      wikiUnlocked: [],
     });
     expect(result).toBeNull();
     expect(mockCallLLM).not.toHaveBeenCalled();

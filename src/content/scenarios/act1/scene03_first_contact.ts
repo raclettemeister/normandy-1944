@@ -40,7 +40,7 @@ export const scene03_first_contact: Scenario = {
           moraleChange: -1,
           readinessChange: 2
         },
-        lessonUnlocked: "recognition_signals",
+        wikiUnlocks: "recognition_signals",
         nextScene: "act1_the_sergeant"
       }
     },
@@ -73,7 +73,7 @@ export const scene03_first_contact: Scenario = {
           moraleChange: -6,
           readinessChange: 6
         },
-        lessonUnlocked: "recognition_signals",
+        wikiUnlocks: "recognition_signals",
         nextScene: "act1_the_sergeant"
       }
     },
@@ -107,7 +107,7 @@ export const scene03_first_contact: Scenario = {
           readinessChange: 10
         },
         fatal: true,
-        lessonUnlocked: "recognition_signals",
+        wikiUnlocks: "recognition_signals",
         nextScene: "act1_the_sergeant"
       }
     },
@@ -140,7 +140,7 @@ export const scene03_first_contact: Scenario = {
           moraleChange: -2,
           readinessChange: 4
         },
-        lessonUnlocked: "recognition_signals",
+        wikiUnlocks: "recognition_signals",
         nextScene: "act1_the_sergeant"
       }
     },
@@ -173,7 +173,7 @@ export const scene03_first_contact: Scenario = {
           moraleChange: -5,
           readinessChange: 3
         },
-        lessonUnlocked: "recognition_signals",
+        wikiUnlocks: "recognition_signals",
         nextScene: "act1_the_sergeant"
       }
     },
@@ -206,7 +206,7 @@ export const scene03_first_contact: Scenario = {
           moraleChange: -8,
           readinessChange: 12
         },
-        lessonUnlocked: "recognition_signals",
+        wikiUnlocks: "recognition_signals",
         nextScene: "act1_the_sergeant"
       }
     },
@@ -240,7 +240,7 @@ export const scene03_first_contact: Scenario = {
           readinessChange: 10
         },
         fatal: true,
-        lessonUnlocked: "identify_before_engaging",
+        wikiUnlocks: "identify_before_engaging",
         nextScene: "act1_the_sergeant"
       }
     },
@@ -273,7 +273,7 @@ export const scene03_first_contact: Scenario = {
           moraleChange: -4,
           readinessChange: 1
         },
-        lessonUnlocked: "recognition_signals",
+        wikiUnlocks: "recognition_signals",
         nextScene: "act1_the_sergeant"
       }
     },
@@ -306,7 +306,7 @@ export const scene03_first_contact: Scenario = {
           moraleChange: -5,
           readinessChange: 2
         },
-        lessonUnlocked: "recognition_signals",
+        wikiUnlocks: "recognition_signals",
         nextScene: "act1_the_sergeant"
       }
     }

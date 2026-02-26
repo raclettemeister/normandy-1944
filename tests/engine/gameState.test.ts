@@ -81,7 +81,7 @@ describe("createInitialState", () => {
 
   it("starts with empty lessons and visited scenes", () => {
     const state = createInitialState();
-    expect(state.lessonsUnlocked).toEqual([]);
+    expect(state.wikiUnlocked).toEqual([]);
     expect(state.scenesVisited).toEqual([]);
   });
 });

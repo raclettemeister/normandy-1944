@@ -141,7 +141,7 @@ function validateNoDeadEnds(scenarios: Scenario[]): ValidationError[] {
   return errors;
 }
 
-// ─── Rule 4: Every lessonUnlocked matches a lesson ID ────────────
+// ─── Rule 4: Every wikiUnlocks matches a lesson ID ────────────
 
 function validateLessonReferences(
   scenarios: Scenario[],
@@ -152,13 +152,13 @@ function validateLessonReferences(
   const errors: ValidationError[] = [];
   for (const scene of scenarios) {
     for (const decision of scene.decisions) {
-      const lessonId = decision.outcome.lessonUnlocked;
+      const lessonId = decision.outcome.wikiUnlocks;
       if (lessonId && !validLessonIds.has(lessonId)) {
         errors.push({
           rule: 4,
           sceneId: scene.id,
           decisionId: decision.id,
-          message: `lessonUnlocked "${lessonId}" does not match any known lesson ID`,
+          message: `wikiUnlocks "${lessonId}" does not match any known lesson ID`,
         });
       }
     }
@@ -331,7 +331,7 @@ function makeMinimalScenario(
             moraleChange: 0,
             readinessChange: 0,
           },
-          lessonUnlocked: "test_lesson",
+          wikiUnlocks: "test_lesson",
           nextScene: overrides.id,
         },
       },
@@ -371,7 +371,7 @@ function makeLinkedScenarios(): Scenario[] {
               moraleChange: 0,
               readinessChange: 0,
             },
-            lessonUnlocked: "test_lesson",
+            wikiUnlocks: "test_lesson",
             nextScene: "scene_b",
           },
         },
@@ -406,7 +406,7 @@ function makeLinkedScenarios(): Scenario[] {
               moraleChange: 0,
               readinessChange: 0,
             },
-            lessonUnlocked: "test_lesson",
+            wikiUnlocks: "test_lesson",
             nextScene: "scene_a",
           },
         },
@@ -512,7 +512,7 @@ describe("validateScenario", () => {
   describe("Rule 4: lesson references", () => {
     it("flags unknown lesson IDs when validLessonIds provided", () => {
       const scenario = makeMinimalScenario({ id: "scene_a" });
-      scenario.decisions[0].outcome.lessonUnlocked = "unknown_lesson";
+      scenario.decisions[0].outcome.wikiUnlocks = "unknown_lesson";
       const errors = validateScenario(
         scenario,
         new Set(["scene_a"]),
@@ -523,7 +523,7 @@ describe("validateScenario", () => {
 
     it("passes when lesson IDs are valid", () => {
       const scenario = makeMinimalScenario({ id: "scene_a" });
-      scenario.decisions[0].outcome.lessonUnlocked = "real_lesson";
+      scenario.decisions[0].outcome.wikiUnlocks = "real_lesson";
       const errors = validateScenario(
         scenario,
         new Set(["scene_a"]),
@@ -534,7 +534,7 @@ describe("validateScenario", () => {
 
     it("skips lesson validation when no validLessonIds provided", () => {
       const scenario = makeMinimalScenario({ id: "scene_a" });
-      scenario.decisions[0].outcome.lessonUnlocked = "anything";
+      scenario.decisions[0].outcome.wikiUnlocks = "anything";
       const errors = validateScenario(scenario, new Set(["scene_a"]));
       expect(errors.filter((e) => e.rule === 4)).toEqual([]);
     });
@@ -601,7 +601,7 @@ describe("validateAct", () => {
                 moraleChange: 0,
                 readinessChange: 0,
               },
-              lessonUnlocked: "bogus",
+              wikiUnlocks: "bogus",
               nextScene: "nonexistent",
             },
           },

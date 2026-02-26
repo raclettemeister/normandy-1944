@@ -10,6 +10,7 @@ import type {
   Difficulty,
   TacticalPhase,
   DMEvaluation,
+  RunHistory,
 } from "../types/index.ts";
 import { createInitialStateWithDifficulty, advanceTime, clamp } from "../engine/gameState.ts";
 import {
@@ -26,7 +27,8 @@ import {
   processSceneTransition,
 } from "../engine/outcomeEngine.ts";
 import { deriveBalanceEnvelope } from "../engine/balanceEnvelope.ts";
-import { unlockWikiEntry, migrateFromLegacy } from "../engine/metaProgress.ts";
+import { unlockWikiEntry, migrateFromLegacy, loadMeta } from "../engine/metaProgress.ts";
+import { checkAchievements, unlockAchievement } from "../engine/achievementTracker.ts";
 import { getActiveRelationships } from "../content/relationships.ts";
 import { NarrativeService } from "../services/narrativeService.ts";
 import { EventLog } from "../services/eventLog.ts";
@@ -35,13 +37,12 @@ import NarrativePanel from "./NarrativePanel";
 import PrepPhase from "./PrepPhase.tsx";
 import PlanPhase from "./PlanPhase.tsx";
 import BriefingPhase from "./BriefingPhase.tsx";
-import LessonJournal from "./LessonJournal";
 import OrdersPanel from "./OrdersPanel";
 import WikiPanel from "./WikiPanel";
 import RosterPanel from "./RosterPanel";
 import AchievementPopup from "./AchievementPopup";
 
-type Overlay = "orders" | "roster" | "wiki" | "lessons" | null;
+type Overlay = "orders" | "roster" | "wiki" | null;
 
 interface PendingTransition {
   nextSceneId: string;
@@ -49,7 +50,7 @@ interface PendingTransition {
   newState: GameState;
   outcomeContext?: string;
   outcome: OutcomeNarrative;
-  lessonUnlocked: string;
+  wikiUnlocks: string;
 }
 
 export interface GameEndData {
@@ -90,6 +91,13 @@ export default function GameScreen({
   const [pendingAchievement, setPendingAchievement] =
     useState<Achievement | null>(null);
   const eventLogRef = useRef(new EventLog());
+  const runTrackerRef = useRef({
+    decisions: [] as string[],
+    positions: [] as CaptainPosition[],
+    maxMen: 0,
+    minMorale: 100,
+    maxReadiness: 0,
+  });
 
   const [currentPhase, setCurrentPhase] = useState<TacticalPhase>("situation");
   const [dmEvaluation, setDmEvaluation] = useState<DMEvaluation | null>(null);
@@ -98,6 +106,40 @@ export default function GameScreen({
   const [lastPlayerText, setLastPlayerText] = useState<string>("");
 
   useEffect(() => { migrateFromLegacy(); }, []);
+
+  const getNewAchievements = useCallback((state: GameState, completed: boolean, cause?: string): Achievement[] => {
+    const tracker = runTrackerRef.current;
+    const meta = loadMeta();
+    const kiaCount = state.roster.filter(s => s.status === "KIA").length;
+    const woundedCount = state.roster.filter(s => s.status === "wounded").length;
+    const history: RunHistory = {
+      playthroughCount: meta.completedRuns + 1,
+      decisionsThisRun: tracker.decisions,
+      captainPositions: tracker.positions,
+      gameCompleted: completed,
+      gameOverCause: cause,
+      wikiUnlocked: state.wikiUnlocked,
+      menRallied: state.roster.length,
+      maxMen: Math.max(tracker.maxMen, state.men),
+      minMorale: Math.min(tracker.minMorale, state.morale),
+      maxReadiness: Math.max(tracker.maxReadiness, state.enemyReadiness),
+      allMilestonesOnTime: state.milestones.every(m => m.status !== "failed"),
+      zeroKIA: kiaCount === 0,
+      zeroCasualties: kiaCount === 0 && woundedCount === 0,
+    };
+    const earned = checkAchievements(state, history);
+    for (const a of earned) unlockAchievement(a.id);
+    return earned;
+  }, []);
+
+  const trackDecision = useCallback((decisionId: string, pos: CaptainPosition, state: GameState) => {
+    const t = runTrackerRef.current;
+    t.decisions.push(decisionId);
+    t.positions.push(pos);
+    t.maxMen = Math.max(t.maxMen, state.men);
+    t.minMorale = Math.min(t.minMorale, state.morale);
+    t.maxReadiness = Math.max(t.maxReadiness, state.enemyReadiness);
+  }, []);
 
   const scene = getScene(gameState.currentScene);
   const decisions = scene ? getAvailableDecisions(scene, gameState) : [];
@@ -125,7 +167,8 @@ export default function GameScreen({
       const outcome = decision.outcome[tier];
       const result = processSceneTransition(gameState, scene, outcome, pos);
 
-      unlockWikiEntry(decision.outcome.lessonUnlocked);
+      unlockWikiEntry(decision.outcome.wikiUnlocks);
+      trackDecision(decision.id, pos, gameState);
 
       const log = eventLogRef.current;
 
@@ -166,8 +209,8 @@ export default function GameScreen({
           finalState: result.state,
           captainSurvived: false,
           deathNarrative: outcome.text,
-          lastLesson: decision.outcome.lessonUnlocked,
-          newAchievements: [],
+          lastLesson: decision.outcome.wikiUnlocks,
+          newAchievements: getNewAchievements(result.state, false, "captain_killed"),
           eventLog: log.getAll(),
         });
         return;
@@ -179,8 +222,8 @@ export default function GameScreen({
           captainSurvived: true,
           deathNarrative:
             "All your men are down. You are alone, with no way to complete the mission.",
-          lastLesson: decision.outcome.lessonUnlocked,
-          newAchievements: [],
+          lastLesson: decision.outcome.wikiUnlocks,
+          newAchievements: getNewAchievements(result.state, false, "all_men_down"),
           eventLog: log.getAll(),
         });
         return;
@@ -197,7 +240,7 @@ export default function GameScreen({
         onVictory({
           finalState: result.state,
           captainSurvived: true,
-          newAchievements: [],
+          newAchievements: getNewAchievements(result.state, true),
           eventLog: log.getAll(),
         });
         return;
@@ -210,10 +253,10 @@ export default function GameScreen({
         ...result.state,
         currentScene: nextSceneId,
         scenesVisited: [...result.state.scenesVisited, scene.id],
-        lessonsUnlocked: [
+        wikiUnlocked: [
           ...new Set([
-            ...result.state.lessonsUnlocked,
-            decision.outcome.lessonUnlocked,
+            ...result.state.wikiUnlocked,
+            decision.outcome.wikiUnlocks,
           ]),
         ],
       };
@@ -224,7 +267,7 @@ export default function GameScreen({
         newState,
         outcomeContext: outcome.context,
         outcome,
-        lessonUnlocked: decision.outcome.lessonUnlocked,
+        wikiUnlocks: decision.outcome.wikiUnlocks,
       });
 
       const isLlmMode = narrativeService.getMode() === "llm";
@@ -259,7 +302,7 @@ export default function GameScreen({
       setCaptainPosition("middle");
       setProcessing(false);
     },
-    [scene, gameState, captainPosition, processing, onGameOver, onVictory, narrativeService]
+    [scene, gameState, captainPosition, processing, onGameOver, onVictory, narrativeService, trackDecision, getNewAchievements]
   );
 
   const handleContinue = useCallback(async () => {
@@ -356,7 +399,7 @@ export default function GameScreen({
         roster: gameState.roster.filter((s) => s.status === "active"),
         relationships,
         recentEvents,
-        lessonsUnlocked: gameState.lessonsUnlocked,
+        wikiUnlocked: gameState.wikiUnlocked,
       });
 
       if (!evaluation) {
@@ -404,13 +447,17 @@ export default function GameScreen({
     const pos = scene.combatScene ? captainPosition : "middle";
     const referenceDecision = decisions[0];
 
+    if (referenceDecision) {
+      trackDecision(referenceDecision.id, pos, gameState);
+    }
+
     if (dmEvaluation.fatal) {
       onGameOver({
         finalState: gameState,
         captainSurvived: false,
         deathNarrative: dmEvaluation.narrative,
-        lastLesson: referenceDecision?.outcome.lessonUnlocked,
-        newAchievements: [],
+        lastLesson: referenceDecision?.outcome.wikiUnlocks,
+        newAchievements: getNewAchievements(gameState, false, "captain_killed"),
         eventLog: log.getAll(),
       });
       return;
@@ -446,7 +493,7 @@ export default function GameScreen({
     const result = processSceneTransition(gameState, scene, outcome, pos);
 
     if (referenceDecision) {
-      unlockWikiEntry(referenceDecision.outcome.lessonUnlocked);
+      unlockWikiEntry(referenceDecision.outcome.wikiUnlocks);
     }
 
     if (result.casualties.length > 0) {
@@ -472,8 +519,8 @@ export default function GameScreen({
         finalState: result.state,
         captainSurvived: false,
         deathNarrative: dmEvaluation.narrative,
-        lastLesson: referenceDecision?.outcome.lessonUnlocked,
-        newAchievements: [],
+        lastLesson: referenceDecision?.outcome.wikiUnlocks,
+        newAchievements: getNewAchievements(result.state, false, "captain_killed"),
         eventLog: log.getAll(),
       });
       return;
@@ -484,8 +531,8 @@ export default function GameScreen({
         finalState: result.state,
         captainSurvived: true,
         deathNarrative: "All your men are down. You are alone, with no way to complete the mission.",
-        lastLesson: referenceDecision?.outcome.lessonUnlocked,
-        newAchievements: [],
+        lastLesson: referenceDecision?.outcome.wikiUnlocks,
+        newAchievements: getNewAchievements(result.state, false, "all_men_down"),
         eventLog: log.getAll(),
       });
       return;
@@ -503,7 +550,7 @@ export default function GameScreen({
       onVictory({
         finalState: result.state,
         captainSurvived: true,
-        newAchievements: [],
+        newAchievements: getNewAchievements(result.state, true),
         eventLog: log.getAll(),
       });
       return;
@@ -515,9 +562,9 @@ export default function GameScreen({
       ...result.state,
       currentScene: nextSceneId,
       scenesVisited: [...result.state.scenesVisited, scene.id],
-      lessonsUnlocked: referenceDecision
-        ? [...new Set([...result.state.lessonsUnlocked, referenceDecision.outcome.lessonUnlocked])]
-        : result.state.lessonsUnlocked,
+      wikiUnlocked: referenceDecision
+        ? [...new Set([...result.state.wikiUnlocked, referenceDecision.outcome.wikiUnlocks])]
+        : result.state.wikiUnlocked,
     };
 
     setPendingTransition({
@@ -526,12 +573,12 @@ export default function GameScreen({
       newState,
       outcomeContext: outcome.context,
       outcome,
-      lessonUnlocked: referenceDecision?.outcome.lessonUnlocked ?? "",
+      wikiUnlocks: referenceDecision?.outcome.wikiUnlocks ?? "",
     });
 
     setCaptainPosition("middle");
     setProcessing(false);
-  }, [scene, dmEvaluation, gameState, decisions, captainPosition, onGameOver, onVictory, narrativeService]);
+  }, [scene, dmEvaluation, gameState, decisions, captainPosition, onGameOver, onVictory, narrativeService, trackDecision, getNewAchievements]);
 
   const narrative = sceneNarrative ?? scene?.narrative ?? "";
   const rallyText = rallyNarrative ?? scene?.rally?.narrative ?? null;
@@ -579,15 +626,6 @@ export default function GameScreen({
             onClick={() => setOverlay(overlay === "wiki" ? null : "wiki")}
           >
             Wiki
-          </button>
-          <button
-            className="btn"
-            data-testid="lesson-journal-btn"
-            onClick={() =>
-              setOverlay(overlay === "lessons" ? null : "lessons")
-            }
-          >
-            Lessons
           </button>
         </div>
       </header>
@@ -707,10 +745,9 @@ export default function GameScreen({
           onClose={() => setOverlay(null)}
         />
       )}
-      {overlay === "wiki" && <WikiPanel onClose={() => setOverlay(null)} />}
-      {overlay === "lessons" && (
-        <LessonJournal
-          lessonIds={gameState.lessonsUnlocked}
+      {overlay === "wiki" && (
+        <WikiPanel
+          unlockedEntryIds={loadMeta().unlockedWikiEntries}
           onClose={() => setOverlay(null)}
         />
       )}

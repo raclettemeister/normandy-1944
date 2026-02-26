@@ -12,7 +12,7 @@ function makeDecision(overrides: Partial<Decision> & { id: string }): Decision {
       success: { text: "ok", menLost: 0, ammoSpent: 5, moraleChange: 5, readinessChange: 2 },
       partial: { text: "ok", menLost: 1, ammoSpent: 10, moraleChange: -5, readinessChange: 5 },
       failure: { text: "ok", menLost: 2, ammoSpent: 15, moraleChange: -15, readinessChange: 10 },
-      lessonUnlocked: "test", nextScene: "test",
+      wikiUnlocks: "test", nextScene: "test",
     },
     ...overrides,
   };
@@ -52,7 +52,7 @@ describe("Tactical Cycle Integration", () => {
       roster: [],
       relationships: [],
       recentEvents: [],
-      lessonsUnlocked: [],
+      wikiUnlocked: [],
     });
 
     expect(evaluation).not.toBeNull();

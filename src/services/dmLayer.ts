@@ -25,7 +25,7 @@ export interface DMEvaluateInput {
   roster: Soldier[];
   relationships: SoldierRelationship[];
   recentEvents: PlaythroughEvent[];
-  lessonsUnlocked: string[];
+  wikiUnlocked: string[];
 }
 
 export class DMLayer {
@@ -49,12 +49,13 @@ export class DMLayer {
         roster: input.roster,
         relationships: input.relationships,
         recentEvents: input.recentEvents,
-        lessonsUnlocked: input.lessonsUnlocked,
+        wikiUnlocked: input.wikiUnlocked,
       });
 
       const raw = await this.callLLM(prompt.system, prompt.userMessage, 800);
       return this.parseResponse(raw);
-    } catch {
+    } catch (e) {
+      console.warn("DMLayer.evaluatePrompt failed:", e);
       return null;
     }
   }
@@ -76,7 +77,8 @@ export class DMLayer {
         secondInCommandReaction: parsed.secondInCommandReaction ?? "",
         planSummary: parsed.planSummary ?? "",
       };
-    } catch {
+    } catch (e) {
+      console.warn("DMLayer.parseResponse failed:", e);
       return null;
     }
   }

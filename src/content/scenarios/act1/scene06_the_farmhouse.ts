@@ -93,7 +93,7 @@ export const scene06_the_farmhouse: Scenario = {
           moraleChange: 1,
           readinessChange: 5
         },
-        lessonUnlocked: "positive_identification",
+        wikiUnlocks: "positive_identification",
         nextScene: "act1_scene07"
       }
     },
@@ -128,7 +128,7 @@ export const scene06_the_farmhouse: Scenario = {
           moraleChange: -2,
           readinessChange: 5
         },
-        lessonUnlocked: "positive_identification",
+        wikiUnlocks: "positive_identification",
         nextScene: "act1_scene07"
       }
     },
@@ -161,7 +161,7 @@ export const scene06_the_farmhouse: Scenario = {
           moraleChange: -10,
           readinessChange: 8
         },
-        lessonUnlocked: "positive_identification",
+        wikiUnlocks: "positive_identification",
         nextScene: "act1_scene07"
       }
     },
@@ -194,7 +194,7 @@ export const scene06_the_farmhouse: Scenario = {
           moraleChange: -15,
           readinessChange: 10
         },
-        lessonUnlocked: "positive_identification",
+        wikiUnlocks: "positive_identification",
         nextScene: "act1_scene07"
       }
     },
@@ -227,7 +227,7 @@ export const scene06_the_farmhouse: Scenario = {
           moraleChange: 1,
           readinessChange: 3
         },
-        lessonUnlocked: "positive_identification",
+        wikiUnlocks: "positive_identification",
         nextScene: "act1_scene07"
       }
     },
@@ -260,7 +260,7 @@ export const scene06_the_farmhouse: Scenario = {
           moraleChange: 0,
           readinessChange: 3
         },
-        lessonUnlocked: "positive_identification",
+        wikiUnlocks: "positive_identification",
         nextScene: "act1_scene07"
       }
     },
@@ -293,7 +293,7 @@ export const scene06_the_farmhouse: Scenario = {
           moraleChange: -8,
           readinessChange: 0
         },
-        lessonUnlocked: "positive_identification",
+        wikiUnlocks: "positive_identification",
         nextScene: "act1_scene07"
       }
     }

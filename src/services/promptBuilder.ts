@@ -218,7 +218,7 @@ export interface DMEvaluationPromptInput {
   roster: Soldier[];
   relationships: SoldierRelationship[];
   recentEvents: PlaythroughEvent[];
-  lessonsUnlocked: string[];
+  wikiUnlocked: string[];
 }
 
 const TIER_DEFINITIONS = `[TIER DEFINITIONS — evaluate holistically]
@@ -262,8 +262,8 @@ export function buildDMEvaluationPrompt(input: DMEvaluationPromptInput): PromptP
     ? `\n\n[RECENT EVENTS — cross-scene memory]\n${recentEventLines.join("\n")}`
     : "";
 
-  const lessonsSection = input.lessonsUnlocked.length > 0
-    ? `\n\n[PLAYER'S UNLOCKED LESSONS]\n${input.lessonsUnlocked.join(", ")}`
+  const lessonsSection = input.wikiUnlocked.length > 0
+    ? `\n\n[PLAYER'S UNLOCKED LESSONS]\n${input.wikiUnlocked.join(", ")}`
     : "";
 
   const system = `[ROLE]

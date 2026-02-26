@@ -26,7 +26,7 @@ export interface GameState {
 
   milestones: Milestone[];
 
-  lessonsUnlocked: string[];
+  wikiUnlocked: string[];
   scenesVisited: string[];
   currentScene: string;
 
@@ -224,7 +224,7 @@ export interface OutcomeTemplate {
   partial: OutcomeNarrative;
   failure: OutcomeNarrative;
   fatal?: boolean;
-  lessonUnlocked: string;
+  wikiUnlocks: string;
   nextScene: string;
   nextSceneOnFailure?: string;
 }
@@ -360,7 +360,7 @@ export interface RunHistory {
   captainPositions: CaptainPosition[];
   gameCompleted: boolean;
   gameOverCause?: string;
-  lessonsUnlocked: string[];
+  wikiUnlocked: string[];
   menRallied: number;
   maxMen: number;
   minMorale: number;

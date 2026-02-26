@@ -563,39 +563,7 @@
 .roster-soldier__status--KIA { color: var(--danger-light); }
 .roster-soldier__status--missing { color: var(--text-muted); }
 
-/* ─── Lesson Journal ─────────────────────────────────────────────── */
-
-.lesson-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.lesson-item {
-  padding: 0.6rem;
-  border-left: 2px solid var(--accent-gold-dim);
-}
-
-.lesson-item__title {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--accent-gold);
-  margin-bottom: 0.25rem;
-}
-
-.lesson-item__content {
-  font-family: var(--font-narrative);
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-.lesson-empty {
-  color: var(--text-muted);
-  font-style: italic;
-  padding: 1rem 0;
-}
+/* ─── (Lesson Journal removed — merged into Wiki) ────────────────── */
 
 /* ─── Death Report ───────────────────────────────────────────────── */
 
@@ -782,10 +750,190 @@
 
 /* ─── Wiki Panel ─────────────────────────────────────────────────── */
 
+.wiki-panel {
+  max-width: 48rem;
+}
+
+.wiki-layout {
+  display: flex;
+  gap: 1rem;
+  min-height: 20rem;
+}
+
+.wiki-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 10rem;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  padding-right: 0.75rem;
+}
+
+.wiki-category-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.wiki-category-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+.wiki-category-btn--active {
+  color: var(--accent-gold);
+  border-color: var(--accent-gold-dim);
+  background: rgba(196, 164, 78, 0.04);
+}
+
+.wiki-category-btn__count {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-left: 0.5rem;
+}
+
+.wiki-entries {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  overflow-y: auto;
+  max-height: 24rem;
+}
+
+.wiki-entry-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.5rem 0.6rem;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease;
+}
+
+.wiki-entry-btn:hover:not(:disabled) {
+  border-color: var(--border);
+}
+
+.wiki-entry-btn--locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.wiki-entry-btn__term {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.wiki-entry-btn--locked .wiki-entry-btn__term {
+  color: var(--text-muted);
+}
+
+.wiki-entry-btn__desc {
+  font-family: var(--font-narrative);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.wiki-entry-btn--locked .wiki-entry-btn__desc {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.wiki-article {
+  padding: 0.5rem 0;
+}
+
+.wiki-back-btn {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  margin-bottom: 0.75rem;
+}
+
+.wiki-back-btn:hover {
+  color: var(--accent-gold);
+}
+
+.wiki-article__term {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem;
+}
+
+.wiki-article__short {
+  font-family: var(--font-narrative);
+  font-size: 0.9rem;
+  color: var(--accent-gold);
+  font-style: italic;
+  margin: 0 0 0.75rem;
+}
+
+.wiki-article__full {
+  font-family: var(--font-narrative);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0 0 0.75rem;
+}
+
+.wiki-article__tactical {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  padding: 0.5rem 0.75rem;
+  border-left: 2px solid var(--accent-gold-dim);
+  margin: 0;
+}
+
+.wiki-article__tactical-label {
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
 .wiki-empty {
   color: var(--text-muted);
   font-style: italic;
   padding: 1rem 0;
+}
+
+@media (max-width: 600px) {
+  .wiki-layout {
+    flex-direction: column;
+  }
+  .wiki-categories {
+    flex-direction: row;
+    overflow-x: auto;
+    min-width: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding-right: 0;
+    padding-bottom: 0.5rem;
+  }
+  .wiki-category-btn {
+    white-space: nowrap;
+    font-size: 0.7rem;
+  }
 }
 
 /* ─── Scrollbar ──────────────────────────────────────────────────── */

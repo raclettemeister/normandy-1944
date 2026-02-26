@@ -55,7 +55,7 @@ export const scene07_the_road: Scenario = {
           moraleChange: 2,
           readinessChange: 5
         },
-        lessonUnlocked: "route_selection",
+        wikiUnlocks: "route_selection",
         nextScene: "act2_scene01"
       }
     },
@@ -88,7 +88,7 @@ export const scene07_the_road: Scenario = {
           moraleChange: 0,
           readinessChange: 3
         },
-        lessonUnlocked: "route_selection",
+        wikiUnlocks: "route_selection",
         nextScene: "act2_scene01"
       }
     },
@@ -121,7 +121,7 @@ export const scene07_the_road: Scenario = {
           moraleChange: -3,
           readinessChange: 8
         },
-        lessonUnlocked: "route_selection",
+        wikiUnlocks: "route_selection",
         nextScene: "act2_scene01"
       }
     },
@@ -154,7 +154,7 @@ export const scene07_the_road: Scenario = {
           moraleChange: -8,
           readinessChange: 10
         },
-        lessonUnlocked: "route_selection",
+        wikiUnlocks: "route_selection",
         nextScene: "act2_scene01"
       }
     }

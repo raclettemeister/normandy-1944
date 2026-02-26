@@ -106,7 +106,7 @@ export const scene05_the_patrol: Scenario = {
           moraleChange: 1,
           readinessChange: 12
         },
-        lessonUnlocked: "ambush_doctrine",
+        wikiUnlocks: "ambush_doctrine",
         nextScene: "act1_the_farmhouse"
       }
     },
@@ -151,7 +151,7 @@ export const scene05_the_patrol: Scenario = {
           moraleChange: -3,
           readinessChange: 12
         },
-        lessonUnlocked: "ambush_doctrine",
+        wikiUnlocks: "ambush_doctrine",
         nextScene: "act1_the_farmhouse"
       }
     },
@@ -194,7 +194,7 @@ export const scene05_the_patrol: Scenario = {
           moraleChange: -6,
           readinessChange: 12
         },
-        lessonUnlocked: "ambush_doctrine",
+        wikiUnlocks: "ambush_doctrine",
         nextScene: "act1_the_farmhouse"
       }
     },
@@ -235,7 +235,7 @@ export const scene05_the_patrol: Scenario = {
           moraleChange: -5,
           readinessChange: 12
         },
-        lessonUnlocked: "ambush_doctrine",
+        wikiUnlocks: "ambush_doctrine",
         nextScene: "act1_the_farmhouse"
       }
     },
@@ -279,7 +279,7 @@ export const scene05_the_patrol: Scenario = {
           readinessChange: 15
         },
         fatal: true,
-        lessonUnlocked: "ambush_doctrine",
+        wikiUnlocks: "ambush_doctrine",
         nextScene: "act1_the_farmhouse"
       }
     },
@@ -321,7 +321,7 @@ export const scene05_the_patrol: Scenario = {
           moraleChange: -4,
           readinessChange: 12
         },
-        lessonUnlocked: "ambush_doctrine",
+        wikiUnlocks: "ambush_doctrine",
         nextScene: "act1_the_farmhouse"
       }
     },
@@ -363,7 +363,7 @@ export const scene05_the_patrol: Scenario = {
           moraleChange: -8,
           readinessChange: 12
         },
-        lessonUnlocked: "ambush_doctrine",
+        wikiUnlocks: "ambush_doctrine",
         nextScene: "act1_the_farmhouse"
       }
     },
@@ -406,7 +406,7 @@ export const scene05_the_patrol: Scenario = {
           moraleChange: -7,
           readinessChange: 18
         },
-        lessonUnlocked: "tactical_patience",
+        wikiUnlocks: "tactical_patience",
         nextScene: "act1_the_farmhouse"
       }
     },
@@ -452,7 +452,7 @@ export const scene05_the_patrol: Scenario = {
           moraleChange: -5,
           readinessChange: 10
         },
-        lessonUnlocked: "stealth_operations",
+        wikiUnlocks: "stealth_operations",
         nextScene: "act1_the_farmhouse"
       }
     },
@@ -498,7 +498,7 @@ export const scene05_the_patrol: Scenario = {
           moraleChange: -8,
           readinessChange: 12
         },
-        lessonUnlocked: "ambush_doctrine",
+        wikiUnlocks: "ambush_doctrine",
         nextScene: "act1_the_farmhouse"
       }
     }
