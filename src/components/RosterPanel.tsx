@@ -19,7 +19,7 @@ export default function RosterPanel({
   onClose,
 }: RosterPanelProps) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const handleNoteChange = useCallback(
     (soldierId: string, value: string) => {

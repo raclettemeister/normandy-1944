@@ -614,6 +614,67 @@
   color: var(--text-muted);
 }
 
+/* ─── Interlude Screen ──────────────────────────────────────────── */
+
+.interlude-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 300px;
+  padding: 2rem 0;
+}
+
+.interlude-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.interlude-beat {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.6rem 0.8rem;
+  border-left: 2px solid var(--text-muted);
+  font-style: italic;
+}
+
+.interlude-narrative {
+  font-family: var(--font-narrative);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+}
+
+.interlude-objective {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent-gold);
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--accent-gold-dim);
+  background: rgba(196, 164, 78, 0.04);
+}
+
+.interlude-objective__label {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+}
+
+.interlude-action {
+  padding: 2rem 0 1rem;
+  text-align: center;
+}
+
+.interlude-continue {
+  font-size: 1rem;
+  padding: 0.8rem 2.5rem;
+}
+
 /* ─── Death Report ───────────────────────────────────────────────── */
 
 .death-report {

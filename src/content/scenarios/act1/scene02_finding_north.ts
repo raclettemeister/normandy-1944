@@ -186,4 +186,11 @@ export const scene02_finding_north: Scenario = {
       },
     },
   ],
+
+  interlude: {
+    type: "movement",
+    beat: "You wade through the flooded field toward higher ground. The water thins, then gives way to mud, then firm earth.",
+    context: "relief mixed with disorientation, alone in the dark",
+    objectiveReminder: "Find your men. Rally at the nearest landmark.",
+  },
 };

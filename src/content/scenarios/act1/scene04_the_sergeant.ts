@@ -316,5 +316,12 @@ export const scene04_the_sergeant: Scenario = {
         nextScene: "act1_the_patrol"
       }
     }
-  ]
+  ],
+
+  interlude: {
+    type: "rest",
+    beat: "Henderson posts security while the new arrivals catch their breath. You take a knee and check your map by moonlight.",
+    context: "brief respite after first rally, cautious optimism",
+    objectiveReminder: "Continue rallying. Secure enough men to move on the objective.",
+  },
 };

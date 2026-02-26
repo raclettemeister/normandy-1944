@@ -297,5 +297,12 @@ export const scene06_the_farmhouse: Scenario = {
         nextScene: "act1_scene07"
       }
     }
-  ]
+  ],
+
+  interlude: {
+    type: "transition",
+    beat: "The farmhouse sits dark and silent at the edge of the field. Stone walls, shuttered windows. Could be empty. Could be anything.",
+    context: "tension rising, approaching unknown structure",
+    objectiveReminder: "Clear the farmhouse and continue to the crossroads.",
+  },
 };

@@ -41,6 +41,7 @@ import OrdersPanel from "./OrdersPanel";
 import WikiPanel from "./WikiPanel";
 import RosterPanel from "./RosterPanel";
 import AchievementPopup from "./AchievementPopup";
+import InterludeScreen from "./InterludeScreen";
 
 type Overlay = "orders" | "roster" | "wiki" | null;
 
@@ -98,6 +99,10 @@ export default function GameScreen({
     minMorale: 100,
     maxReadiness: 0,
   });
+
+  const [showInterlude, setShowInterlude] = useState(false);
+  const [interludeNarrative, setInterludeNarrative] = useState<string | null>(null);
+  const [interludeStreaming, setInterludeStreaming] = useState(false);
 
   const [currentPhase, setCurrentPhase] = useState<TacticalPhase>("situation");
   const [dmEvaluation, setDmEvaluation] = useState<DMEvaluation | null>(null);
@@ -305,8 +310,8 @@ export default function GameScreen({
     [scene, gameState, captainPosition, processing, onGameOver, onVictory, narrativeService, trackDecision, getNewAchievements]
   );
 
-  const handleContinue = useCallback(async () => {
-    if (!pendingTransition || isStreaming) return;
+  const proceedToNextScene = useCallback(async () => {
+    if (!pendingTransition) return;
 
     const { nextScene, newState, outcomeContext, outcome } = pendingTransition;
     const isLlmMode = narrativeService.getMode() === "llm";
@@ -315,6 +320,9 @@ export default function GameScreen({
     setOutcomeText(null);
     setSceneNarrative(null);
     setRallyNarrative(null);
+    setShowInterlude(false);
+    setInterludeNarrative(null);
+    setInterludeStreaming(false);
 
     setGameState(newState);
     setPendingTransition(null);
@@ -357,7 +365,56 @@ export default function GameScreen({
     }
 
     setGeneratingScene(false);
-  }, [pendingTransition, isStreaming, narrativeService]);
+  }, [pendingTransition, narrativeService]);
+
+  const handleContinue = useCallback(async () => {
+    if (!pendingTransition || isStreaming) return;
+
+    const { nextScene, outcome, outcomeContext } = pendingTransition;
+
+    if (nextScene.interlude) {
+      setOutcomeText(null);
+      setShowInterlude(true);
+
+      const isLlmMode = narrativeService.getMode() === "llm";
+      if (isLlmMode) {
+        setInterludeStreaming(true);
+        const activeRoster = gameState.roster.filter(s => s.status === "active");
+        const activeSoldierIds = activeRoster.map(s => s.id);
+        const relationships = getActiveRelationships(activeSoldierIds);
+
+        narrativeService.narrateInterlude({
+          beat: nextScene.interlude.beat,
+          context: nextScene.interlude.context,
+          objectiveReminder: nextScene.interlude.objectiveReminder,
+          previousOutcomeText: outcome.text,
+          previousOutcomeContext: outcomeContext,
+          nextSceneContext: nextScene.sceneContext ?? "",
+          nextSceneNarrative: nextScene.narrative,
+          gameState,
+          roster: activeRoster,
+          relationships,
+          interludeType: nextScene.interlude.type,
+          onChunk: (chunk) => {
+            setInterludeNarrative(prev => prev ? prev + chunk : chunk);
+          },
+        }).then(finalText => {
+          setInterludeNarrative(finalText);
+          setInterludeStreaming(false);
+        }).catch(() => {
+          setInterludeStreaming(false);
+        });
+      }
+      return;
+    }
+
+    await proceedToNextScene();
+  }, [pendingTransition, isStreaming, narrativeService, gameState, proceedToNextScene]);
+
+  const handleInterludeContinue = useCallback(async () => {
+    if (interludeStreaming) return;
+    await proceedToNextScene();
+  }, [interludeStreaming, proceedToNextScene]);
 
   const handlePrepComplete = useCallback((timeCostMinutes: number) => {
     if (timeCostMinutes > 0) {
@@ -632,7 +689,15 @@ export default function GameScreen({
 
       <StatusPanel state={gameState} />
 
-      {showingOutcome ? (
+      {showInterlude && pendingTransition?.nextScene.interlude ? (
+        <InterludeScreen
+          beatText={pendingTransition.nextScene.interlude.beat}
+          narrativeText={interludeNarrative}
+          objectiveReminder={pendingTransition.nextScene.interlude.objectiveReminder}
+          isStreaming={interludeStreaming}
+          onContinue={handleInterludeContinue}
+        />
+      ) : showingOutcome ? (
         <>
           <NarrativePanel
             narrative={narrative}
