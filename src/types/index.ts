@@ -404,7 +404,8 @@ export interface PlaythroughEvent {
     | "close_call"
     | "brave_act"
     | "player_action"
-    | "promotion";
+    | "promotion"
+    | "plan_summary";
   soldierIds: string[];
   description: string;
 }

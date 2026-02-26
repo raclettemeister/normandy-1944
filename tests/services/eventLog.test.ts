@@ -76,3 +76,45 @@ describe("EventLog", () => {
     expect(log.getAll()).toHaveLength(0);
   });
 });
+
+describe("EventLog — plan summaries", () => {
+  it("getRecentForDM returns last N events", () => {
+    const log = new EventLog();
+    for (let i = 0; i < 15; i++) {
+      log.append({
+        sceneId: `scene_${i}`,
+        type: "player_action",
+        soldierIds: [],
+        description: `Action ${i}`,
+      });
+    }
+    const recent = log.getRecentForDM(10);
+    expect(recent).toHaveLength(10);
+    expect(recent[0].description).toBe("Action 5");
+    expect(recent[9].description).toBe("Action 14");
+  });
+
+  it("getRecentForDM returns all if fewer than N", () => {
+    const log = new EventLog();
+    log.append({
+      sceneId: "s1",
+      type: "casualty",
+      soldierIds: ["henderson"],
+      description: "Henderson KIA",
+    });
+    const recent = log.getRecentForDM(10);
+    expect(recent).toHaveLength(1);
+  });
+
+  it("tracks plan_summary event type", () => {
+    const log = new EventLog();
+    log.append({
+      sceneId: "act1_the_patrol",
+      type: "plan_summary",
+      soldierIds: [],
+      description: "Player set L-ambush using Henderson and Malone in crossfire",
+    });
+    const summaries = log.getByType("plan_summary");
+    expect(summaries).toHaveLength(1);
+  });
+});

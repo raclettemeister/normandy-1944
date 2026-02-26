@@ -19,6 +19,11 @@ export class EventLog {
     return this.events.filter(e => e.type === type);
   }
 
+  getRecentForDM(count: number): PlaythroughEvent[] {
+    const start = Math.max(0, this.events.length - count);
+    return this.events.slice(start);
+  }
+
   serialize(): PlaythroughEvent[] {
     return [...this.events];
   }
