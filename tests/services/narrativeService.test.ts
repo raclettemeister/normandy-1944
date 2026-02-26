@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vitest";
 import { NarrativeService } from "../../src/services/narrativeService.ts";
 import { createInitialState } from "../../src/engine/gameState.ts";
 import type { GameState } from "../../src/types/index.ts";
@@ -6,6 +6,11 @@ import type { GameState } from "../../src/types/index.ts";
 function makeMinimalGameState(overrides: Partial<GameState> = {}): GameState {
   return { ...createInitialState(), men: 5, morale: 60, ammo: 50, ...overrides };
 }
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+  vi.restoreAllMocks();
+});
 
 describe("NarrativeService", () => {
   describe("mode detection", () => {
@@ -24,6 +29,40 @@ describe("NarrativeService", () => {
         apiUrl: "http://localhost:8787", accessCode: "TEST-CODE"
       });
       expect(service.getMode()).toBe("llm");
+    });
+
+    it("should treat whitespace-only access code as hardcoded mode", () => {
+      const service = new NarrativeService({
+        apiUrl: "http://localhost:8787",
+        accessCode: "   ",
+      });
+      expect(service.getMode()).toBe("hardcoded");
+    });
+
+    it("should normalize access code before narrative API calls", async () => {
+      const fetchMock = vi.fn().mockResolvedValue({
+        ok: false,
+        status: 401,
+      } as unknown as Response);
+      vi.stubGlobal("fetch", fetchMock);
+
+      const service = new NarrativeService({
+        apiUrl: "http://localhost:8787",
+        accessCode: "  test-code  ",
+      });
+
+      await service.generateSceneNarrative(
+        "Scene context",
+        makeMinimalGameState(),
+        [],
+        [],
+        "Fallback scene text",
+      );
+
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      const [, requestInit] = fetchMock.mock.calls[0] as [string, RequestInit];
+      const headers = requestInit.headers as Record<string, string>;
+      expect(headers.Authorization).toBe("Bearer TEST-CODE");
     });
   });
 

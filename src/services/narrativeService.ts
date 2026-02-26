@@ -55,10 +55,14 @@ export class NarrativeService {
   private mode: NarrativeMode;
   private dmLayer: DMLayer | null;
 
+  private static normalizeAccessCode(accessCode: string): string {
+    return accessCode.trim().toUpperCase();
+  }
+
   constructor(config: NarrativeServiceConfig) {
     this.apiUrl = config.apiUrl;
-    this.accessCode = config.accessCode;
-    this.mode = config.apiUrl && config.accessCode ? "llm" : "hardcoded";
+    this.accessCode = NarrativeService.normalizeAccessCode(config.accessCode);
+    this.mode = config.apiUrl && this.accessCode ? "llm" : "hardcoded";
     this.dmLayer = this.mode === "llm"
       ? new DMLayer((system, userMessage, maxTokens) => this.callLLM(system, userMessage, maxTokens))
       : null;

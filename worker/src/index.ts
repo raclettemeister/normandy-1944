@@ -9,6 +9,10 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 } as const;
 
+function normalizeAccessCode(code: string): string {
+  return code.trim().toUpperCase();
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
@@ -30,11 +34,24 @@ export default {
 } satisfies ExportedHandler<Env>;
 
 async function validateCode(code: string, env: Env): Promise<boolean> {
-  const stored = await env.ACCESS_CODES.get(code, "json") as {
+  const normalizedCode = normalizeAccessCode(code);
+  const trimmedCode = code.trim();
+  if (!normalizedCode) return false;
+
+  const normalizedRecord = await env.ACCESS_CODES.get(normalizedCode, "json") as {
     active?: boolean;
     maxUses?: number;
     currentUses?: number;
   } | null;
+  const legacyRecord = normalizedCode !== trimmedCode
+    ? await env.ACCESS_CODES.get(trimmedCode, "json") as {
+        active?: boolean;
+        maxUses?: number;
+        currentUses?: number;
+      } | null
+    : null;
+
+  const stored = normalizedRecord ?? legacyRecord;
   if (!stored || !stored.active) return false;
   if (stored.maxUses && (stored.currentUses ?? 0) >= stored.maxUses) return false;
   return true;
@@ -49,7 +66,10 @@ function jsonResponse(data: unknown, status = 200): Response {
 
 async function handleValidateCode(request: Request, env: Env): Promise<Response> {
   try {
-    const { code } = await request.json() as { code: string };
+    const { code } = await request.json() as { code?: string };
+    if (!code || typeof code !== "string") {
+      return jsonResponse({ valid: false, error: "Invalid request" }, 400);
+    }
     const valid = await validateCode(code, env);
     return jsonResponse({ valid });
   } catch {
@@ -58,7 +78,7 @@ async function handleValidateCode(request: Request, env: Env): Promise<Response>
 }
 
 async function handleNarrative(request: Request, env: Env): Promise<Response> {
-  const code = request.headers.get("Authorization")?.replace("Bearer ", "");
+  const code = request.headers.get("Authorization")?.replace("Bearer ", "") ?? "";
   if (!code || !(await validateCode(code, env))) {
     return jsonResponse({ error: "Invalid access code" }, 401);
   }
