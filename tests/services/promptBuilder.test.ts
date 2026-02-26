@@ -3,6 +3,7 @@ import {
   buildNarrationPrompt,
   buildClassificationPrompt,
   buildEpiloguePrompt,
+  buildDMEvaluationPrompt,
 } from "../../src/services/promptBuilder.ts";
 import { createInitialState } from "../../src/engine/gameState.ts";
 import type { GameState, Soldier, SoldierRelationship, Decision } from "../../src/types/index.ts";
@@ -191,5 +192,104 @@ describe("buildEpiloguePrompt", () => {
     });
     expect(prompt.system).toContain("past tense");
     expect(prompt.system).toContain("third person");
+  });
+});
+
+describe("buildDMEvaluationPrompt", () => {
+  it("includes anchor decisions in system prompt", () => {
+    const decisions = [
+      makeDecision({ id: "patrol_l_ambush", tier: "excellent", text: "L-shaped ambush" }),
+      makeDecision({ id: "patrol_knife", tier: "reckless", text: "Solo knife attack" }),
+    ];
+    const prompt = buildDMEvaluationPrompt({
+      sceneContext: "Bridge. Four Germans.",
+      decisions,
+      playerText: "Set up crossfire from the canal bank",
+      gameState: makeMinimalGameState(),
+      roster: [makeSoldier({ id: "henderson", name: "Henderson", traits: ["veteran"] })],
+      relationships: [],
+      recentEvents: [],
+      lessonsUnlocked: [],
+    });
+    expect(prompt.system).toContain("ANCHOR DECISIONS");
+    expect(prompt.system).toContain("patrol_l_ambush");
+    expect(prompt.system).toContain("excellent");
+    expect(prompt.system).toContain("patrol_knife");
+    expect(prompt.system).toContain("reckless");
+  });
+
+  it("includes masterful tier definition", () => {
+    const prompt = buildDMEvaluationPrompt({
+      sceneContext: "Bridge.",
+      decisions: [],
+      playerText: "Attack",
+      gameState: makeMinimalGameState(),
+      roster: [],
+      relationships: [],
+      recentEvents: [],
+      lessonsUnlocked: [],
+    });
+    expect(prompt.system).toContain("masterful");
+    expect(prompt.system).toContain("tactically coherent");
+    expect(prompt.system).toContain("creative");
+  });
+
+  it("includes recent events for cross-scene memory", () => {
+    const prompt = buildDMEvaluationPrompt({
+      sceneContext: "Bridge.",
+      decisions: [],
+      playerText: "Attack",
+      gameState: makeMinimalGameState(),
+      roster: [],
+      relationships: [],
+      recentEvents: [
+        { sceneId: "s1", type: "plan_summary", soldierIds: [], description: "Player used L-ambush at the crossroads" },
+      ],
+      lessonsUnlocked: [],
+    });
+    expect(prompt.system).toContain("L-ambush at the crossroads");
+  });
+
+  it("includes player text in user message", () => {
+    const prompt = buildDMEvaluationPrompt({
+      sceneContext: "Bridge.",
+      decisions: [],
+      playerText: "Henderson take the BAR to the wall",
+      gameState: makeMinimalGameState(),
+      roster: [],
+      relationships: [],
+      recentEvents: [],
+      lessonsUnlocked: [],
+    });
+    expect(prompt.userMessage).toContain("Henderson take the BAR to the wall");
+  });
+
+  it("formats anchor decisions with outcome ranges", () => {
+    const decisions = [
+      makeDecision({
+        id: "d1",
+        tier: "excellent",
+        text: "Good plan",
+        outcome: {
+          success: { text: "ok", menLost: 0, ammoSpent: 5, moraleChange: 5, readinessChange: 2 },
+          partial: { text: "ok", menLost: 1, ammoSpent: 10, moraleChange: -5, readinessChange: 5 },
+          failure: { text: "ok", menLost: 2, ammoSpent: 15, moraleChange: -15, readinessChange: 10 },
+          lessonUnlocked: "test",
+          nextScene: "test",
+        },
+      }),
+    ];
+    const prompt = buildDMEvaluationPrompt({
+      sceneContext: "Bridge.",
+      decisions,
+      playerText: "Attack",
+      gameState: makeMinimalGameState(),
+      roster: [],
+      relationships: [],
+      recentEvents: [],
+      lessonsUnlocked: [],
+    });
+    expect(prompt.system).toContain("success: 0 casualties");
+    expect(prompt.system).toContain("failure: 2 casualties");
   });
 });

@@ -208,6 +208,98 @@ ${decisionsFormatted}
   return { system, userMessage };
 }
 
+// ─── DM Evaluation ─────────────────────────────────────────────────
+
+export interface DMEvaluationPromptInput {
+  sceneContext: string;
+  decisions: Decision[];
+  playerText: string;
+  gameState: GameState;
+  roster: Soldier[];
+  relationships: SoldierRelationship[];
+  recentEvents: PlaythroughEvent[];
+  lessonsUnlocked: string[];
+}
+
+const TIER_DEFINITIONS = `[TIER DEFINITIONS — evaluate holistically]
+- suicidal (5): Deliberately harmful, insane, will get people killed for no reason
+- reckless (25): Brave but stupid. Takes extreme risks without mitigation
+- mediocre (45): Vague, lazy, generic. "Attack" with no plan. Or does nothing
+- sound (70): Reasonable plan. Makes tactical sense, accounts for basics
+- excellent (90): Strong plan. Good use of terrain, coordination, timing
+- masterful (105): ALL of these: tactically coherent, creative, shows situation awareness (names soldiers, references terrain, accounts for equipment), shows genuine engagement with the scenario. This is the ceiling — a player thinking like a real platoon leader.`;
+
+const ADVERSARIAL_RULES = `[ADVERSARIAL INPUT HANDLING]
+- Deliberate team-kill or betrayal → fatal: true. Game over.
+- Surrender/desert → fatal: true. Game over.
+- Fantasy/impossible ("cast fireball") → tier: mediocre. Narrative: incoherent order, men stare.
+- Do nothing / "wait" → tier: mediocre. Time passes, readiness increases, morale drops.
+- Vague / lazy ("attack") → tier: mediocre. Generic outcome.
+- Repeating the same plan as a previous scene → consider downgrading. The enemy adapts.`;
+
+export function buildDMEvaluationPrompt(input: DMEvaluationPromptInput): PromptPair {
+  const anchorLines = input.decisions.map((d) => {
+    const s = d.outcome.success;
+    const f = d.outcome.failure;
+    return `- "${d.id}" (${d.tier}): ${d.text} → success: ${s.menLost} casualties, failure: ${f.menLost} casualties`;
+  });
+
+  const anchors = anchorLines.length > 0
+    ? `[ANCHOR DECISIONS — for calibration, not constraint]\nThese show the SCALE of outcomes for this scene:\n${anchorLines.join("\n")}\n\nUse these as calibration for what each tier looks like HERE.\nA player's plan can match an anchor, blend concepts, or be entirely original. Evaluate on its own merits.`
+    : "[ANCHOR DECISIONS]\nNo predefined decisions for this scene. Evaluate the player's plan entirely on its own merits.";
+
+  const recentEventLines = input.recentEvents.map((e) =>
+    `- [${e.sceneId}] ${e.type}: ${e.description}`
+  );
+  const recentSection = recentEventLines.length > 0
+    ? `\n\n[RECENT EVENTS — cross-scene memory]\n${recentEventLines.join("\n")}`
+    : "";
+
+  const lessonsSection = input.lessonsUnlocked.length > 0
+    ? `\n\n[PLAYER'S UNLOCKED LESSONS]\n${input.lessonsUnlocked.join(", ")}`
+    : "";
+
+  const system = `[ROLE]
+You are the DM (Dungeon Master) of a WWII tactical text game. You evaluate the player's plan and assign a tactical tier.
+
+[TONE GUIDE]
+${TONE_GUIDE}
+
+${TIER_DEFINITIONS}
+
+${ADVERSARIAL_RULES}
+
+[GAME STATE]
+${formatGameState(input.gameState)}
+
+[ACTIVE ROSTER]
+${formatRoster(input.roster)}
+${formatRelationships(input.relationships)}
+
+[SCENE CONTEXT]
+${input.sceneContext}
+
+${anchors}${recentSection}${lessonsSection}
+
+[OUTPUT FORMAT — JSON only, no markdown]
+{
+  "tier": "<suicidal|reckless|mediocre|sound|excellent|masterful>",
+  "reasoning": "<one sentence explaining why this tier>",
+  "narrative": "<3-5 sentences narrating the execution and outcome. Reference specific soldiers. Use the player's plan language.>",
+  "fatal": false,
+  "intelGained": null,
+  "planSummary": "<one sentence summary of the player's plan for the event log>",
+  "secondInCommandReaction": "<Henderson's in-character reaction to the plan — calibrated to tier and competence>",
+  "soldierReactions": [
+    {"soldierId": "<id>", "text": "<in-character reaction>"}
+  ]
+}`;
+
+  const userMessage = `[PLAYER'S PLAN]\n"${input.playerText}"\n\nEvaluate this plan. Return JSON only.`;
+
+  return { system, userMessage };
+}
+
 export function buildEpiloguePrompt(input: EpiloguePromptInput): PromptPair {
   const system = `[ROLE]
 You are writing the "After the War" epilogue for soldiers in a WWII game.
