@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import {
   buildNarrationPrompt,
   buildClassificationPrompt,
@@ -291,5 +291,47 @@ describe("buildDMEvaluationPrompt", () => {
     });
     expect(prompt.system).toContain("success: 0 casualties");
     expect(prompt.system).toContain("failure: 2 casualties");
+  });
+});
+
+describe("language integration", () => {
+  it("adds French language block when language is fr", async () => {
+    const { setLanguage } = await import("../../src/locales/i18n");
+    setLanguage("fr");
+    const prompt = buildNarrationPrompt({
+      sceneContext: "Test scene",
+      gameState: makeMinimalGameState(),
+      roster: [],
+      relationships: [],
+    });
+    expect(prompt.system).toContain("[LANGUAGE]");
+    expect(prompt.system).toContain("Generate all narrative text in French");
+    setLanguage("en");
+  });
+
+  it("does not add language block for English", async () => {
+    const { setLanguage } = await import("../../src/locales/i18n");
+    setLanguage("en");
+    const prompt = buildNarrationPrompt({
+      sceneContext: "Test scene",
+      gameState: makeMinimalGameState(),
+      roster: [],
+      relationships: [],
+    });
+    expect(prompt.system).not.toContain("[LANGUAGE]");
+    setLanguage("en");
+  });
+
+  it("epilogue prompt includes French block", async () => {
+    const { setLanguage } = await import("../../src/locales/i18n");
+    setLanguage("fr");
+    const prompt = buildEpiloguePrompt({
+      soldier: makeSoldier({ id: "test" }),
+      events: [],
+      relationships: [],
+      allSoldierStatuses: [],
+    });
+    expect(prompt.system).toContain("[LANGUAGE]");
+    setLanguage("en");
   });
 });

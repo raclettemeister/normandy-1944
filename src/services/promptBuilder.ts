@@ -48,7 +48,20 @@ export interface EpiloguePromptInput {
   allSoldierStatuses: { id: string; status: string }[];
 }
 
+import { getLanguage } from '../locales/i18n';
+
 const TONE_GUIDE = `Terse, military, present tense, second person. No melodrama, no purple prose. Write like a combat memoir — Ambrose, not Tolkien. Concrete military language. Never use "strategic" or "tactical." Maximum specificity: name weapons, terrain, distances. Reference soldiers by name when they act.`;
+
+const FRENCH_LANGUAGE_BLOCK = `
+[LANGUAGE]
+Generate all narrative text in French.
+Maintain the same terse military tone — short sentences, present tense, second person ("vous").
+Keep these terms in English: all soldier names, ranks (SSgt, Sgt, Cpl, PFC, Pvt), weapon names (BAR, MG-42, Gammon bomb), acronyms (OPORD, DZ, PIR, KIA), location names (Sainte-Marie-du-Mont, Utah Beach).
+Use "h" for time (e.g., "0215 h" not "0215 hrs").`;
+
+function getLanguageBlock(): string {
+  return getLanguage() === 'fr' ? FRENCH_LANGUAGE_BLOCK : '';
+}
 
 function formatGameState(state: GameState): string {
   const alert = getAlertStatus(state.readiness);
@@ -117,6 +130,7 @@ ${input.sceneContext}`;
   }
 
   system += `\n\n[INSTRUCTIONS]\n${instructions}`;
+  system += getLanguageBlock();
 
   let userMessage = "";
 
@@ -167,7 +181,7 @@ Write 3-5 sentences describing these soldiers joining the captain.
 Show each soldier's personality through how they arrive and react.
 Account for the current situation — if things just went badly, the rally should reflect that tension.
 Do not reference game mechanics.
-Maximum 100 words.`;
+Maximum 100 words.${getLanguageBlock()}`;
 
   const userMessage = `${input.rallySoldiers.length} soldiers rally to the captain: ${input.rallySoldiers.map(s => s.name).join(", ")}. They bring ammo and raise morale. Narrate their arrival.`;
 
@@ -300,7 +314,7 @@ ${anchors}${recentSection}${lessonsSection}
   "soldierReactions": [
     {"soldierId": "<id>", "text": "<in-character reaction>"}
   ]
-}`;
+}${getLanguageBlock()}`;
 
   const userMessage = `[PLAYER'S PLAN]\n"${input.playerText}"\n\nEvaluate this plan. Return JSON only.`;
 
@@ -319,7 +333,7 @@ Reference their relationships — especially if someone close survived or died.
 If wounded, it should affect their postwar life.
 If they lost someone close, it should mark them.
 Keep it grounded. Real names, real places, real jobs. No Hollywood endings.
-Maximum 100 words.`;
+Maximum 100 words.${getLanguageBlock()}`;
 
   const traits = input.soldier.traits.length > 0
     ? input.soldier.traits.join(", ")
@@ -396,7 +410,7 @@ Write 2-4 sentences of transitional narration. This is a BREATHING MOMENT betwee
 - Include soldier banter, movement details, or atmosphere as appropriate
 - The interlude type guides the feeling: "movement" = marching/advancing, "rest" = brief pause, "transition" = shift in situation
 - Do not reference game mechanics
-- Maximum 80 words.`;
+- Maximum 80 words.${getLanguageBlock()}`;
 
   const userMessage = `Write the transition narration following the beat: "${input.beat}"`;
 

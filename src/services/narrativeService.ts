@@ -15,6 +15,7 @@ import {
   buildInterludePrompt,
 } from './promptBuilder.ts';
 import { DMLayer } from './dmLayer.ts';
+import { getLanguage } from '../locales/i18n';
 
 interface NarrativeServiceConfig {
   apiUrl: string;
@@ -279,6 +280,7 @@ export class NarrativeService {
         system,
         messages: [{ role: "user", content: userMessage }],
         max_tokens: maxTokens,
+        language: getLanguage(),
       }),
     });
 
