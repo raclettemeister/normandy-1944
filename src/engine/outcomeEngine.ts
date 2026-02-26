@@ -86,6 +86,39 @@ export function calculateEffectiveScore(
   return clamp(score, 0, 100);
 }
 
+export function calculateEffectiveScoreFromTier(
+  tier: TacticalTier,
+  state: GameState,
+  captainPosition?: CaptainPosition
+): number {
+  let score = TIER_BASE_SCORES[tier];
+
+  if (state.morale < 20) score -= 15;
+  else if (state.morale < 40) score -= 10;
+  else if (state.morale < 60) score -= 0;
+  else if (state.morale < 80) score += 0;
+  else score += 5;
+
+  if (state.readiness >= 75) score -= 20;
+  else if (state.readiness >= 50) score -= 12;
+  else if (state.readiness >= 25) score -= 5;
+
+  if (state.ammo < 10) score -= 10;
+  else if (state.ammo < 30) score -= 5;
+
+  const activeTraits = state.roster
+    .filter((s) => s.status === "active")
+    .flatMap((s) => s.traits);
+
+  if (activeTraits.includes("sharpshooter")) score += 3;
+  if (activeTraits.includes("hothead")) score += 3;
+
+  if (captainPosition === "front") score += 5;
+  if (captainPosition === "rear") score -= 5;
+
+  return clamp(score, 0, 100);
+}
+
 // ─── Outcome Range ─────────────────────────────────────────────────
 
 export function getOutcomeRange(effectiveScore: number): OutcomeRange {

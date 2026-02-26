@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   calculateEffectiveScore,
+  calculateEffectiveScoreFromTier,
   getOutcomeRange,
   rollOutcome,
   getOutcomeTier,
@@ -867,5 +868,38 @@ describe("calculateEffectiveScore — masterful tier", () => {
     const masterful = calculateEffectiveScore("masterful", state, decision);
     const excellent = calculateEffectiveScore("excellent", state, decision);
     expect(masterful).toBeGreaterThan(excellent);
+  });
+});
+
+describe("calculateEffectiveScoreFromTier — no decision modifiers", () => {
+  it("returns base tier score with neutral state", () => {
+    const state = makeState({ morale: 60, readiness: 0, ammo: 50, men: 0 });
+    expect(calculateEffectiveScoreFromTier("sound", state)).toBe(70);
+  });
+
+  it("masterful clamps to 100", () => {
+    const state = makeState({ morale: 60, readiness: 0, ammo: 50, men: 0 });
+    expect(calculateEffectiveScoreFromTier("masterful", state)).toBe(100);
+  });
+
+  it("applies morale and readiness modifiers but NOT decision-specific ones", () => {
+    const state = makeState({ morale: 10, readiness: 75, ammo: 5, men: 3 });
+    const score = calculateEffectiveScoreFromTier("excellent", state);
+    // excellent=90, morale<20 => -15, readiness>=75 => -20, ammo<10 => -10 = 45
+    expect(score).toBe(45);
+  });
+
+  it("applies captain position modifier", () => {
+    const state = makeState({ morale: 60, readiness: 0, ammo: 50, men: 0 });
+    expect(calculateEffectiveScoreFromTier("sound", state, "front")).toBe(75);
+    expect(calculateEffectiveScoreFromTier("sound", state, "rear")).toBe(65);
+  });
+
+  it("applies trait bonuses from roster", () => {
+    const state = makeState({
+      morale: 60, readiness: 0, ammo: 50, men: 1,
+      roster: [makeSoldier({ id: "s1", role: "rifleman", traits: ["sharpshooter"] })],
+    });
+    expect(calculateEffectiveScoreFromTier("sound", state)).toBe(73);
   });
 });
