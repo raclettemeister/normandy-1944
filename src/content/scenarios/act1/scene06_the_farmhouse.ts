@@ -29,6 +29,31 @@ export const scene06_the_farmhouse: Scenario = {
     "farmhouse_skip": "Captain, that's paratrooper gear on the porch. Somebody's in there."
   },
 
+  prepActions: [
+    {
+      id: "farmhouse_prep_observe",
+      text: "Watch the farmhouse for movement",
+      timeCost: 5,
+      responseVeteran: "Floorboards creaking — someone pacing. Musette bag on the porch is 506th issue. No German boot prints in the mud, just jump boots. Whoever's in there came down in a chute.",
+      responseGreen: "I can hear someone moving inside. The helmet on the porch has a spade on it.",
+    },
+    {
+      id: "farmhouse_prep_ask_henderson",
+      text: "Ask Henderson about the approach",
+      soldierId: "henderson",
+      timeCost: 5,
+      responseVeteran: "One door front, one door barn side. Windows: two ground floor, two upstairs. Stone walls — nothing's going through those. If they're ours, the clicker should sort it. If they're not, that BAR on the doorframe is going to be a problem. I'd say front door, clicker first.",
+      responseGreen: "It's a building, sir. Door's right there.",
+    },
+    {
+      id: "farmhouse_prep_circle_building",
+      text: "Circle the building to check exits",
+      timeCost: 5,
+      responseVeteran: "Back door through the barn, one window accessible on the west side. Stone walls everywhere else. Good news: only two ways out. You can cover both with four men.",
+      responseGreen: "There's a door in the back. And a window, I think.",
+    },
+  ],
+
   rally: {
     soldiers: [{ ...rivera }, { ...kowalski }],
     ammoGain: 15,

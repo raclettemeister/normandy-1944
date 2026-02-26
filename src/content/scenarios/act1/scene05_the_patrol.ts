@@ -37,6 +37,32 @@ export const scene05_the_patrol: Scenario = {
     patrol_decoy: "Who are you sending out there, sir?"
   },
 
+  prepActions: [
+    {
+      id: "patrol_prep_ask_henderson",
+      text: "Ask Henderson about the bridge",
+      soldierId: "henderson",
+      timeCost: 5,
+      responseVeteran: "Four men. Feldwebel — see the torch? He's reading something. Papers. MG34 slung on the guard, not shouldered. Second man watching the French civilian. Other two are relaxed — smoking. They don't know we're here. Dead ground along the canal bank, maybe fifty meters to the bridge.",
+      responseGreen: "There's... some Germans. On the bridge. One's got a light.",
+    },
+    {
+      id: "patrol_prep_check_canal",
+      text: "Check the drainage canal for cover",
+      timeCost: 5,
+      responseVeteran: "Canal bank is about three feet deep. Good dead ground — you could move a fire team along it to within thirty meters of the bridge without being seen. Mud at the bottom, so it'll be slow and quiet.",
+      responseGreen: "It's a ditch. Pretty deep. Muddy.",
+    },
+    {
+      id: "patrol_prep_ask_malone",
+      text: "Ask Malone what he thinks",
+      soldierId: "malone",
+      timeCost: 5,
+      responseVeteran: "Let me take my guys around the left, Captain. Through that canal. We hit 'em fast — they won't know what happened. I'll go first.",
+      responseGreen: "I can go. Whatever you need, sir. Just say the word.",
+    },
+  ],
+
   decisions: [
     {
       id: "patrol_l_ambush",
