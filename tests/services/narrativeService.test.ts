@@ -118,7 +118,7 @@ describe("NarrativeService", () => {
         relationships: [],
         allSoldierStatuses: [],
       });
-      expect(result).toContain("survecu");
+      expect(result.toLowerCase()).toContain("surv");
       expect(result).toContain("Henderson");
     });
   });

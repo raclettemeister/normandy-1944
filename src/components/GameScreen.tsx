@@ -381,7 +381,7 @@ export default function GameScreen({
   const proceedToNextScene = useCallback(async () => {
     if (!pendingTransition) return;
 
-    const { nextScene, newState, outcomeContext, outcome } = pendingTransition;
+    const { nextScene, newState, outcomeContext } = pendingTransition;
     const isLlmMode = narrativeService.getMode() === "llm";
 
     setGeneratingScene(true);
