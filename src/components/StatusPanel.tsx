@@ -60,6 +60,15 @@ export default function StatusPanel({ state }: StatusPanelProps) {
           {formatTime(state.time)} hrs
         </span>
       </div>
+
+      {state.difficulty === "medium" && (
+        <div className="status-row">
+          <span className="status-label">Reveal Tokens</span>
+          <span className="status-value" data-testid="reveal-token-count">
+            {state.revealTokensRemaining}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
