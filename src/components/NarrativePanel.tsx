@@ -3,6 +3,7 @@ import StreamingText from "./StreamingText";
 interface NarrativePanelProps {
   narrative: string;
   outcomeText: string | null;
+  outcomeDeltaText?: string | null;
   rallyText: string | null;
   isStreaming?: boolean;
   isLoading?: boolean;
@@ -11,6 +12,7 @@ interface NarrativePanelProps {
 export default function NarrativePanel({
   narrative,
   outcomeText,
+  outcomeDeltaText = null,
   rallyText,
   isStreaming = false,
   isLoading = false,
@@ -31,6 +33,11 @@ export default function NarrativePanel({
               ) : (
                 outcomeText
               )}
+            </div>
+          )}
+          {outcomeText && outcomeDeltaText && (
+            <div className="outcome-delta" data-testid="outcome-delta">
+              {outcomeDeltaText}
             </div>
           )}
           {rallyText && <div className="rally-text">{rallyText}</div>}

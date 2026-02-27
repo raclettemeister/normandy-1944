@@ -78,6 +78,7 @@ export default function GameScreen({
   difficulty,
 }: GameScreenProps) {
   const { t } = useTranslation("ui");
+  const { t: tGame } = useTranslation("game");
   const { t: tScenes } = useTranslation("scenes");
   const [gameState, setGameState] = useState<GameState>(() =>
     createInitialStateWithDifficulty(difficulty)
@@ -156,6 +157,23 @@ export default function GameScreen({
     : null;
 
   const showingOutcome = pendingTransition !== null;
+  const outcomeDeltaSummary = (() => {
+    if (!pendingTransition) return null;
+    const after = pendingTransition.newState;
+    const formatSigned = (value: number) => `${value > 0 ? "+" : ""}${value}`;
+    const beforeMinutes = gameState.time.hour * 60 + gameState.time.minute;
+    const afterMinutes = after.time.hour * 60 + after.time.minute;
+    const deltaMinutes = afterMinutes >= beforeMinutes
+      ? afterMinutes - beforeMinutes
+      : afterMinutes + 24 * 60 - beforeMinutes;
+
+    return `${tGame("outcomeDelta.label")} — ` +
+      `${tGame("outcomeDelta.men")} ${formatSigned(after.men - gameState.men)} · ` +
+      `${tGame("outcomeDelta.ammo")} ${formatSigned(after.ammo - gameState.ammo)} · ` +
+      `${tGame("outcomeDelta.morale")} ${formatSigned(after.morale - gameState.morale)} · ` +
+      `${tGame("outcomeDelta.enemy")} ${formatSigned(after.readiness - gameState.readiness)} · ` +
+      `${tGame("outcomeDelta.time")} +${tGame("outcomeDelta.minutes", { count: deltaMinutes })}`;
+  })();
 
   const handleDecision = useCallback(
     async (decision: Decision, playerAction?: string) => {
@@ -776,6 +794,7 @@ export default function GameScreen({
           <NarrativePanel
             narrative={narrative}
             outcomeText={outcomeText}
+            outcomeDeltaText={outcomeDeltaSummary}
             rallyText={rallyNarrative}
             isStreaming={isStreaming}
           />
@@ -794,6 +813,7 @@ export default function GameScreen({
           <NarrativePanel
             narrative={narrative}
             outcomeText={null}
+            outcomeDeltaText={null}
             rallyText={null}
             isStreaming={false}
             isLoading={generatingScene}

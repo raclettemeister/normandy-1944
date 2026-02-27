@@ -28,5 +28,14 @@
     "solo": "Solo",
     "squad": "Squad",
     "platoon": "Platoon"
+  },
+  "outcomeDelta": {
+    "label": "State changes",
+    "men": "Men",
+    "ammo": "Ammo",
+    "morale": "Morale",
+    "enemy": "Enemy",
+    "time": "Time",
+    "minutes": "{{count}} min"
   }
 }
