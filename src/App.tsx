@@ -89,7 +89,6 @@ export default function App() {
       {screen === "menu" && (
         <MainMenu
           onStartGame={handleStartGame}
-          narrativeMode={narrativeService.getMode()}
         />
       )}
 

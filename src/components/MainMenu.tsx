@@ -1,17 +1,15 @@
 import { useTranslation } from "react-i18next";
 import { loadAchievements } from "../engine/achievementTracker.ts";
 import { loadMeta, resetMeta } from "../engine/metaProgress.ts";
-import type { NarrativeMode, Difficulty } from "../types/index.ts";
+import type { Difficulty } from "../types/index.ts";
 import LanguageSelector from "./LanguageSelector";
 
 interface MainMenuProps {
   onStartGame: (difficulty: Difficulty) => void;
-  narrativeMode: NarrativeMode;
 }
 
 export default function MainMenu({
   onStartGame,
-  narrativeMode,
 }: MainMenuProps) {
   const { t } = useTranslation("ui");
   const achievements = loadAchievements();
@@ -32,12 +30,6 @@ export default function MainMenu({
       <h1 className="main-menu__title">{t("title")}</h1>
       <p className="main-menu__subtitle">{t("subtitle")}</p>
 
-      {narrativeMode === "llm" && (
-        <div className="main-menu__mode-badge" data-testid="narrative-mode-badge">
-          {t("aiNarrationActive")}
-        </div>
-      )}
-
       <div className="main-menu__actions">
         <div className="difficulty-selection">
           <h2>Select Difficulty</h2>
@@ -54,7 +46,6 @@ export default function MainMenu({
           <button
             className="btn btn--primary difficulty-btn"
             onClick={() => onStartGame("medium")}
-            disabled={narrativeMode !== "llm"}
             data-testid="start-medium"
           >
             <span className="difficulty-btn__name">Medium</span>
@@ -64,18 +55,11 @@ export default function MainMenu({
           <button
             className="btn btn--primary difficulty-btn"
             onClick={() => onStartGame("hardcore")}
-            disabled={narrativeMode !== "llm"}
             data-testid="start-hardcore"
           >
             <span className="difficulty-btn__name">Hardcore</span>
             <span className="difficulty-btn__desc">No decisions. No tokens. Lead or die.</span>
           </button>
-
-          {narrativeMode !== "llm" && (
-            <p className="difficulty-note">
-              Enter an access code above to unlock Medium and Hardcore modes.
-            </p>
-          )}
         </div>
 
         {(achievements.length > 0 || lessons.length > 0) && (
