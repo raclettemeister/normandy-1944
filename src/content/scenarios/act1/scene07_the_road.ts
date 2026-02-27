@@ -158,5 +158,12 @@ export const scene07_the_road: Scenario = {
         nextScene: "act2_scene01"
       }
     }
-  ]
+  ],
+
+  interlude: {
+    type: "movement",
+    beat: "You leave the farmhouse behind and push north in short bounds, checking each hedge gap before crossing.",
+    context: "final approach under time pressure",
+    objectiveReminder: "Reach the rally point with your force intact.",
+  },
 };

@@ -310,5 +310,12 @@ export const scene03_first_contact: Scenario = {
         nextScene: "act1_the_sergeant"
       }
     }
-  ]
+  ],
+
+  interlude: {
+    type: "movement",
+    beat: "You move hedgerow to hedgerow, keeping low and counting paces between gaps. The dark shifts in front of you — movement, close.",
+    context: "rising tension after orientation, procedure over impulse",
+    objectiveReminder: "Identify the contact before you engage.",
+  },
 };

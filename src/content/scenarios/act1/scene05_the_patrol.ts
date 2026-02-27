@@ -502,5 +502,12 @@ export const scene05_the_patrol: Scenario = {
         nextScene: "act1_the_farmhouse"
       }
     }
-  ]
+  ],
+
+  interlude: {
+    type: "transition",
+    beat: "Your group leaves the stone wall in staggered files, spacing out in the ditch line. Ahead, the lane narrows toward a bridge.",
+    context: "shift from rally to deliberate small-unit action",
+    objectiveReminder: "Block the patrol and stop the papers from moving.",
+  },
 };
