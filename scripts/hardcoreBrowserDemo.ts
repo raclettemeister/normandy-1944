@@ -133,14 +133,22 @@ async function run(): Promise<void> {
         );
       });
 
+      const transitionBtn = page.locator(".transition-prompt__btn");
+      if ((await transitionBtn.count()) > 0) {
+        await page.waitForFunction(() => {
+          const btn = document.querySelector(".transition-prompt__btn");
+          return !btn || !(btn as HTMLButtonElement).disabled;
+        });
+      }
+
       const terminalState = await page.evaluate(() => {
         if (document.querySelector("[data-testid='game-over']")) return "game-over";
         if (document.querySelector("[data-testid='epilogue-screen']")) return "epilogue";
         return null;
       });
 
-      // wait for local streaming animation to advance if present
-      await page.waitForTimeout(600);
+      // short settle for text/layout after streaming completes
+      await page.waitForTimeout(150);
 
       const narrativeLead = terminalState
         ? "(terminal screen)"
