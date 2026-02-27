@@ -278,6 +278,112 @@ export const WIKI_ENTRIES: WikiEntry[] = [
     alwaysAvailable: false,
     unlockedBy: ["route_selection"],
   },
+  {
+    id: "reconnaissance_under_fire",
+    term: "Reconnaissance Under Fire",
+    category: "tactics_learned",
+    shortDescription: "Scout first, fight second — even when contact is close.",
+    fullDescription:
+      "Reconnaissance in combat is not passive observation. It is deliberate collection of actionable information while minimizing exposure. Identify fields of fire, wire gaps, dead ground, and likely fallback lanes before committing assault elements. A platoon that attacks with a map of the fight loses fewer men than a platoon that attacks on instinct.",
+    tacticalNote: "The best time to learn the ground is before the shooting starts in full.",
+    alwaysAvailable: false,
+    unlockedBy: ["reconnaissance_under_fire"],
+  },
+  {
+    id: "objective_reconnaissance",
+    term: "Objective Reconnaissance",
+    category: "tactics_learned",
+    shortDescription: "Know the objective structure before the first breach.",
+    fullDescription:
+      "Objective reconnaissance translates terrain into a plan: where the guns are, where the blind lanes are, where the wire is weakest, and where enemy reserves may appear. In bocage and village terrain, ten minutes of disciplined recon can remove hours of attritional fighting. The cost of poor recon is usually paid in blood during the first movement phase.",
+    alwaysAvailable: false,
+    unlockedBy: ["objective_reconnaissance"],
+  },
+  {
+    id: "base_of_fire_principles",
+    term: "Base of Fire Principles",
+    category: "tactics_learned",
+    shortDescription: "Suppression creates movement. Movement creates victory.",
+    fullDescription:
+      "A base of fire fixes the enemy by forcing him to keep his head down. Maneuver elements then move while the enemy is suppressed. The key is timing: shift fire too early and maneuver dies in the open; shift too late and you risk friendly fire. Good assault leaders treat suppression and movement as one synchronized action, not separate events.",
+    tacticalNote: "No suppression, no safe movement.",
+    alwaysAvailable: false,
+    unlockedBy: ["base_of_fire_principles"],
+  },
+  {
+    id: "suppress_and_flank",
+    term: "Suppress and Flank",
+    category: "tactics_learned",
+    shortDescription: "Do not kill machine guns from the front.",
+    fullDescription:
+      "A prepared machine-gun position dominates frontal approaches. The doctrinal answer is suppression plus flank: one element keeps the gun busy while another moves into a blind angle and eliminates it. The flank must move under cover and with strict fire coordination. Rushing the front is fast only in one direction.",
+    tacticalNote: "The gun you can see is rarely the easiest gun to kill.",
+    alwaysAvailable: false,
+    unlockedBy: ["suppress_and_flank"],
+  },
+  {
+    id: "assault_tempo",
+    term: "Assault Tempo",
+    category: "tactics_learned",
+    shortDescription: "Momentum wins assaults; chaos loses them.",
+    fullDescription:
+      "Tempo is the rhythm of pressure in an assault — suppress, move, clear, repeat. Too slow and defenders recover between bounds. Too fast and your own elements desynchronize. Strong leaders enforce a controlled pace that keeps pressure on the enemy while preserving command and sector integrity.",
+    alwaysAvailable: false,
+    unlockedBy: ["assault_tempo"],
+  },
+  {
+    id: "room_clearing_drills",
+    term: "Room Clearing Drills",
+    category: "tactics_learned",
+    shortDescription: "Close-quarters fights reward discipline over speed alone.",
+    fullDescription:
+      "Building clearing is a sequence of practiced actions: stack, entry angles, corner priorities, stairwell control, and communication. Most room-clearing casualties occur in transitions — threshold crossings, stair turns, and uncertain handoffs between men. Drill discipline reduces hesitation and prevents bunching in kill points.",
+    tacticalNote: "A doorway is not cover. It is a choke point.",
+    alwaysAvailable: false,
+    unlockedBy: ["room_clearing_drills"],
+  },
+  {
+    id: "command_net_discipline",
+    term: "Command Net Discipline",
+    category: "tactics_learned",
+    shortDescription: "Short, clear radio traffic beats long, noisy chatter.",
+    fullDescription:
+      "Radio can multiply combat power by coordinating sectors and preventing friendly interference. It can also expose position and consume decision time if used poorly. Effective command net discipline means brief transmissions, clear call signs, and communication tied directly to tactical actions. Speak only what must be known now.",
+    alwaysAvailable: false,
+    unlockedBy: ["command_net_discipline"],
+  },
+  {
+    id: "objective_security",
+    term: "Objective Security",
+    category: "tactics_learned",
+    shortDescription: "Taken is not secured until sectors and checks are complete.",
+    fullDescription:
+      "Capturing terrain is only the first half of objective warfare. Security requires sector assignment, final clearance of dead space, casualty lanes, and immediate defensive layout. Most reversals happen after apparent victory, when units assume the fight is over and leave blind spots behind.",
+    tacticalNote: "If you cannot describe every sector, you do not own the objective yet.",
+    alwaysAvailable: false,
+    unlockedBy: ["objective_security"],
+  },
+  {
+    id: "defensive_consolidation",
+    term: "Defensive Consolidation",
+    category: "tactics_learned",
+    shortDescription: "Use the lull to prepare for the next blow.",
+    fullDescription:
+      "After an assault, consolidation converts a temporary gain into a survivable position. Priorities are simple: reassign sectors, rebalance ammunition, establish casualty flow, improve cover, and restore command clarity. Every minute spent consolidating now pays dividends when the enemy probes or counterattacks.",
+    alwaysAvailable: false,
+    unlockedBy: ["defensive_consolidation"],
+  },
+  {
+    id: "fire_discipline",
+    term: "Fire Discipline",
+    category: "tactics_learned",
+    shortDescription: "Controlled fire preserves combat power and prevents confusion.",
+    fullDescription:
+      "Volume fire can feel decisive, but uncontrolled fire wastes ammunition, obscures target information, and increases friendly-lane risk. Fire discipline means confirmed targets, sector control, and measured bursts that preserve ammunition for critical moments. Units that stay disciplined under probe attacks fight better in the battles that follow.",
+    tacticalNote: "You are not trying to be loud. You are trying to be effective.",
+    alwaysAvailable: false,
+    unlockedBy: ["fire_discipline"],
+  },
 ];
 
 export function getWikiEntry(id: string): WikiEntry | undefined {
