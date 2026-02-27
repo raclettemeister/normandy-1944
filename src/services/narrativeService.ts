@@ -19,7 +19,6 @@ import { getLanguage } from '../locales/i18n';
 
 interface NarrativeServiceConfig {
   apiUrl: string;
-  accessCode: string;
 }
 
 interface OutcomeNarrativeInput {
@@ -51,14 +50,12 @@ interface EpilogueInput {
 
 export class NarrativeService {
   private apiUrl: string;
-  private accessCode: string;
   private mode: NarrativeMode;
   private dmLayer: DMLayer | null;
 
   constructor(config: NarrativeServiceConfig) {
     this.apiUrl = config.apiUrl;
-    this.accessCode = config.accessCode;
-    this.mode = config.apiUrl && config.accessCode ? "llm" : "hardcoded";
+    this.mode = config.apiUrl ? "llm" : "hardcoded";
     this.dmLayer = this.mode === "llm"
       ? new DMLayer((system, userMessage, maxTokens) => this.callLLM(system, userMessage, maxTokens))
       : null;
@@ -274,7 +271,6 @@ export class NarrativeService {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${this.accessCode}`,
       },
       body: JSON.stringify({
         system,

@@ -58,11 +58,6 @@ async function handleValidateCode(request: Request, env: Env): Promise<Response>
 }
 
 async function handleNarrative(request: Request, env: Env): Promise<Response> {
-  const code = request.headers.get("Authorization")?.replace("Bearer ", "");
-  if (!code || !(await validateCode(code, env))) {
-    return jsonResponse({ error: "Invalid access code" }, 401);
-  }
-
   try {
     const body = await request.json() as {
       messages: unknown[];

@@ -2,20 +2,15 @@ import { useTranslation } from "react-i18next";
 import { loadAchievements } from "../engine/achievementTracker.ts";
 import { loadMeta, resetMeta } from "../engine/metaProgress.ts";
 import type { NarrativeMode, Difficulty } from "../types/index.ts";
-import AccessCodeInput from "./AccessCodeInput";
 import LanguageSelector from "./LanguageSelector";
 
 interface MainMenuProps {
   onStartGame: (difficulty: Difficulty) => void;
-  apiUrl: string;
-  onAccessCodeValidated: (code: string) => void;
   narrativeMode: NarrativeMode;
 }
 
 export default function MainMenu({
   onStartGame,
-  apiUrl,
-  onAccessCodeValidated,
   narrativeMode,
 }: MainMenuProps) {
   const { t } = useTranslation("ui");
@@ -35,10 +30,6 @@ export default function MainMenu({
       <LanguageSelector />
       <h1 className="main-menu__title">{t("title")}</h1>
       <p className="main-menu__subtitle">{t("subtitle")}</p>
-
-      {apiUrl && narrativeMode !== "llm" && (
-        <AccessCodeInput apiUrl={apiUrl} onValidated={onAccessCodeValidated} />
-      )}
 
       {narrativeMode === "llm" && (
         <div className="main-menu__mode-badge" data-testid="narrative-mode-badge">

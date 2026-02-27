@@ -10,26 +10,19 @@ function makeMinimalGameState(overrides: Partial<GameState> = {}): GameState {
 describe("NarrativeService", () => {
   describe("mode detection", () => {
     it("should use hardcoded mode when no API URL configured", () => {
-      const service = new NarrativeService({ apiUrl: "", accessCode: "" });
+      const service = new NarrativeService({ apiUrl: "" });
       expect(service.getMode()).toBe("hardcoded");
     });
 
-    it("should use hardcoded mode when no access code configured", () => {
-      const service = new NarrativeService({ apiUrl: "http://localhost:8787", accessCode: "" });
-      expect(service.getMode()).toBe("hardcoded");
-    });
-
-    it("should use llm mode when API URL and code are configured", () => {
-      const service = new NarrativeService({
-        apiUrl: "http://localhost:8787", accessCode: "TEST-CODE"
-      });
+    it("should use llm mode when API URL is configured", () => {
+      const service = new NarrativeService({ apiUrl: "http://localhost:8787" });
       expect(service.getMode()).toBe("llm");
     });
   });
 
   describe("generateOutcomeNarrative", () => {
     it("should return hardcoded text when in hardcoded mode", async () => {
-      const service = new NarrativeService({ apiUrl: "", accessCode: "" });
+      const service = new NarrativeService({ apiUrl: "" });
       const result = await service.generateOutcomeNarrative({
         outcomeText: "You succeed.",
         outcomeContext: "Ambush worked.",
@@ -43,7 +36,7 @@ describe("NarrativeService", () => {
 
     it("should return hardcoded text when no outcome context", async () => {
       const service = new NarrativeService({
-        apiUrl: "http://localhost:8787", accessCode: "CODE"
+        apiUrl: "http://localhost:8787"
       });
       const result = await service.generateOutcomeNarrative({
         outcomeText: "You succeed.",
@@ -58,7 +51,7 @@ describe("NarrativeService", () => {
   describe("classifyPlayerAction", () => {
     it("should reject empty input", async () => {
       const service = new NarrativeService({
-        apiUrl: "http://localhost:8787", accessCode: "CODE"
+        apiUrl: "http://localhost:8787"
       });
       const result = await service.classifyPlayerAction({
         sceneContext: "Bridge.", decisions: [], playerText: "",
@@ -69,7 +62,7 @@ describe("NarrativeService", () => {
 
     it("should reject short input", async () => {
       const service = new NarrativeService({
-        apiUrl: "http://localhost:8787", accessCode: "CODE"
+        apiUrl: "http://localhost:8787"
       });
       const result = await service.classifyPlayerAction({
         sceneContext: "Bridge.", decisions: [], playerText: "hi",
@@ -79,7 +72,7 @@ describe("NarrativeService", () => {
     });
 
     it("should return null in hardcoded mode", async () => {
-      const service = new NarrativeService({ apiUrl: "", accessCode: "" });
+      const service = new NarrativeService({ apiUrl: "" });
       const result = await service.classifyPlayerAction({
         sceneContext: "Bridge.", decisions: [],
         playerText: "I throw a grenade",
@@ -91,7 +84,7 @@ describe("NarrativeService", () => {
 
   describe("generateEpilogue fallbacks", () => {
     it("should return default KIA epilogue in hardcoded mode", async () => {
-      const service = new NarrativeService({ apiUrl: "", accessCode: "" });
+      const service = new NarrativeService({ apiUrl: "" });
       const result = await service.generateEpilogue({
         soldier: {
           id: "doyle", name: "Doyle", rank: "PFC", role: "rifleman",
@@ -107,7 +100,7 @@ describe("NarrativeService", () => {
     });
 
     it("should return default active epilogue in hardcoded mode", async () => {
-      const service = new NarrativeService({ apiUrl: "", accessCode: "" });
+      const service = new NarrativeService({ apiUrl: "" });
       const result = await service.generateEpilogue({
         soldier: {
           id: "henderson", name: "Henderson", rank: "SSgt", role: "platoon_sergeant",

@@ -27,17 +27,12 @@ export default function App() {
   const [screen, setScreen] = useState<AppScreen>("menu");
   const [endState, setEndState] = useState<EndState | null>(null);
   const [achievementQueue, setAchievementQueue] = useState<Achievement[]>([]);
-  const [accessCode, setAccessCode] = useState("");
   const [difficulty, setDifficulty] = useState<Difficulty>("easy");
 
   const narrativeService = useMemo(
-    () => new NarrativeService({ apiUrl: NARRATIVE_API_URL, accessCode }),
-    [accessCode]
+    () => new NarrativeService({ apiUrl: NARRATIVE_API_URL }),
+    []
   );
-
-  const handleAccessCodeValidated = useCallback((code: string) => {
-    setAccessCode(code);
-  }, []);
 
   const handleStartGame = useCallback((diff: Difficulty) => {
     setDifficulty(diff);
@@ -94,8 +89,6 @@ export default function App() {
       {screen === "menu" && (
         <MainMenu
           onStartGame={handleStartGame}
-          apiUrl={NARRATIVE_API_URL}
-          onAccessCodeValidated={handleAccessCodeValidated}
           narrativeMode={narrativeService.getMode()}
         />
       )}
