@@ -7,3 +7,5 @@ This folder holds **playthrough traces** — one file per run (e.g. one "bad run
 **How to judge steps:** Use [SPEC_ALIGNMENT.md](../SPEC_ALIGNMENT.md) to check each step against the success criteria.
 
 The first trace can be manual or semi-manual; add a bad-run file when available.
+
+**Design:** [docs/plans/2026-02-27-playthrough-trace-and-spec-alignment-design.md](../plans/2026-02-27-playthrough-trace-and-spec-alignment-design.md)

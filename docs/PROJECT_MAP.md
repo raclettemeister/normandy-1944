@@ -2,6 +2,8 @@
 
 Architectural reference for normandy-1944. Read this to orient yourself before making changes.
 
+**Docs for AI workers (fixing playthrough experience):** [AI_WORKER_BRIEF.md](AI_WORKER_BRIEF.md) (onboarding), [SPEC_ALIGNMENT.md](SPEC_ALIGNMENT.md) (success criteria), [playthroughs/](playthroughs/) (trace evidence).
+
 ---
 
 ## Architecture Overview
