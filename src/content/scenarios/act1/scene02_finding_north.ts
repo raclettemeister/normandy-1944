@@ -97,6 +97,7 @@ export const scene02_finding_north: Scenario = {
           ammoSpent: 0,
           moraleChange: -2,
           readinessChange: 3,
+          timeCost: 15,
         },
         partial: {
           text: "You move toward the shooting but the sound bounces off the hedgerows. Fifteen minutes and you're not sure you've walked straight. Then the gunfire stops.",
@@ -105,6 +106,7 @@ export const scene02_finding_north: Scenario = {
           ammoSpent: 0,
           moraleChange: -4,
           readinessChange: 3,
+          timeCost: 15,
         },
         failure: {
           text: "The noise leads you to the edge of a village — German helmets in the firelight. You freeze, back away, circle wide. Fifteen minutes in the wrong direction.",
@@ -113,6 +115,7 @@ export const scene02_finding_north: Scenario = {
           ammoSpent: 0,
           moraleChange: -6,
           readinessChange: 5,
+          timeCost: 15,
         },
         wikiUnlocks: "dead_reckoning",
         nextScene: "act1_first_contact",
@@ -130,6 +133,7 @@ export const scene02_finding_north: Scenario = {
           ammoSpent: 0,
           moraleChange: -3,
           readinessChange: 2,
+          timeCost: 25,
         },
         partial: {
           text: "Hedgerow, field, hedgerow, field. Twenty-five minutes and you might have walked in a circle. Your boots are soaked. You're no closer to knowing where you are.",
@@ -138,6 +142,7 @@ export const scene02_finding_north: Scenario = {
           ammoSpent: 0,
           moraleChange: -5,
           readinessChange: 3,
+          timeCost: 25,
         },
         failure: {
           text: "Twenty-five minutes blundering through the bocage. You trip a stone wall and land in a cow field. When you get up — German voices, close. You press flat against the hedgerow and don't breathe until they pass.",
@@ -146,6 +151,7 @@ export const scene02_finding_north: Scenario = {
           ammoSpent: 0,
           moraleChange: -8,
           readinessChange: 5,
+          timeCost: 25,
         },
         wikiUnlocks: "dead_reckoning",
         nextScene: "act1_first_contact",
@@ -164,6 +170,7 @@ export const scene02_finding_north: Scenario = {
           ammoSpent: -10,
           moraleChange: 2,
           readinessChange: 3,
+          timeCost: 30,
         },
         partial: {
           text: "Thirty minutes searching turns up one equipment chute — mostly clothing and a broken radio. One box of .30 cal at the bottom. Better than nothing.",
@@ -172,6 +179,7 @@ export const scene02_finding_north: Scenario = {
           ammoSpent: -5,
           moraleChange: 0,
           readinessChange: 3,
+          timeCost: 30,
         },
         failure: {
           text: "Thirty minutes crawling through wet fields in the dark. Nothing. The supply bundles could be anywhere in a square mile. Time burned, noise made, nothing gained.",
@@ -180,6 +188,7 @@ export const scene02_finding_north: Scenario = {
           ammoSpent: 0,
           moraleChange: -4,
           readinessChange: 4,
+          timeCost: 30,
         },
         wikiUnlocks: "supply_discipline",
         nextScene: "act1_first_contact",

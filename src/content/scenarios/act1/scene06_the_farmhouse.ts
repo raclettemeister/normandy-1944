@@ -243,6 +243,8 @@ export const scene06_the_farmhouse: Scenario = {
           ammoSpent: 0,
           moraleChange: 3,
           readinessChange: 1
+          ,
+          timeCost: 25
         },
         partial: {
           text: "You circle the farmhouse. Dark inside — shapes, nothing clear. But the boots on the floor are American tread, not German hobnail. You tap the door with your clicker and wait. It takes time, but contact is made. Rivera and Kowalski, alive in the dark.",
@@ -251,6 +253,8 @@ export const scene06_the_farmhouse: Scenario = {
           ammoSpent: 0,
           moraleChange: 2,
           readinessChange: 2
+          ,
+          timeCost: 25
         },
         failure: {
           text: "Twenty-five minutes circling the building on your belly. Shapes through dirty glass, nothing confirmed. You finally use the clicker at the front door and it works in thirty seconds. Half an hour burned for what the clicker would have done from the porch.",
@@ -259,6 +263,8 @@ export const scene06_the_farmhouse: Scenario = {
           ammoSpent: 0,
           moraleChange: 0,
           readinessChange: 3
+          ,
+          timeCost: 25
         },
         wikiUnlocks: "positive_identification",
         nextScene: "act1_scene07"
