@@ -14,6 +14,11 @@ describe("NarrativeService", () => {
       expect(service.getMode()).toBe("hardcoded");
     });
 
+    it("should use template mode when local access code is present without API URL", () => {
+      const service = new NarrativeService({ apiUrl: "", accessCode: "LOCAL-OFFLINE-AI" });
+      expect(service.getMode()).toBe("template");
+    });
+
     it("should use hardcoded mode when no access code configured", () => {
       const service = new NarrativeService({ apiUrl: "http://localhost:8787", accessCode: "" });
       expect(service.getMode()).toBe("hardcoded");

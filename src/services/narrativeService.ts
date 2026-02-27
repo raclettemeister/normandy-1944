@@ -14,7 +14,8 @@ import {
   buildEpiloguePrompt,
   buildInterludePrompt,
 } from './promptBuilder.ts';
-import { DMLayer } from './dmLayer.ts';
+import { DMLayer, type DMEvaluator } from './dmLayer.ts';
+import { TemplateDMLayer } from './templateDmLayer.ts';
 import { getLanguage } from '../locales/i18n';
 
 interface NarrativeServiceConfig {
@@ -53,22 +54,31 @@ export class NarrativeService {
   private apiUrl: string;
   private accessCode: string;
   private mode: NarrativeMode;
-  private dmLayer: DMLayer | null;
+  private dmLayer: DMEvaluator | null;
 
   constructor(config: NarrativeServiceConfig) {
     this.apiUrl = config.apiUrl;
     this.accessCode = config.accessCode;
-    this.mode = config.apiUrl && config.accessCode ? "llm" : "hardcoded";
-    this.dmLayer = this.mode === "llm"
-      ? new DMLayer((system, userMessage, maxTokens) => this.callLLM(system, userMessage, maxTokens))
-      : null;
+    this.mode = config.apiUrl
+      ? (config.accessCode ? "llm" : "hardcoded")
+      : (config.accessCode ? "template" : "hardcoded");
+
+    if (this.mode === "llm") {
+      this.dmLayer = new DMLayer(
+        (system, userMessage, maxTokens) => this.callLLM(system, userMessage, maxTokens)
+      );
+    } else if (this.mode === "template") {
+      this.dmLayer = new TemplateDMLayer();
+    } else {
+      this.dmLayer = null;
+    }
   }
 
   getMode(): NarrativeMode {
     return this.mode;
   }
 
-  getDMLayer(): DMLayer | null {
+  getDMLayer(): DMEvaluator | null {
     return this.dmLayer;
   }
 

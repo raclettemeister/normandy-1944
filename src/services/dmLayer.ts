@@ -30,7 +30,11 @@ export interface DMEvaluateInput {
   secondInCommandCompetence?: "veteran" | "green";
 }
 
-export class DMLayer {
+export interface DMEvaluator {
+  evaluatePrompt(input: DMEvaluateInput): Promise<DMEvaluation | null>;
+}
+
+export class DMLayer implements DMEvaluator {
   private callLLM: LLMCallFn;
 
   constructor(callLLM: LLMCallFn) {

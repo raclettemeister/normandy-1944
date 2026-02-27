@@ -22,6 +22,7 @@ export default function MainMenu({
   const achievements = loadAchievements();
   const meta = loadMeta();
   const lessons = meta.unlockedWikiEntries;
+  const aiNarrationAvailable = narrativeMode !== "hardcoded";
 
   const handleReset = () => {
     if (window.confirm(t("resetConfirm"))) {
@@ -40,9 +41,9 @@ export default function MainMenu({
         <AccessCodeInput apiUrl={apiUrl} onValidated={onAccessCodeValidated} />
       )}
 
-      {narrativeMode === "llm" && (
+      {aiNarrationAvailable && (
         <div className="main-menu__mode-badge" data-testid="narrative-mode-badge">
-          {t("aiNarrationActive")}
+          {narrativeMode === "template" ? "Offline AI Narration Active" : t("aiNarrationActive")}
         </div>
       )}
 
@@ -62,7 +63,7 @@ export default function MainMenu({
           <button
             className="btn btn--primary difficulty-btn"
             onClick={() => onStartGame("medium")}
-            disabled={narrativeMode !== "llm"}
+            disabled={!aiNarrationAvailable}
             data-testid="start-medium"
           >
             <span className="difficulty-btn__name">Medium</span>
@@ -72,16 +73,18 @@ export default function MainMenu({
           <button
             className="btn btn--primary difficulty-btn"
             onClick={() => onStartGame("hardcore")}
-            disabled={narrativeMode !== "llm"}
+            disabled={!aiNarrationAvailable}
             data-testid="start-hardcore"
           >
             <span className="difficulty-btn__name">Hardcore</span>
             <span className="difficulty-btn__desc">No decisions. No tokens. Lead or die.</span>
           </button>
 
-          {narrativeMode !== "llm" && (
+          {!aiNarrationAvailable && (
             <p className="difficulty-note">
-              Enter an access code above to unlock Medium and Hardcore modes.
+              {apiUrl
+                ? "Enter an access code above to unlock Medium and Hardcore modes."
+                : "AI narrator endpoint is not configured in this build."}
             </p>
           )}
         </div>

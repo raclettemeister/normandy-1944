@@ -27,7 +27,9 @@ export default function App() {
   const [screen, setScreen] = useState<AppScreen>("menu");
   const [endState, setEndState] = useState<EndState | null>(null);
   const [achievementQueue, setAchievementQueue] = useState<Achievement[]>([]);
-  const [accessCode, setAccessCode] = useState("");
+  const [accessCode, setAccessCode] = useState(
+    NARRATIVE_API_URL ? "" : "LOCAL-OFFLINE-AI"
+  );
   const [difficulty, setDifficulty] = useState<Difficulty>("easy");
 
   const narrativeService = useMemo(
