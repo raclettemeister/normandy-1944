@@ -187,7 +187,7 @@ export const scene04_the_sergeant: Scenario = {
           text: "The shot cracks the night open. Voices scatter — running in every direction. 'FLASH!' you shout. 'THUNDER!' Henderson, fifty meters away and moving farther. Malone and Doyle are gone — bolted into the dark. Henderson finds you alone. 'A signal shot, sir? In Normandy?'",
           context: "Signal shot scattered everyone. Malone and Doyle bolted — lost. Only Henderson recovered. Partial rally, ammo spent.",
           menLost: 0,
-          ammoSpent: -1,
+          ammoSpent: 1,
           moraleChange: -3,
           readinessChange: 10
         },
@@ -195,7 +195,7 @@ export const scene04_the_sergeant: Scenario = {
           text: "The shot echoes off the hedgerows. Pandemonium — running, shouting, a German voice barking in the distance. You find Henderson crouching behind the wall, alone. Malone and Doyle scattered. 'Captain. I've got nothing kind to say about what you just did.'",
           context: "Signal shot caused pandemonium. German voice in distance. Malone and Doyle scattered, lost. Henderson only.",
           menLost: 0,
-          ammoSpent: -1,
+          ammoSpent: 1,
           moraleChange: -6,
           readinessChange: 12
         },
@@ -203,7 +203,7 @@ export const scene04_the_sergeant: Scenario = {
           text: "The shot echoes. A machine gun opens up from three hundred meters — long bursts, tracers whipping overhead. Everyone scatters. Forty-five minutes of crawling through ditches. You find Henderson. Just Henderson. Malone and Doyle are gone.",
           context: "Signal shot drew MG fire. 45 minutes crawling ditches. Only Henderson found. Malone and Doyle lost. Rally failed.",
           menLost: 0,
-          ammoSpent: -1,
+          ammoSpent: 1,
           moraleChange: -10,
           readinessChange: 15,
           skipRally: true,

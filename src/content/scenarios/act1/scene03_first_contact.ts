@@ -219,7 +219,7 @@ export const scene03_first_contact: Scenario = {
           text: "You fire. The figure drops. You rush forward — screaming eagle patch on his shoulder. 101st. American. The round hit his canteen. He's alive, staring up at you with an expression you'll carry for the rest of the war.",
           context: "Fired on unidentified figure. Hit canteen — American 101st, alive but shot at. Severe trust damage. Gunshot noise.",
           menLost: 0,
-          ammoSpent: -2,
+          ammoSpent: 2,
           moraleChange: -10,
           readinessChange: 8
         },
@@ -227,7 +227,7 @@ export const scene03_first_contact: Scenario = {
           text: "You fire. Miss. The figure fires back. Both of you shooting blind until he screams 'FLASH! FLASH! FLASH!' American. You stop. He stops. You find each other with shaking hands. You almost killed each other.",
           context: "Mutual blind firefight with American. Both missed. Identified by verbal challenge after shots fired. Massive noise signature.",
           menLost: 0,
-          ammoSpent: -3,
+          ammoSpent: 3,
           moraleChange: -8,
           readinessChange: 10
         },
@@ -235,7 +235,7 @@ export const scene03_first_contact: Scenario = {
           text: "You fire. The figure crumples. Screaming eagle patch. 101st. He's not moving. You killed an American — alone in the dark, just like you — and you shot him dead.",
           context: "Shot and killed an American paratrooper, 101st. Friendly fire fatality. Catastrophic morale and psychological damage.",
           menLost: 0,
-          ammoSpent: -2,
+          ammoSpent: 2,
           moraleChange: -15,
           readinessChange: 10
         },

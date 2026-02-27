@@ -51,7 +51,7 @@ export const scene07_the_road: Scenario = {
           text: "The scouts get spotted — a German sentry fires one shot before bolting east. Your men scatter, regroup, push through the crossroads at a run. Nobody hit, but the shot will bring attention. You reach the rally point breathing hard.",
           context: "Scouts spotted by sentry. One shot fired — sentry fled east. Squad scattered, regrouped, rushed crossroads. Rally point reached under alert.",
           menLost: 0,
-          ammoSpent: -2,
+          ammoSpent: 2,
           moraleChange: 2,
           readinessChange: 5
         },
@@ -117,7 +117,7 @@ export const scene07_the_road: Scenario = {
           text: "The wire catches your lead man's boot. He goes down hard, canteen clattering on the road. A rifle shot from the tree line — a German sentry, hasty and wild, but close. You return fire and run. The rally point is there, but the Germans know exactly where you crossed.",
           context: "Wire tripped lead man. Noise drew sentry fire. Returned fire and ran. Rally point reached but crossing point compromised.",
           menLost: 0,
-          ammoSpent: -3,
+          ammoSpent: 3,
           moraleChange: -3,
           readinessChange: 8
         },
@@ -150,7 +150,7 @@ export const scene07_the_road: Scenario = {
           text: "The pasture is mined. The first explosion throws dirt twenty feet into the air. Everyone scatters. The second blast catches someone's leg — they go down screaming. You drag him the last hundred meters into the rally point perimeter while the rest of the platoon provides covering fire at shadows.",
           context: "Pasture mined. Two detonations — one friendly lost a leg. Dragged casualty to rally point under covering fire. One KIA.",
           menLost: 1,
-          ammoSpent: -5,
+          ammoSpent: 5,
           moraleChange: -8,
           readinessChange: 10
         },
