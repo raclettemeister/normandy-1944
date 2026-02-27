@@ -691,9 +691,16 @@ export default function GameScreen({
     const sceneId = gameState.currentScene;
     if (scene.narrativeAlt) {
       for (const altKey of Object.keys(scene.narrativeAlt)) {
+        const isIntelKey = Object.prototype.hasOwnProperty.call(
+          gameState.intel,
+          altKey
+        );
+        const intelConditionMet = isIntelKey
+          ? gameState.intel[altKey as keyof typeof gameState.intel]
+          : false;
         const conditionMet =
+          intelConditionMet ||
           gameState.wikiUnlocked.includes(altKey) ||
-          (altKey === "hasCompass" && gameState.wikiUnlocked.includes("hasCompass")) ||
           (altKey === "hasSecondInCommand" && gameState.secondInCommand !== null) ||
           (altKey === "solo" && gameState.secondInCommand === null) ||
           (altKey === "squad" && gameState.phase !== "solo") ||
