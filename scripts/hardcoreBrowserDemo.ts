@@ -19,6 +19,7 @@ interface StepResult {
   statusReadiness: string;
   statusTime: string;
   screenshot: string;
+  terminalState?: string;
 }
 
 const STEPS: DemoStep[] = [
@@ -124,20 +125,52 @@ async function run(): Promise<void> {
       await page.getByTestId("briefing-phase").waitFor({ state: "visible" });
       await page.getByTestId("briefing-commit").click();
 
-      await page.getByTestId("outcome-narrative").waitFor({ state: "visible" });
-      // wait for local streaming animation to finish if active
-      await page.waitForTimeout(400);
+      await page.waitForFunction(() => {
+        return Boolean(
+          document.querySelector(".transition-prompt__btn") ||
+          document.querySelector("[data-testid='game-over']") ||
+          document.querySelector("[data-testid='epilogue-screen']")
+        );
+      });
 
-      const narrativeLead = shortLine(await page.getByTestId("narrative").innerText());
-      const outcomeLead = shortLine(await page.getByTestId("outcome-narrative").innerText());
-      const statusMen = shortLine(await page.getByTestId("status-men").innerText(), 80);
-      const statusAmmo = shortLine(await page.getByTestId("status-ammo").innerText(), 80);
-      const statusMorale = shortLine(await page.getByTestId("status-morale").innerText(), 80);
-      const statusReadiness = shortLine(
-        await page.getByTestId("status-readiness").innerText(),
-        80
-      );
-      const statusTime = shortLine(await page.getByTestId("status-time").innerText(), 80);
+      const terminalState = await page.evaluate(() => {
+        if (document.querySelector("[data-testid='game-over']")) return "game-over";
+        if (document.querySelector("[data-testid='epilogue-screen']")) return "epilogue";
+        return null;
+      });
+
+      // wait for local streaming animation to advance if present
+      await page.waitForTimeout(600);
+
+      const narrativeLead = terminalState
+        ? "(terminal screen)"
+        : shortLine(await page.getByTestId("narrative").innerText());
+      const outcomeVisible = terminalState
+        ? false
+        : await page
+            .getByTestId("outcome-narrative")
+            .isVisible({ timeout: 200 })
+            .catch(() => false);
+      const outcomeLead = terminalState === "game-over"
+        ? shortLine(await page.getByTestId("death-narrative").innerText())
+        : outcomeVisible
+          ? shortLine(await page.getByTestId("outcome-narrative").innerText())
+          : "(no outcome text visible)";
+      const statusMen = terminalState
+        ? "(status unavailable)"
+        : shortLine(await page.getByTestId("status-men").innerText(), 80);
+      const statusAmmo = terminalState
+        ? "(status unavailable)"
+        : shortLine(await page.getByTestId("status-ammo").innerText(), 80);
+      const statusMorale = terminalState
+        ? "(status unavailable)"
+        : shortLine(await page.getByTestId("status-morale").innerText(), 80);
+      const statusReadiness = terminalState
+        ? "(status unavailable)"
+        : shortLine(await page.getByTestId("status-readiness").innerText(), 80);
+      const statusTime = terminalState
+        ? "(status unavailable)"
+        : shortLine(await page.getByTestId("status-time").innerText(), 80);
 
       const screenshot = `step-${String(i + 1).padStart(2, "0")}.png`;
       await page.screenshot({ path: resolve(artifactsDir, screenshot), fullPage: true });
@@ -153,7 +186,12 @@ async function run(): Promise<void> {
         statusReadiness,
         statusTime,
         screenshot,
+        terminalState: terminalState ?? undefined,
       });
+
+      if (terminalState) {
+        break;
+      }
 
       await clickContinueButtons(page);
     }
@@ -175,6 +213,9 @@ async function run(): Promise<void> {
         `- Status: ${result.statusMen} | ${result.statusAmmo} | ${result.statusMorale} | ${result.statusReadiness} | ${result.statusTime}`
       );
       reportLines.push(`- Screenshot: artifacts/hardcore-browser-demo/${result.screenshot}`);
+      if (result.terminalState) {
+        reportLines.push(`- Terminal state reached: ${result.terminalState}`);
+      }
       reportLines.push("");
     }
 
