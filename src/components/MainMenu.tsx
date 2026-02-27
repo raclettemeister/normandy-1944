@@ -27,6 +27,7 @@ export default function MainMenu({
 
   return (
     <div className="main-menu" data-testid="main-menu">
+      <span className="main-menu__version">v1.0</span>
       <LanguageSelector />
       <h1 className="main-menu__title">{t("title")}</h1>
       <p className="main-menu__subtitle">{t("subtitle")}</p>
