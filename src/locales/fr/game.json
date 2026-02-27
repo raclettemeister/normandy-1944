@@ -28,5 +28,14 @@
     "solo": "Solo",
     "squad": "Escouade",
     "platoon": "Section"
+  },
+  "outcomeDelta": {
+    "label": "Changements d'état",
+    "men": "Hommes",
+    "ammo": "Munitions",
+    "morale": "Moral",
+    "enemy": "Ennemi",
+    "time": "Temps",
+    "minutes": "{{count}} min"
   }
 }

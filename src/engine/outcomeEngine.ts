@@ -195,6 +195,24 @@ function weightedRandom<T>(items: T[], weightFn: (item: T) => number): T {
   return items[items.length - 1];
 }
 
+function createAttachedTrooper(existingRoster: Soldier[], ordinal: number): Soldier {
+  const existingAttachedCount = existingRoster.filter((s) =>
+    s.id.startsWith("attached_")
+  ).length;
+  const serial = existingAttachedCount + ordinal;
+  return {
+    id: `attached_${serial}`,
+    name: `Attached Trooper ${serial}`,
+    rank: "PFC",
+    role: "rifleman",
+    status: "active",
+    age: 22,
+    hometown: "Unknown",
+    background: "Straggler from another airborne stick folded into your command.",
+    traits: ["green", "steady"],
+  };
+}
+
 export function assignCasualties(
   roster: Soldier[],
   menLost: number,
@@ -260,10 +278,20 @@ export function processSceneTransition(
   }
 
   if (outcomeNarrative.menGained && outcomeNarrative.menGained > 0) {
-    newState.men = Math.min(18, newRoster.filter((s) => s.status === "active").length + outcomeNarrative.menGained);
-  } else {
-    newState.men = Math.max(0, newRoster.filter((s) => s.status === "active").length);
+    const activeNow = newState.roster.filter((s) => s.status === "active").length;
+    const availableSlots = Math.max(0, 18 - activeNow);
+    const toAdd = Math.min(outcomeNarrative.menGained, availableSlots);
+    if (toAdd > 0) {
+      const attached = Array.from({ length: toAdd }, (_, index) =>
+        createAttachedTrooper(newState.roster, index + 1)
+      );
+      newState.roster = [...newState.roster, ...attached];
+    }
   }
+  newState.men = Math.max(
+    0,
+    Math.min(18, newState.roster.filter((s) => s.status === "active").length)
+  );
   newState.ammo = clamp(state.ammo - outcomeNarrative.ammoSpent, 0, 100);
   newState.morale = clamp(
     state.morale + outcomeNarrative.moraleChange,

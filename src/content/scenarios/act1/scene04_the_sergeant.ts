@@ -154,6 +154,8 @@ export const scene04_the_sergeant: Scenario = {
           ammoSpent: 0,
           moraleChange: 2,
           readinessChange: 1
+          ,
+          timeCost: 30
         },
         partial: {
           text: "The stone lands. Dead silence. Weapons being readied. Two full minutes before a whisper: 'If you're American, use your goddamn clicker.' You do. Henderson: 'Would've been nice to start with that, sir.'",
@@ -162,6 +164,8 @@ export const scene04_the_sergeant: Scenario = {
           ammoSpent: 0,
           moraleChange: 1,
           readinessChange: 2
+          ,
+          timeCost: 30
         },
         failure: {
           text: "The pebble lands and Malone opens fire at the sound. You flatten yourself into the dirt. Henderson shouts cease fire. Ten minutes of chaos before you make contact with the clicker. Doyle is crying. Malone won't look at you.",
@@ -170,6 +174,8 @@ export const scene04_the_sergeant: Scenario = {
           ammoSpent: 0,
           moraleChange: -3,
           readinessChange: 5
+          ,
+          timeCost: 30
         },
         wikiUnlocks: "rally_procedures",
         nextScene: "act1_the_patrol"
@@ -187,7 +193,7 @@ export const scene04_the_sergeant: Scenario = {
           text: "The shot cracks the night open. Voices scatter — running in every direction. 'FLASH!' you shout. 'THUNDER!' Henderson, fifty meters away and moving farther. Malone and Doyle are gone — bolted into the dark. Henderson finds you alone. 'A signal shot, sir? In Normandy?'",
           context: "Signal shot scattered everyone. Malone and Doyle bolted — lost. Only Henderson recovered. Partial rally, ammo spent.",
           menLost: 0,
-          ammoSpent: -1,
+          ammoSpent: 1,
           moraleChange: -3,
           readinessChange: 10
         },
@@ -195,7 +201,7 @@ export const scene04_the_sergeant: Scenario = {
           text: "The shot echoes off the hedgerows. Pandemonium — running, shouting, a German voice barking in the distance. You find Henderson crouching behind the wall, alone. Malone and Doyle scattered. 'Captain. I've got nothing kind to say about what you just did.'",
           context: "Signal shot caused pandemonium. German voice in distance. Malone and Doyle scattered, lost. Henderson only.",
           menLost: 0,
-          ammoSpent: -1,
+          ammoSpent: 1,
           moraleChange: -6,
           readinessChange: 12
         },
@@ -203,7 +209,7 @@ export const scene04_the_sergeant: Scenario = {
           text: "The shot echoes. A machine gun opens up from three hundred meters — long bursts, tracers whipping overhead. Everyone scatters. Forty-five minutes of crawling through ditches. You find Henderson. Just Henderson. Malone and Doyle are gone.",
           context: "Signal shot drew MG fire. 45 minutes crawling ditches. Only Henderson found. Malone and Doyle lost. Rally failed.",
           menLost: 0,
-          ammoSpent: -1,
+          ammoSpent: 1,
           moraleChange: -10,
           readinessChange: 15,
           skipRally: true,
@@ -225,6 +231,8 @@ export const scene04_the_sergeant: Scenario = {
           ammoSpent: 0,
           moraleChange: 4,
           readinessChange: 1
+          ,
+          timeCost: 30
         },
         partial: {
           text: "Twenty-five minutes through dense hedgerow. Shapes in the dark — details gone. American, probably. You use the clicker. Two clicks back. Henderson, Malone, Doyle. 'Where the hell have you been, Captain? We've been here an hour.'",
@@ -233,6 +241,8 @@ export const scene04_the_sergeant: Scenario = {
           ammoSpent: 0,
           moraleChange: 3,
           readinessChange: 2
+          ,
+          timeCost: 30
         },
         failure: {
           text: "You circle too wide. Thirty-five minutes. When you reach the spot, they've moved. Another ten minutes tracking before Henderson's clicker finds you. You've burned nearly an hour.",
@@ -241,6 +251,8 @@ export const scene04_the_sergeant: Scenario = {
           ammoSpent: 0,
           moraleChange: 1,
           readinessChange: 4
+          ,
+          timeCost: 45
         },
         wikiUnlocks: "rally_procedures",
         nextScene: "act1_the_patrol"
@@ -295,6 +307,8 @@ export const scene04_the_sergeant: Scenario = {
           ammoSpent: 0,
           moraleChange: 5,
           readinessChange: 1
+          ,
+          timeCost: 20
         },
         partial: {
           text: "Five minutes of listening. Indistinct voices. One of them laughs — something about the Red Sox. American. Probably. You use the clicker. Two clicks back. Henderson, Malone, Doyle.",
@@ -303,6 +317,8 @@ export const scene04_the_sergeant: Scenario = {
           ammoSpent: 0,
           moraleChange: 4,
           readinessChange: 1
+          ,
+          timeCost: 20
         },
         failure: {
           text: "Five minutes and the words blur in the dark. Accents, cadence — nothing clear. You use the clicker anyway. Henderson responds. But you've been crouching here too long. Your knees ache and the clock has moved.",
@@ -311,6 +327,8 @@ export const scene04_the_sergeant: Scenario = {
           ammoSpent: 0,
           moraleChange: 2,
           readinessChange: 2
+          ,
+          timeCost: 20
         },
         wikiUnlocks: "rally_procedures",
         nextScene: "act1_the_patrol"
