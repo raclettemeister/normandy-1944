@@ -1,0 +1,1 @@
+{"stepIndex":1,"sceneId":"act1_landing","phase":"solo","tacticalPhase":"execution","playerAction":"check gear, move toward sound","outcomeSummary":"+0 men, -0 ammo, scene → act1_finding_north","narrativeSnippet":"","stateAfter":{"men":0,"ammo":5,"morale":40,"readiness":10,"time":{"hour":1,"minute":30}},"issue":"Example step — replace with real trace from a bad run"}
