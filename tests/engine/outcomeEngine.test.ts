@@ -852,6 +852,36 @@ describe("processSceneTransition — per-decision timeCost", () => {
     const result = processSceneTransition(state, scene, outcome, "middle");
     expect(result.state.time).toEqual({ hour: 1, minute: 15 });
   });
+
+  it("increments day when time wraps past midnight", () => {
+    const state = makeState({ day: 0, time: { hour: 23, minute: 50 }, roster: [] });
+    const scene = makeMinimalScene({ timeCost: 20 });
+    const outcome: OutcomeNarrative = {
+      text: "result",
+      menLost: 0,
+      ammoSpent: 0,
+      moraleChange: 0,
+      readinessChange: 0,
+    };
+    const result = processSceneTransition(state, scene, outcome, "middle");
+    expect(result.state.time).toEqual({ hour: 0, minute: 10 });
+    expect(result.state.day).toBe(1);
+  });
+
+  it("keeps day unchanged when no midnight wrap occurs", () => {
+    const state = makeState({ day: 0, time: { hour: 2, minute: 10 }, roster: [] });
+    const scene = makeMinimalScene({ timeCost: 20 });
+    const outcome: OutcomeNarrative = {
+      text: "result",
+      menLost: 0,
+      ammoSpent: 0,
+      moraleChange: 0,
+      readinessChange: 0,
+    };
+    const result = processSceneTransition(state, scene, outcome, "middle");
+    expect(result.state.time).toEqual({ hour: 2, minute: 30 });
+    expect(result.state.day).toBe(0);
+  });
 });
 
 describe("calculateEffectiveScore — masterful tier", () => {

@@ -425,11 +425,19 @@ export default function GameScreen({
 
   const handlePrepComplete = useCallback((timeCostMinutes: number) => {
     if (timeCostMinutes > 0) {
-      setGameState((prev) => ({
-        ...prev,
-        time: advanceTime(prev.time, timeCostMinutes),
-        readiness: clamp(prev.readiness + Math.floor(timeCostMinutes / 10), 0, 100),
-      }));
+      setGameState((prev) => {
+        const nextTime = advanceTime(prev.time, timeCostMinutes);
+        const wrappedToNextDay =
+          nextTime.hour < prev.time.hour ||
+          (nextTime.hour === prev.time.hour && nextTime.minute < prev.time.minute);
+
+        return {
+          ...prev,
+          time: nextTime,
+          day: prev.day + (wrappedToNextDay ? 1 : 0),
+          readiness: clamp(prev.readiness + Math.floor(timeCostMinutes / 10), 0, 100),
+        };
+      });
     }
     setCurrentPhase("plan");
   }, []);

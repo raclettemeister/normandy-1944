@@ -121,6 +121,7 @@ function createDefaultMilestones(): Milestone[] {
       time: "0100",
       description: "End of operational period",
       status: "pending",
+      dayOffset: 1,
     },
   ];
 }
@@ -132,6 +133,7 @@ export function createInitialState(): GameState {
     morale: 40,
     readiness: 10,
     time: { hour: 1, minute: 15 },
+    day: 0,
     capabilities: {
       canSuppress: false,
       canTreatWounded: false,

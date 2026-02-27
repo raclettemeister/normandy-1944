@@ -17,6 +17,7 @@ export interface GameState {
   morale: number;
   readiness: number;
   time: GameTime;
+  day: number;
 
   capabilities: PlatoonCapabilities;
   intel: IntelFlags;
@@ -300,6 +301,7 @@ export interface Milestone {
   time: string;
   description: string;
   status: "pending" | "achieved" | "missed";
+  dayOffset?: number;
 }
 
 // ─── Lessons ───────────────────────────────────────────────────────

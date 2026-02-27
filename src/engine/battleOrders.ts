@@ -1,5 +1,5 @@
 import type { BattleOrders, Milestone, GameState } from "../types/index.ts";
-import { isAfter, parseTime } from "./gameState.ts";
+import { parseTime } from "./gameState.ts";
 
 export const BATTLE_ORDERS: BattleOrders = {
   milestones: [
@@ -47,6 +47,7 @@ export const BATTLE_ORDERS: BattleOrders = {
       time: "0100",
       description: "End of operational period.",
       status: "pending",
+      dayOffset: 1,
     },
   ],
 };
@@ -55,12 +56,16 @@ export function checkMilestones(
   milestones: Milestone[],
   state: GameState
 ): Milestone[] {
+  const currentTotalMinutes = state.day * 24 * 60 + state.time.hour * 60 + state.time.minute;
+
   return milestones.map((m) => {
     if (m.status !== "pending") return m;
 
     const milestoneTime = parseTime(m.time);
+    const milestoneTotalMinutes =
+      (m.dayOffset ?? 0) * 24 * 60 + milestoneTime.hour * 60 + milestoneTime.minute;
 
-    if (isAfter(state.time, milestoneTime)) {
+    if (currentTotalMinutes > milestoneTotalMinutes) {
       return { ...m, status: "missed" as const };
     }
 

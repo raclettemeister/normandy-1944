@@ -284,7 +284,12 @@ export function processSceneTransition(
   }
 
   const effectiveTimeCost = outcomeNarrative.timeCost ?? scene.timeCost;
-  newState.time = advanceTime(state.time, effectiveTimeCost);
+  const nextTime = advanceTime(state.time, effectiveTimeCost);
+  const wrappedToNextDay =
+    nextTime.hour < state.time.hour ||
+    (nextTime.hour === state.time.hour && nextTime.minute < state.time.minute);
+  newState.time = nextTime;
+  newState.day = state.day + (wrappedToNextDay ? 1 : 0);
 
   newState.readiness = clamp(
     newState.readiness + Math.floor(effectiveTimeCost / 10),
