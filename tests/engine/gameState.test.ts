@@ -13,7 +13,7 @@ import {
   formatTime,
   promoteToSecondInCommand,
 } from "../../src/engine/gameState.ts";
-import type { Soldier, GameState, Difficulty } from "../../src/types/index.ts";
+import type { Soldier, GameState } from "../../src/types/index.ts";
 
 // ─── Helpers ──────────────────────────────────────────────────────
 

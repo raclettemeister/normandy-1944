@@ -14,6 +14,7 @@ export default function StreamingText({
   const [displayedText, setDisplayedText] = useState("");
   const indexRef = useRef(0);
 
+  /* eslint-disable react-hooks/set-state-in-effect -- prop-to-state sync resets typewriter on text/streaming change */
   useEffect(() => {
     if (!text) {
       setDisplayedText("");
@@ -40,11 +41,14 @@ export default function StreamingText({
 
     return () => clearInterval(interval);
   }, [text, isStreaming]);
+  /* eslint-enable react-hooks/set-state-in-effect */
+
+  const showCursor = isStreaming || displayedText.length < text.length;
 
   return (
     <span className={`streaming-text ${className}`} data-testid="streaming-text">
       {displayedText}
-      {(isStreaming || indexRef.current < text.length) && (
+      {showCursor && (
         <span className="streaming-cursor" data-testid="streaming-cursor">
           &#9608;
         </span>
