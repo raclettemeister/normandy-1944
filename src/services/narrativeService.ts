@@ -53,14 +53,12 @@ interface EpilogueInput {
 
 export class NarrativeService {
   private apiUrl: string;
-  private accessCode: string;
   private mode: NarrativeMode;
   private dmLayer: DMLayer | null;
   private language: GameLanguage;
 
   constructor(config: NarrativeServiceConfig) {
     this.apiUrl = config.apiUrl;
-    this.accessCode = config.accessCode;
     this.language = config.language ?? "fr";
     this.mode = config.apiUrl && config.accessCode ? "llm" : "hardcoded";
     this.dmLayer = this.mode === "llm"

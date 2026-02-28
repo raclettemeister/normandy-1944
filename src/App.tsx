@@ -30,7 +30,7 @@ export default function App() {
   const [achievementQueue, setAchievementQueue] = useState<Achievement[]>([]);
   const [difficulty, setDifficulty] = useState<Difficulty>("easy");
 
-  const [accessCode, setAccessCode] = useState("");
+  const [accessCode, _setAccessCode] = useState("");
   const narrativeService = useMemo(
     () =>
       new NarrativeService({
