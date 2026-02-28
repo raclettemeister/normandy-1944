@@ -6,27 +6,27 @@ interface OrdersPanelProps {
   onClose: () => void;
 }
 
-const OPORD_TEXT = `OPERATION ALBANY — 506th PIR, 2nd PLATOON, EASY COMPANY
-CLASSIFICATION: SECRET
-DATE: 5 JUNE 1944
+const OPORD_TEXT = `OPERATION ALBANY — 506th PIR, 2e PELOTON, EASY COMPANY
+CLASSIFICATION : SECRET
+DATE : 5 JUIN 1944
 
-MISSION: Secure causeway exit at Sainte-Marie-du-Mont
-to enable linkup with seaborne forces landing Utah
-Beach at H-Hour.
+MISSION : Securiser la sortie de chaussee de Sainte-Marie-du-Mont
+afin de permettre la liaison avec les forces amphibies debarquant
+a Utah Beach a l'heure H.
 
-TIMELINE:
-  0100 — Drop on DZ C. Rally at assembly area.
-  0400 — Assembly complete. Move to objective area.
-  0600 — H-HOUR. Beach landings begin.
-  0900 — Crossroads SECURED. Establish perimeter.
-  1200 — Resupply expected from beach elements.
-  1800 — Relief from 4th Infantry Division.
-  0100 — End of operational period.
+CHRONOLOGIE :
+  0100 — Saut sur la DZ C. Ralliement a la zone d'assemblage.
+  0400 — Assemblage termine. Mouvement vers la zone objectif.
+  0600 — HEURE H. Debut des debarquements.
+  0900 — Carrefour SECURISE. Etablir le perimetre.
+  1200 — Ravitaillement attendu depuis les elements de plage.
+  1800 — Releve par la 4th Infantry Division.
+  0100 — Fin de la periode operationnelle.
 
-COMMANDER'S INTENT: Speed is critical. Every hour of
-delay gives the enemy time to organize. Strike while
-they are confused. The men landing on that beach are
-counting on us.`;
+INTENTION DU COMMANDANT : La vitesse est decisive.
+Chaque heure de retard laisse a l'ennemi le temps de s'organiser.
+Frappez pendant qu'ils sont desorganises. Les hommes qui debarquent
+sur cette plage comptent sur nous.`;
 
 export default function OrdersPanel({
   milestones,
@@ -42,7 +42,7 @@ export default function OrdersPanel({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="overlay-header">
-          <span className="overlay-title">{t("battleOrders")}</span>
+          <span className="overlay-title">Ordres d'operation</span>
           <button className="overlay-close" onClick={onClose}>
             {t("close")}
           </button>
@@ -59,8 +59,8 @@ export default function OrdersPanel({
                 {m.status === "achieved"
                   ? tGame("milestoneStatus.achieved")
                   : m.status === "missed"
-                  ? tGame("milestoneStatus.missed")
-                  : tGame("milestoneStatus.pending")}
+                  ? "ECHEC"
+                  : "—"}
               </span>
             </div>
           ))}

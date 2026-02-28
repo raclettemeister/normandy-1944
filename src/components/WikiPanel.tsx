@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import type { WikiCategory } from "../types/index.ts";
 import { WIKI_ENTRIES, getEntriesByCategory } from "../content/wiki.ts";
 
@@ -10,11 +9,11 @@ interface WikiPanelProps {
 
 const CATEGORIES: { key: WikiCategory; label: string }[] = [
   { key: "operation", label: "Operation" },
-  { key: "your_unit", label: "Your Unit" },
-  { key: "weapons_equipment", label: "Weapons & Equipment" },
-  { key: "enemy_forces", label: "Enemy Forces" },
-  { key: "terrain_landmarks", label: "Terrain & Landmarks" },
-  { key: "tactics_learned", label: "Tactics Learned" },
+  { key: "your_unit", label: "Votre unite" },
+  { key: "weapons_equipment", label: "Armes et equipement" },
+  { key: "enemy_forces", label: "Forces ennemies" },
+  { key: "terrain_landmarks", label: "Terrain et reperes" },
+  { key: "tactics_learned", label: "Tactiques apprises" },
 ];
 
 function isEntryVisible(entryId: string, alwaysAvailable: boolean, unlockedIds: string[]): boolean {
@@ -22,7 +21,6 @@ function isEntryVisible(entryId: string, alwaysAvailable: boolean, unlockedIds: 
 }
 
 export default function WikiPanel({ unlockedEntryIds, onClose }: WikiPanelProps) {
-  const { t } = useTranslation("ui");
   const [selectedCategory, setSelectedCategory] = useState<WikiCategory>("operation");
   const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
 
@@ -44,22 +42,22 @@ export default function WikiPanel({ unlockedEntryIds, onClose }: WikiPanelProps)
       <div className="overlay-backdrop" onClick={onClose}>
         <div className="overlay-panel wiki-panel" onClick={(e) => e.stopPropagation()}>
           <div className="overlay-header">
-            <span className="overlay-title">{t("fieldManual")}</span>
-            <button className="overlay-close" onClick={onClose}>{t("close")}</button>
+            <span className="overlay-title">Manuel de campagne</span>
+            <button className="overlay-close" onClick={onClose}>ESC</button>
           </div>
           <div className="wiki-article">
             <button
               className="wiki-back-btn"
               onClick={() => setSelectedEntryId(null)}
             >
-              &larr; Back
+              &larr; Retour
             </button>
             <h2 className="wiki-article__term">{selectedEntry.term}</h2>
             <p className="wiki-article__short">{selectedEntry.shortDescription}</p>
             <p className="wiki-article__full">{selectedEntry.fullDescription}</p>
             {selectedEntry.tacticalNote && (
               <p className="wiki-article__tactical">
-                <span className="wiki-article__tactical-label">Tactical Note: </span>
+                <span className="wiki-article__tactical-label">Note tactique : </span>
                 {selectedEntry.tacticalNote}
               </p>
             )}
@@ -73,8 +71,8 @@ export default function WikiPanel({ unlockedEntryIds, onClose }: WikiPanelProps)
     <div className="overlay-backdrop" onClick={onClose}>
       <div className="overlay-panel wiki-panel" onClick={(e) => e.stopPropagation()}>
         <div className="overlay-header">
-          <span className="overlay-title">{t("fieldManual")}</span>
-          <button className="overlay-close" onClick={onClose}>{t("close")}</button>
+          <span className="overlay-title">Manuel de campagne</span>
+          <button className="overlay-close" onClick={onClose}>ESC</button>
         </div>
         <div className="wiki-layout">
           <nav className="wiki-categories">
@@ -97,7 +95,7 @@ export default function WikiPanel({ unlockedEntryIds, onClose }: WikiPanelProps)
           </nav>
           <div className="wiki-entries">
             {entries.length === 0 ? (
-              <p className="wiki-empty">No entries in this category.</p>
+              <p className="wiki-empty">Aucune entree dans cette categorie.</p>
             ) : (
               entries.map((entry) => {
                 const visible = isEntryVisible(entry.id, entry.alwaysAvailable, unlockedEntryIds);

@@ -39,7 +39,6 @@ export default function DecisionPanel({
   disabled,
   sceneId,
 }: DecisionPanelProps) {
-  const { t } = useTranslation("ui");
   const { t: tScenes } = useTranslation("scenes");
   const shuffledDecisions = useMemo(() => {
     if (decisions.length === 0) return decisions;
@@ -60,7 +59,7 @@ export default function DecisionPanel({
 
       {isCombatScene && (
         <div className="captain-position" data-testid="captain-position">
-          <span className="captain-position__label">{t("yourPosition")}</span>
+          <span className="captain-position__label">Votre position :</span>
           {POSITIONS.map((pos) => (
             <button
               key={pos}
@@ -72,7 +71,7 @@ export default function DecisionPanel({
               onClick={() => onCaptainPositionChange(pos)}
               disabled={disabled}
             >
-              {t(pos)}
+              {pos === "front" ? "avant" : pos === "middle" ? "centre" : "arriere"}
             </button>
           ))}
         </div>

@@ -149,6 +149,8 @@ export const TIER_BASE_SCORES: Record<TacticalTier, number> = {
 
 export type Difficulty = "easy" | "medium" | "hardcore";
 
+export type GameLanguage = "fr" | "en";
+
 // ─── Tactical Cycle Phases ─────────────────────────────────────────
 
 export type TacticalPhase = "situation" | "preparation" | "plan" | "briefing" | "execution";
@@ -215,6 +217,7 @@ export interface OutcomeNarrative {
   intelGained?: keyof IntelFlags;
   menGained?: number;
   skipRally?: boolean;
+  rallyOverride?: RallyEffect;
   timeCost?: number;
   context?: string;
 }
@@ -282,10 +285,13 @@ export interface VisibilityCondition {
   phase?: GamePhase;
 }
 
-export interface RallyEvent {
+export interface RallyEffect {
   soldiers: Soldier[];
   ammoGain: number;
   moraleGain: number;
+}
+
+export interface RallyEvent extends RallyEffect {
   narrative: string;
 }
 

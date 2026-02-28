@@ -13,7 +13,7 @@ export default function FreeTextInput({
   onSubmit,
   disabled,
   loading,
-  placeholder = "Captain, what are your orders?",
+  placeholder = "Mon capitaine, quels sont vos ordres ?",
   maxLength = 500,
   initialText = "",
 }: FreeTextInputProps) {
@@ -24,7 +24,7 @@ export default function FreeTextInput({
     e.preventDefault();
     const trimmed = text.trim();
     if (!trimmed || trimmed.length < 5) {
-      setError("Say again, Captain?");
+      setError("Repetez, mon capitaine ?");
       return;
     }
     setError(null);
@@ -59,7 +59,7 @@ export default function FreeTextInput({
           disabled={disabled || loading || text.trim().length < 5}
           data-testid="free-text-submit"
         >
-          {loading ? "Evaluating..." : "Issue Orders"}
+          {loading ? "Evaluation..." : "Donner les ordres"}
         </button>
       </div>
     </form>

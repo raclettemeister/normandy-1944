@@ -51,6 +51,7 @@ describe("buildNarrationPrompt", () => {
     });
     expect(prompt.system).toContain("Night landing");
     expect(prompt.system).toContain("Terse");
+    expect(prompt.system).toContain("French");
   });
 
   it("should include active roster with traits", () => {
@@ -113,9 +114,9 @@ describe("buildNarrationPrompt", () => {
       roster: [],
       relationships: [],
     });
-    expect(prompt.system).toContain("Men: 8/18");
-    expect(prompt.system).toContain("Ammo: 45%");
-    expect(prompt.system).toContain("Morale: 62");
+    expect(prompt.system).toContain("Hommes: 8/18");
+    expect(prompt.system).toContain("Munitions: 45%");
+    expect(prompt.system).toContain("Moral: 62");
   });
 });
 
@@ -295,43 +296,45 @@ describe("buildDMEvaluationPrompt", () => {
 });
 
 describe("language integration", () => {
-  it("adds French language block when language is fr", async () => {
-    const { setLanguage } = await import("../../src/locales/i18n");
-    setLanguage("fr");
-    const prompt = buildNarrationPrompt({
-      sceneContext: "Test scene",
-      gameState: makeMinimalGameState(),
-      roster: [],
-      relationships: [],
-    });
+  it("adds French language directive when language is fr", () => {
+    const prompt = buildNarrationPrompt(
+      {
+        sceneContext: "Test scene",
+        gameState: makeMinimalGameState(),
+        roster: [],
+        relationships: [],
+      },
+      "fr"
+    );
     expect(prompt.system).toContain("[LANGUAGE]");
-    expect(prompt.system).toContain("Generate all narrative text in French");
-    setLanguage("en");
+    expect(prompt.system).toContain("Produce ALL player-facing prose in French");
   });
 
-  it("does not add language block for English", async () => {
-    const { setLanguage } = await import("../../src/locales/i18n");
-    setLanguage("en");
-    const prompt = buildNarrationPrompt({
-      sceneContext: "Test scene",
-      gameState: makeMinimalGameState(),
-      roster: [],
-      relationships: [],
-    });
-    expect(prompt.system).not.toContain("[LANGUAGE]");
-    setLanguage("en");
+  it("adds English language directive when language is en", () => {
+    const prompt = buildNarrationPrompt(
+      {
+        sceneContext: "Test scene",
+        gameState: makeMinimalGameState(),
+        roster: [],
+        relationships: [],
+      },
+      "en"
+    );
+    expect(prompt.system).toContain("[LANGUAGE]");
+    expect(prompt.system).toContain("Produce all prose in English");
   });
 
-  it("epilogue prompt includes French block", async () => {
-    const { setLanguage } = await import("../../src/locales/i18n");
-    setLanguage("fr");
-    const prompt = buildEpiloguePrompt({
-      soldier: makeSoldier({ id: "test" }),
-      events: [],
-      relationships: [],
-      allSoldierStatuses: [],
-    });
+  it("epilogue prompt includes French directive when language is fr", () => {
+    const prompt = buildEpiloguePrompt(
+      {
+        soldier: makeSoldier({ id: "test" }),
+        events: [],
+        relationships: [],
+        allSoldierStatuses: [],
+      },
+      "fr"
+    );
     expect(prompt.system).toContain("[LANGUAGE]");
-    setLanguage("en");
+    expect(prompt.system).toContain("Produce ALL player-facing prose in French");
   });
 });

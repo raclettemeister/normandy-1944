@@ -299,13 +299,14 @@ export function processSceneTransition(
     newState.intel[outcomeNarrative.intelGained] = true;
   }
 
-  if (scene.rally && !outcomeNarrative.skipRally) {
-    const rallySoldiers = scene.rally.soldiers.map((s) => ({ ...s }));
+  const rallyEvent = outcomeNarrative.rallyOverride ?? scene.rally;
+  if (rallyEvent && !outcomeNarrative.skipRally) {
+    const rallySoldiers = rallyEvent.soldiers.map((s) => ({ ...s }));
     newState.roster = [...newState.roster, ...rallySoldiers];
     newState.men += rallySoldiers.length;
-    newState.ammo = clamp(newState.ammo + scene.rally.ammoGain, 0, 100);
+    newState.ammo = clamp(newState.ammo + rallyEvent.ammoGain, 0, 100);
     newState.morale = clamp(
-      newState.morale + scene.rally.moraleGain,
+      newState.morale + rallyEvent.moraleGain,
       0,
       100
     );

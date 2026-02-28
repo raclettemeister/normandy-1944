@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 
 interface AccessCodeInputProps {
   onValidated: (code: string) => void;
@@ -10,7 +9,6 @@ export default function AccessCodeInput({
   onValidated,
   apiUrl,
 }: AccessCodeInputProps) {
-  const { t } = useTranslation("ui");
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,10 +32,10 @@ export default function AccessCodeInput({
       if (result.valid) {
         onValidated(trimmed);
       } else {
-        setError(t("accessCodeInvalid"));
+        setError("Code d'acces invalide.");
       }
     } catch {
-      setError(t("accessCodeOffline"));
+      setError("Serveur injoignable. Mode hors ligne active.");
     } finally {
       setLoading(false);
     }
@@ -46,7 +44,7 @@ export default function AccessCodeInput({
   return (
     <form className="access-code-form" onSubmit={handleSubmit} data-testid="access-code-form">
       <label className="access-code-form__label" htmlFor="access-code">
-        {t("accessCodeLabel")}
+        Code d'acces <span className="access-code-form__optional">(optionnel — active la narration IA)</span>
       </label>
       <div className="access-code-form__row">
         <input
@@ -55,7 +53,7 @@ export default function AccessCodeInput({
           type="text"
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          placeholder={t("accessCodePlaceholder")}
+          placeholder="Entrez le code d'acces"
           disabled={loading}
           data-testid="access-code-input"
           autoComplete="off"
@@ -66,7 +64,7 @@ export default function AccessCodeInput({
           disabled={loading || !code.trim()}
           data-testid="access-code-submit"
         >
-          {loading ? t("validating") : t("activate")}
+          {loading ? "Validation..." : "Activer"}
         </button>
       </div>
       {error && (

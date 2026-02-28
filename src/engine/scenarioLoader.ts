@@ -42,6 +42,34 @@ export function getScene(id: string): Scenario | undefined {
   return scenarioRegistry.get(id);
 }
 
+function narrativeAltMatches(key: string, state: GameState): boolean {
+  switch (key) {
+    case "solo":
+      return state.phase === "solo" || state.men <= 1;
+    case "squad":
+      return state.phase !== "solo" && state.men > 1;
+    case "hasSecondInCommand":
+      return !!state.secondInCommand?.alive;
+    case "low_morale":
+      return state.morale < 30;
+    default:
+      if (key in state.intel) {
+        return Boolean(state.intel[key as keyof GameState["intel"]]);
+      }
+      return state.wikiUnlocked.includes(key);
+  }
+}
+
+export function resolveSceneNarrative(scene: Scenario, state: GameState): string {
+  if (!scene.narrativeAlt) return scene.narrative;
+
+  for (const [key, text] of Object.entries(scene.narrativeAlt)) {
+    if (narrativeAltMatches(key, state)) return text;
+  }
+
+  return scene.narrative;
+}
+
 export function getAvailableDecisions(
   scene: Scenario,
   state: GameState
@@ -81,62 +109,62 @@ function isDecisionVisible(decision: Decision, state: GameState): boolean {
 const VETERAN_COMMENTS: SecondInCommandComment[] = [
   {
     trigger: { type: "low_ammo", threshold: 20 },
-    text: "Captain, we're burning through ammo. Might want to think about conserving for the objective.",
+    text: "Mon capitaine, on brule les munitions. Il faudrait peut-etre economiser pour l'objectif.",
   },
   {
     trigger: { type: "low_morale", threshold: 30 },
-    text: "The men are shaky, Captain. We need a win — something to steady them.",
+    text: "Les hommes sont nerveux, mon capitaine. Il nous faut une victoire — quelque chose pour les calmer.",
   },
   {
     trigger: { type: "low_men", threshold: 6 },
-    text: "We're down to a handful, sir. Not enough for a proper assault. Maybe we find another way.",
+    text: "On n'est plus qu'une poignee, mon capitaine. Pas assez pour un assaut propre. Peut-etre trouver autre chose.",
   },
   {
     trigger: { type: "high_readiness", threshold: 60 },
-    text: "They're dug in now, sir. This won't be easy. We need to be smart about our approach.",
+    text: "Ils sont retranches maintenant, mon capitaine. Ce ne sera pas facile. Il faut etre malins sur le plan.",
   },
   {
     trigger: { type: "time_surplus" },
-    text: "We're ahead of schedule. Could use the time to scout the approach.",
+    text: "On a de l'avance. On pourrait utiliser le temps pour reconnaitre l'approche.",
   },
   {
     trigger: { type: "bad_decision", tier: "suicidal" },
-    text: "With all due respect, sir — that's suicide. There has to be another way.",
+    text: "Avec tout le respect, mon capitaine — c'est du suicide. Il doit y avoir une autre solution.",
   },
   {
     trigger: { type: "bad_decision", tier: "reckless" },
-    text: "Sir, that's risky. Real risky. I'd want a better plan before committing the men.",
+    text: "Mon capitaine, c'est risque. Vraiment risque. J'aimerais un meilleur plan avant d'engager les hommes.",
   },
 ];
 
 const GREEN_COMMENTS: SecondInCommandComment[] = [
   {
     trigger: { type: "low_ammo", threshold: 20 },
-    text: "Uh... we don't have a lot of bullets, sir.",
+    text: "Euh... on n'a pas beaucoup de balles, mon capitaine.",
   },
   {
     trigger: { type: "low_morale", threshold: 30 },
-    text: "The guys seem pretty scared, sir.",
+    text: "Les gars ont l'air assez effrayes, mon capitaine.",
   },
   {
     trigger: { type: "low_men", threshold: 6 },
-    text: "There's... not many of us left, Captain.",
+    text: "Il... ne reste plus beaucoup de nous, mon capitaine.",
   },
   {
     trigger: { type: "high_readiness", threshold: 60 },
-    text: "Sounds like a lot of shooting up ahead, sir.",
+    text: "On dirait beaucoup de tirs devant, mon capitaine.",
   },
   {
     trigger: { type: "time_surplus" },
-    text: "What do we do now, sir?",
+    text: "Qu'est-ce qu'on fait maintenant, mon capitaine?",
   },
   {
     trigger: { type: "bad_decision", tier: "suicidal" },
-    text: "Yes sir, whatever you say.",
+    text: "Oui mon capitaine, tout ce que vous voulez.",
   },
   {
     trigger: { type: "bad_decision", tier: "reckless" },
-    text: "If you say so, sir.",
+    text: "Si vous le dites, mon capitaine.",
   },
 ];
 

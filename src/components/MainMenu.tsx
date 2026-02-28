@@ -17,7 +17,11 @@ export default function MainMenu({
   const lessons = meta.unlockedWikiEntries;
 
   const handleReset = () => {
-    if (window.confirm(t("resetConfirm"))) {
+    if (
+      window.confirm(
+        "Reinitialiser toute la progression ? Cela effacera les lecons et les succes."
+      )
+    ) {
       resetMeta();
       window.location.reload();
     }
@@ -32,15 +36,15 @@ export default function MainMenu({
 
       <div className="main-menu__actions">
         <div className="difficulty-selection">
-          <h2>Select Difficulty</h2>
+          <h2>Choisir la difficulte</h2>
 
           <button
             className="btn btn--primary difficulty-btn"
             onClick={() => onStartGame("easy")}
             data-testid="start-easy"
           >
-            <span className="difficulty-btn__name">Easy</span>
-            <span className="difficulty-btn__desc">Decisions visible. No AI required.</span>
+            <span className="difficulty-btn__name">Facile</span>
+            <span className="difficulty-btn__desc">Decisions visibles. IA non requise.</span>
           </button>
 
           <button
@@ -48,8 +52,8 @@ export default function MainMenu({
             onClick={() => onStartGame("medium")}
             data-testid="start-medium"
           >
-            <span className="difficulty-btn__name">Medium</span>
-            <span className="difficulty-btn__desc">Write your own orders. 5 reveal tokens.</span>
+            <span className="difficulty-btn__name">Moyen</span>
+            <span className="difficulty-btn__desc">Redigez vos ordres. 5 jetons de revelation.</span>
           </button>
 
           <button
@@ -57,14 +61,14 @@ export default function MainMenu({
             onClick={() => onStartGame("hardcore")}
             data-testid="start-hardcore"
           >
-            <span className="difficulty-btn__name">Hardcore</span>
-            <span className="difficulty-btn__desc">No decisions. No tokens. Lead or die.</span>
+            <span className="difficulty-btn__name">Extreme</span>
+            <span className="difficulty-btn__desc">Aucune decision. Aucun jeton. Commandez ou mourez.</span>
           </button>
         </div>
 
         {(achievements.length > 0 || lessons.length > 0) && (
           <button className="btn" onClick={handleReset}>
-            {t("resetProgress")}
+            Reinitialiser la progression
           </button>
         )}
       </div>
@@ -72,8 +76,8 @@ export default function MainMenu({
       {achievements.length > 0 && (
         <div data-testid="achievement-gallery" style={{ marginTop: "1rem" }}>
           <span style={{ fontSize: "0.7rem", color: "var(--text-muted)" }}>
-            {t("achievementCount", { count: achievements.length })} ·{" "}
-            {t("lessonCount", { count: lessons.length })}
+            {achievements.length} succes ·{" "}
+            {lessons.length} lecon{lessons.length !== 1 ? "s" : ""}
           </span>
         </div>
       )}

@@ -25,46 +25,46 @@ export const scene04_the_sergeant: Scenario = {
   timeCost: 15,
   combatScene: false,
 
-  sceneContext: "Stone wall, 30 meters from 2-3 voices. Cadence sounds American but could be Ost-Battalion or Fallschirmjäger with captured gear. Cricket clicker available. Potential rally with Henderson, Malone, Doyle.",
+  sceneContext: "Mur de pierre, 30 metres de 2-3 voix. La cadence sonne americaine mais pourrait etre Ost-Bataillon ou Fallschirmjager avec equipement capture. Clicker disponible. Rassemblement potentiel avec Henderson, Malone, Doyle.",
 
-  narrative: "Voices on the other side of a stone wall. Thirty meters, maybe less. Two, three people — one giving orders, quiet but firm. The cadence sounds American. But the briefing warned about Ost-Battalion troops with broken English, Fallschirmjäger with captured gear. Your hand finds the cricket clicker.",
+  narrative: "Des voix de l'autre cote d'un mur de pierre. Trente metres, peut-etre moins. Deux, trois personnes — une qui donne des ordres, calme mais ferme. La cadence sonne americaine. Mais le briefing avertissait sur les troupes Ost-Bataillon avec anglais approximatif, Fallschirmjager avec equipement capture. Votre main trouve le clicker.",
 
   narrativeAlt: {
-    low_morale: "Voices on the other side of a stone wall. Close. You drop to a knee. The cadence might be English — or you might need it to be. You're too exhausted to trust your own ears. The cricket clicker is in your breast pocket. Your fingers are slow finding it."
+    low_morale: "Des voix de l'autre cote d'un mur de pierre. Proches. Vous vous mettez a genoux. La cadence pourrait etre de l'anglais — ou vous en auriez besoin. Vous etes trop epuise pour faire confiance a vos propres oreilles. Le clicker est dans votre poche de poitrine. Vos doigts sont lents a le trouver."
   },
 
   rally: {
     soldiers: [byId('henderson'), byId('malone'), byId('doyle')],
     ammoGain: 10,
     moraleGain: 8,
-    narrative: "Henderson stands up from the hedgerow, carbine low. 'Captain.' That's all he says. Behind him, Malone crouches with his Thompson, eyes sweeping the dark, jaw set like he's hoping someone gives him a reason. Doyle is flat on his belly, white-knuckled on his Garand. The kid won't look up. Three men. Your men. Something in your chest unclenches."
+    narrative: "Henderson se leve de la haie, carabine basse. 'Capitaine.' C'est tout ce qu'il dit. Derriere lui, Malone s'accroupit avec sa Thompson, les yeux balayant l'obscurite, machoire serree comme s'il esperait que quelqu'un lui donne une raison. Doyle est a plat ventre, poings blancs sur son Garand. Le gamin ne leve pas les yeux. Trois hommes. Vos hommes. Quelque chose se detend dans votre poitrine."
   },
 
   decisions: [
     {
       id: "sergeant_clicker",
-      text: "Use the cricket clicker from behind the wall",
+      text: "Utiliser le clicker depuis derriere le mur",
       tier: "excellent",
       outcome: {
         success: {
-          text: "One click-clack. Silence — then click-clack, click-clack from the dark. You vault the wall. Henderson is there, carbine low, eyes steady. 'Captain,' he says. 'Glad to see you, sir.'",
-          context: "Cricket challenge from cover. Proper response. Clean rally with Henderson. No noise, no delay.",
+          text: "Un clic-clac. Silence — puis clic-clac, clic-clac depuis l'obscurite. Vous franchissez le mur. Henderson est la, carabine basse, regard stable. 'Capitaine,' dit-il. 'Content de vous voir, mon capitaine.'",
+          context: "Defi clicker depuis couvert. Reponse appropriee. Rassemblement propre avec Henderson. Pas de bruit, pas de retard.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 8,
           readinessChange: 0
         },
         partial: {
-          text: "One click-clack. A long pause. Whispered voices on the other side. Then two clicks — tentative. You climb the wall carefully. Henderson has his pistol leveled at your chest until he sees your face. 'Captain. Jesus Christ.' He lowers the weapon.",
-          context: "Cricket challenge, hesitant response. Henderson had weapon drawn on approach. Rally made but tense.",
+          text: "Un clic-clac. Une longue pause. Des voix chuchotees de l'autre cote. Puis deux clics — tentatifs. Vous escaladez le mur avec precaution. Henderson a son pistolet braque sur votre poitrine jusqu'a voir votre visage. 'Capitaine. Mon Dieu.' Il baisse l'arme.",
+          context: "Defi clicker, reponse hesitante. Henderson avait l'arme braquee a l'approche. Rassemblement fait mais tendu.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 6,
           readinessChange: 0
         },
         failure: {
-          text: "One click-clack. Nothing. Then a rifle bolt being worked. Malone's voice: 'Flash. Right now.' You answer 'Thunder.' He lowers his weapon. 'Thought you were Kraut.' The reunion is tense — everyone's on edge.",
-          context: "Cricket got no response. Malone nearly fired. Verbal challenge resolved it. Rally made but squad on edge.",
+          text: "Un clic-clac. Rien. Puis une culasse qu'on arme. La voix de Malone : 'Flash. Tout de suite.' Vous repondez 'Thunder.' Il baisse son arme. 'Je pensais que vous etiez un Boche.' Les retrouvailles sont tendues — tout le monde est sur les nerfs.",
+          context: "Clicker sans reponse. Malone a failli tirer. Defi verbal a regle. Rassemblement fait mais escouade sur les nerfs.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 4,
@@ -76,28 +76,28 @@ export const scene04_the_sergeant: Scenario = {
     },
     {
       id: "sergeant_flash",
-      text: "Call out 'Flash' from behind the stone wall",
+      text: "Crier 'Flash' depuis derriere le mur de pierre",
       tier: "sound",
       outcome: {
         success: {
-          text: "'Flash.' Instant: 'Thunder. Identify yourself.' Henderson's voice — you'd know it anywhere. 'Captain, 2nd Platoon.' 'Come on in, sir.' Henderson, Malone, Doyle. Your people.",
-          context: "Verbal challenge. Instant proper response from Henderson. Clean rally with full squad element.",
+          text: "'Flash.' Instantane : 'Thunder. Identifiez-vous.' La voix de Henderson — vous la reconnaitriez partout. 'Capitaine, 2e peloton.' 'Entrez, mon capitaine.' Henderson, Malone, Doyle. Vos hommes.",
+          context: "Defi verbal. Reponse correcte instantanee de Henderson. Rassemblement propre avec element complet.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 6,
           readinessChange: 2
         },
         partial: {
-          text: "'Flash.' A pause that lasts forever. Then: '...Thunder.' Uncertain. You come around the wall slowly. Henderson has his carbine up. When he sees you, he exhales. 'Captain. Damn, sir.'",
-          context: "Verbal challenge, uncertain response. Henderson had carbine raised. Rally made but approach was tense.",
+          text: "'Flash.' Une pause qui dure une eternite. Puis : '...Thunder.' Incertain. Vous contournez le mur lentement. Henderson a sa carabine levee. Quand il vous voit, il expire. 'Capitaine. Bon sang, mon capitaine.'",
+          context: "Defi verbal, reponse incertaine. Henderson avait la carabine levee. Rassemblement fait mais approche tendue.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 5,
           readinessChange: 2
         },
         failure: {
-          text: "'Flash.' 'THUNDER!' Malone shouts it — loud enough to echo off the hedgerows. 'Malone, shut the hell up,' Henderson hisses. Too late. Somewhere east, a flare climbs into the sky. You've been located.",
-          context: "Verbal challenge. Malone shouted response — echo carried. German flare went up east. Position compromised.",
+          text: "'Flash.' 'THUNDER!' Malone le crie — assez fort pour resonner sur les haies. 'Malone, ferme-la,' siffle Henderson. Trop tard. Quelque part a l'est, une fusee monte dans le ciel. Vous avez ete repere.",
+          context: "Defi verbal. Malone a crie la reponse — echo porte. Fusee allemande a l'est. Position compromise.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 3,
@@ -109,20 +109,20 @@ export const scene04_the_sergeant: Scenario = {
     },
     {
       id: "sergeant_rush",
-      text: "Sprint toward the voices before they move on",
+      text: "Sprint vers les voix avant qu'elles ne partent",
       tier: "reckless",
       outcome: {
         success: {
-          text: "You vault the wall and run. Malone spins — pistol up. Henderson grabs his arm. 'HOLD FIRE.' You skid to a stop, breathing hard. Henderson stares at you. 'With all due respect, sir — don't ever do that again.'",
-          context: "Rushed over wall without identification. Henderson prevented Malone from firing. Rally made but nearly fatal.",
+          text: "Vous franchissez le mur et courez. Malone pivote — pistolet leve. Henderson lui attrape le bras. 'NE TIREZ PAS.' Vous glissez a l'arret, haletant. Henderson vous fixe. 'Avec tout le respect, mon capitaine — ne refaites jamais ca.'",
+          context: "Precipite par-dessus le mur sans identification. Henderson a empeche Malone de tirer. Rassemblement fait mais presque fatal.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 3,
           readinessChange: 3
         },
         partial: {
-          text: "You jump the wall. Muzzle flash — Malone fires. The round whips past your ear. 'CEASE FIRE!' Henderson tackles Malone. Doyle is screaming. When it settles, no one's hit. But your ear is ringing and your hands won't stop shaking.",
-          context: "Rushed wall. Malone fired — near miss. Henderson tackled shooter. No casualties but squad shaken. Noise signature.",
+          text: "Vous sautez le mur. Eclair de bouche — Malone tire. La balle siffle a votre oreille. 'CESSEZ LE FEU!' Henderson plaque Malone. Doyle hurle. Quand ca se calme, personne n'est touche. Mais votre oreille bourdonne et vos mains ne s'arretent pas de trembler.",
+          context: "Precipite vers le mur. Malone a tire — quasi-accident. Henderson a plaque le tireur. Pas de pertes mais escouade secouee. Signature sonore.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -2,
@@ -130,8 +130,8 @@ export const scene04_the_sergeant: Scenario = {
         },
         failure: {
           // captain_wounded: persistent penalty — engine must track shoulder graze
-          text: "You charge over the wall. Malone fires twice. Pain tears through your shoulder — you hit the ground. Henderson is shouting. Everything is chaos. The round grazed you, but blood is soaking your sleeve. Your own man shot you.",
-          context: "Charged wall without identification. Malone shot captain — shoulder graze. Friendly fire wound. Squad in chaos.",
+          text: "Vous chargez par-dessus le mur. Malone tire deux fois. La douleur dechire votre epaule — vous tombez au sol. Henderson crie. Tout est chaos. La balle vous a effleure, mais le sang imbibe votre manche. Votre propre homme vous a tire dessus.",
+          context: "Charge le mur sans identification. Malone a tire sur le capitaine — effleurement epaule. Blessure par tir ami. Escouade en chaos.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -8,
@@ -143,29 +143,32 @@ export const scene04_the_sergeant: Scenario = {
     },
     {
       id: "sergeant_pebble",
-      text: "Toss a pebble over the wall and listen",
+      text: "Lancer un caillou par-dessus le mur et ecouter",
       tier: "mediocre",
       // Effective timeCost: 30 min (extra 15 min for the confusion this causes)
       outcome: {
         success: {
-          text: "The stone clicks off the far side of the wall. Voices go silent. Then: 'Who's there? Flash.' Henderson. You answer 'Thunder.' It works — just took longer than it needed to.",
-          context: "Tossed pebble. Caused alert but Henderson challenged verbally. Rally made with extra delay.",
+          text: "Le caillou claque de l'autre cote du mur. Les voix se taisent. Puis : 'Qui est la? Flash.' Henderson. Vous repondez 'Thunder.' Ca marche — a juste pris plus longtemps que necessaire.",
+          context: "Caillou lance. Provoque une alerte, mais Henderson force un defi verbal. Rassemblement etabli avec retard.",
+          timeCost: 30,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 2,
           readinessChange: 1
         },
         partial: {
-          text: "The stone lands. Dead silence. Weapons being readied. Two full minutes before a whisper: 'If you're American, use your goddamn clicker.' You do. Henderson: 'Would've been nice to start with that, sir.'",
-          context: "Pebble caused two-minute armed standoff. Had to use clicker anyway. Rally made but time wasted, trust strained.",
+          text: "Le caillou atterrit. Silence de mort. Armes en preparation. Deux longues minutes avant un chuchotement : 'Si vous etes Americain, utilisez votre satane clicker.' Vous le faites. Henderson : 'Ca aurait ete bien de commencer par la, mon capitaine.'",
+          context: "Caillou lance, face-a-face arme pendant deux minutes. Oblige d'utiliser le clicker de toute facon. Rassemblement etabli, mais temps perdu et confiance ebranlee.",
+          timeCost: 30,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 1,
           readinessChange: 2
         },
         failure: {
-          text: "The pebble lands and Malone opens fire at the sound. You flatten yourself into the dirt. Henderson shouts cease fire. Ten minutes of chaos before you make contact with the clicker. Doyle is crying. Malone won't look at you.",
-          context: "Pebble triggered Malone to fire. Ten minutes of chaos. Rally made but squad traumatized. Doyle breaking down.",
+          text: "Le caillou atterrit et Malone ouvre le feu au son. Vous vous plaquez dans la terre. Henderson crie de cesser le feu. Dix minutes de chaos avant d'etablir le contact avec le clicker. Doyle pleure. Malone ne vous regarde pas.",
+          context: "Caillou a declenche les tirs de Malone. Dix minutes de chaos. Rassemblement fait mais escouade traumatisee. Doyle s'effondre.",
+          timeCost: 30,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -3,
@@ -177,31 +180,41 @@ export const scene04_the_sergeant: Scenario = {
     },
     {
       id: "sergeant_signal_shot",
-      text: "Fire a shot in the air to signal them",
+      text: "Tirer un coup en l'air pour les signaler",
       tier: "suicidal",
       // PARTIAL RALLY: Only Henderson is found. Malone and Doyle scatter
       // and are lost. Engine should override the full rally with:
       // soldiers: [henderson], ammoGain: 5, moraleGain: 3
       outcome: {
         success: {
-          text: "The shot cracks the night open. Voices scatter — running in every direction. 'FLASH!' you shout. 'THUNDER!' Henderson, fifty meters away and moving farther. Malone and Doyle are gone — bolted into the dark. Henderson finds you alone. 'A signal shot, sir? In Normandy?'",
-          context: "Signal shot scattered everyone. Malone and Doyle bolted — lost. Only Henderson recovered. Partial rally, ammo spent.",
+          text: "Le coup de feu dechire la nuit. Les voix se dispersent — course dans toutes les directions. 'FLASH!' vous criez. 'THUNDER!' Henderson, cinquante metres et qui s'eloigne. Malone et Doyle ont disparu — enfuis dans le noir. Henderson vous trouve seul. 'Un coup de signal, mon capitaine? En Normandie?'",
+          context: "Coup de signal a disperse tout le monde. Malone et Doyle enfuis — perdus. Seul Henderson recupere. Rassemblement partiel, munitions depensees.",
+          rallyOverride: {
+            soldiers: [byId('henderson')],
+            ammoGain: 5,
+            moraleGain: 3,
+          },
           menLost: 0,
           ammoSpent: -1,
           moraleChange: -3,
           readinessChange: 10
         },
         partial: {
-          text: "The shot echoes off the hedgerows. Pandemonium — running, shouting, a German voice barking in the distance. You find Henderson crouching behind the wall, alone. Malone and Doyle scattered. 'Captain. I've got nothing kind to say about what you just did.'",
-          context: "Signal shot caused pandemonium. German voice in distance. Malone and Doyle scattered, lost. Henderson only.",
+          text: "Le coup de feu resonne sur les haies. Pandemonium — course, cris, une voix allemande qui aboie au loin. Vous trouvez Henderson accroupi derriere le mur, seul. Malone et Doyle disperses. 'Capitaine. Je n'ai rien de gentil a dire sur ce que vous venez de faire.'",
+          context: "Coup de signal a cause le pandemonium. Voix allemande au loin. Malone et Doyle disperses, perdus. Henderson seulement.",
+          rallyOverride: {
+            soldiers: [byId('henderson')],
+            ammoGain: 5,
+            moraleGain: 3,
+          },
           menLost: 0,
           ammoSpent: -1,
           moraleChange: -6,
           readinessChange: 12
         },
         failure: {
-          text: "The shot echoes. A machine gun opens up from three hundred meters — long bursts, tracers whipping overhead. Everyone scatters. Forty-five minutes of crawling through ditches. You find Henderson. Just Henderson. Malone and Doyle are gone.",
-          context: "Signal shot drew MG fire. 45 minutes crawling ditches. Only Henderson found. Malone and Doyle lost. Rally failed.",
+          text: "Le coup de feu resonne. Une mitrailleuse ouvre le feu a trois cents metres — longues rafales, traceurs sifflant au-dessus. Tout le monde se disperse. Quarante-cinq minutes a ramper dans les fosses. Vous trouvez Henderson. Juste Henderson. Malone et Doyle ont disparu.",
+          context: "Coup de signal a attire les tirs de MG. 45 minutes a ramper dans les fosses. Seul Henderson trouve. Malone et Doyle perdus. Rassemblement rate.",
           menLost: 0,
           ammoSpent: -1,
           moraleChange: -10,
@@ -214,29 +227,32 @@ export const scene04_the_sergeant: Scenario = {
     },
     {
       id: "sergeant_observe",
-      text: "Circle wide through the hedgerow and observe them",
+      text: "Contourner large par la haie et les observer",
       tier: "sound",
       // Effective timeCost: 30 min (extra movement through bocage)
       outcome: {
         success: {
-          text: "A hundred meters through the bocage, belly-crawling the last twenty. From the new angle: three men. American helmets. Paratrooper boots. A Thompson — NCO weapon. You use the clicker. Henderson answers.",
-          context: "Circled wide, observed from new angle. Confirmed American helmets, paratrooper boots, Thompson. Clean clicker rally.",
+          text: "Cent metres a travers le bocage, rampant sur le ventre les vingt derniers. Depuis le nouvel angle : trois hommes. Casques americains. Bottes de parachutiste. Une Thompson — arme de sous-officier. Vous utilisez le clicker. Henderson repond.",
+          context: "Contourne large, observe depuis nouvel angle. Confirme casques americains, bottes parachutiste, Thompson. Rassemblement clicker propre.",
+          timeCost: 30,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 4,
           readinessChange: 1
         },
         partial: {
-          text: "Twenty-five minutes through dense hedgerow. Shapes in the dark — details gone. American, probably. You use the clicker. Two clicks back. Henderson, Malone, Doyle. 'Where the hell have you been, Captain? We've been here an hour.'",
-          context: "25-minute flanking circuit. Could not confirm IDs visually. Clicker resolved it. Rally made but time burned.",
+          text: "Vingt-cinq minutes a travers la haie dense. Des formes dans le noir — pas de details. Americains, probablement. Vous utilisez le clicker. Deux clics en retour. Henderson, Malone, Doyle. 'Ou diable etiez-vous, Capitaine? On est la depuis une heure.'",
+          context: "Circuit de flanc 25 minutes. Impossible de confirmer les identites visuellement. Clicker a regle. Rassemblement fait mais temps brule.",
+          timeCost: 30,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 3,
           readinessChange: 2
         },
         failure: {
-          text: "You circle too wide. Thirty-five minutes. When you reach the spot, they've moved. Another ten minutes tracking before Henderson's clicker finds you. You've burned nearly an hour.",
-          context: "Circled too wide — 45 minutes total. Group had moved. Henderson's clicker found you. Nearly an hour wasted.",
+          text: "Vous contournez trop large. Trente-cinq minutes. Quand vous atteignez l'endroit, ils ont bouge. Encore dix minutes a les pister avant que le clicker de Henderson vous trouve. Vous avez brule pres d'une heure.",
+          context: "Contourne trop large — 45 minutes au total. Le groupe avait bouge. Le clicker de Henderson vous a trouve. Pres d'une heure gaspillee.",
+          timeCost: 30,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 1,
@@ -248,12 +264,12 @@ export const scene04_the_sergeant: Scenario = {
     },
     {
       id: "sergeant_avoid",
-      text: "Slip away into the next field and keep moving",
+      text: "Se faufiler dans le champ suivant et continuer",
       tier: "mediocre",
       outcome: {
         success: {
-          text: "You slip into the next field. The voices fade behind the wall. Safe. The silence that follows is the loudest thing you've heard all night. You're still alone.",
-          context: "Avoided contact entirely. Slipped away undetected. No rally — still alone. No risk taken, no men gained.",
+          text: "Vous vous faufilez dans le champ suivant. Les voix s'estompent derriere le mur. En securite. Le silence qui suit est la chose la plus bruyante que vous ayez entendue de toute la nuit. Vous etes toujours seul.",
+          context: "Contact evite. Le groupe s'est faufile sans etre detecte. Pas de rassemblement — toujours seul. Aucun risque pris, aucun homme gagne.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -5,
@@ -261,8 +277,8 @@ export const scene04_the_sergeant: Scenario = {
           skipRally: true,
         },
         partial: {
-          text: "You back away. A branch snaps. The voices go quiet. Someone whispers 'Flash?' — barely audible. You keep moving. Part of you says go back. You don't.",
-          context: "Retreated. Heard 'Flash' challenge behind — Americans. Kept moving anyway. Rally skipped. Alone.",
+          text: "Vous reculez. Une branche craque. Les voix se taisent. Quelqu'un chuchote 'Flash?' — a peine audible. Vous continuez. Une part de vous dit de revenir. Vous ne le faites pas.",
+          context: "Retraite. Defi 'Flash' entendu derriere — Americains confirmes. Repli maintenu. Rassemblement saute. Toujours seul.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -7,
@@ -270,8 +286,8 @@ export const scene04_the_sergeant: Scenario = {
           skipRally: true,
         },
         failure: {
-          text: "You leave. Every sound is louder alone. Every shadow has a rifle. You made the safe choice. The safe choice left you without a single ally in occupied France.",
-          context: "Left potential allies behind wall. No rally. Alone in enemy territory. Fear-driven decision.",
+          text: "Vous partez. Chaque son est plus fort quand on est seul. Chaque ombre a un fusil. Vous avez fait le choix prudent. Le choix prudent vous a laisse sans un seul allie en France occupee.",
+          context: "Allies potentiels laisses derriere le mur. Pas de rassemblement. Seul en territoire ennemi. Decision motivee par la peur.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -10,
@@ -284,29 +300,32 @@ export const scene04_the_sergeant: Scenario = {
     },
     {
       id: "sergeant_listen",
-      text: "Press against the wall and listen before deciding",
+      text: "Se coller au mur et ecouter avant de decider",
       tier: "sound",
       // Effective timeCost: 20 min (five minutes listening plus approach)
       outcome: {
         success: {
-          text: "Five minutes against the wall. '...assembly area should be...' American English. Not textbook — real Boston vowels. That's Malone. Henderson corrects him quietly. You click. They respond instantly.",
-          context: "Listened five minutes. Confirmed American accents, identified Malone's voice. Clicker rally instant. Clean approach.",
+          text: "Cinq minutes contre le mur. '...la zone de rassemblement devrait etre...' Anglais americain. Pas de manuel — de vrais accents de Boston. C'est Malone. Henderson le corrige doucement. Vous cliquez. Ils repondent instantanement.",
+          context: "Ecoute cinq minutes. Confirme accents americains, identifie la voix de Malone. Rassemblement clicker instantane. Approche propre.",
+          timeCost: 20,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 5,
           readinessChange: 1
         },
         partial: {
-          text: "Five minutes of listening. Indistinct voices. One of them laughs — something about the Red Sox. American. Probably. You use the clicker. Two clicks back. Henderson, Malone, Doyle.",
-          context: "Listened five minutes. Voices indistinct but cultural cues suggest American. Clicker confirmed. Rally made.",
+          text: "Cinq minutes d'ecoute. Voix indistinctes. L'un d'eux rit — quelque chose sur les Red Sox. Americain. Probablement. Vous utilisez le clicker. Deux clics en retour. Henderson, Malone, Doyle.",
+          context: "Ecoute cinq minutes. Voix indistinctes mais indices culturels suggerent Americains. Clicker confirme. Rassemblement fait.",
+          timeCost: 20,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 4,
           readinessChange: 1
         },
         failure: {
-          text: "Five minutes and the words blur in the dark. Accents, cadence — nothing clear. You use the clicker anyway. Henderson responds. But you've been crouching here too long. Your knees ache and the clock has moved.",
-          context: "Listened five minutes, couldn't confirm identity. Used clicker anyway — worked. Time burned for no intelligence gain.",
+          text: "Cinq minutes et les mots se brouillent dans le noir. Accents, cadence — rien de clair. Vous utilisez le clicker quand meme. Henderson repond. Mais vous etes accroupi la depuis trop longtemps. Vos genoux font mal et l'heure a avance.",
+          context: "Ecoute cinq minutes, impossible de confirmer l'identite. Utilise le clicker quand meme — a marche. Temps brule sans gain de renseignement.",
+          timeCost: 20,
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 2,
@@ -320,8 +339,8 @@ export const scene04_the_sergeant: Scenario = {
 
   interlude: {
     type: "rest",
-    beat: "You take a knee behind a low stone wall and spread the map across your thigh. Moonlight picks out the contour lines. Somewhere ahead, voices. You mark your position and fold the map away.",
-    context: "brief pause before potential contact, cautious anticipation",
-    objectiveReminder: "Continue rallying. Secure enough men to move on the objective.",
+    beat: "Vous prenez genou derriere un bas mur de pierre et etalez la carte sur votre cuisse. La lune eclaire les courbes de niveau. Quelque part devant, des voix. Vous marquez votre position et repliez la carte.",
+    context: "breve pause avant contact potentiel, anticipation prudente",
+    objectiveReminder: "Continuez le rassemblement. Securisez assez d'hommes pour passer a l'objectif.",
   },
 };

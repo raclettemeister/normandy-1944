@@ -10,7 +10,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     status: "active",
     age: 28,
     hometown: "Scranton, Pennsylvania",
-    background: "Former factory foreman. Oldest man in the platoon.",
+    background: "Ancien contremaitre d'usine. Le plus age du peloton.",
     traits: ["veteran", "steady"],
   },
   {
@@ -22,7 +22,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     status: "active",
     age: 24,
     hometown: "South Boston, Massachusetts",
-    background: "Ex-boxer, built like a fire hydrant. Leads from the front.",
+    background: "Ex-boxeur, bati comme une borne incendie. Mene depuis l'avant.",
     traits: ["brave", "hothead"],
   },
   {
@@ -34,7 +34,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     age: 23,
     hometown: "San Francisco, California",
     background:
-      "Korean-American, had to fight twice as hard for his rank. Quiet, methodical, deadly.",
+      "Coreen-Americain, a du se battre deux fois plus pour son grade. Calme, methodique, mortel.",
     traits: ["steady", "sharpshooter"],
   },
   {
@@ -46,7 +46,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     status: "active",
     age: 22,
     hometown: "San Antonio, Texas",
-    background: "Wanted to be a doctor. Gentle hands, steel nerves under fire.",
+    background: "Voulait etre medecin. Mains douces, nerfs d'acier sous le feu.",
     traits: ["brave", "steady"],
   },
   {
@@ -58,7 +58,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     age: 21,
     hometown: "Detroit, Michigan",
     background:
-      "Polish-American, built like an ox. Carries the BAR like other men carry rifles.",
+      "Polonais-Americain, bati comme un boeuf. Porte le BAR comme les autres portent leur fusil.",
     traits: ["loyal", "steady"],
   },
   {
@@ -70,7 +70,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     age: 20,
     hometown: "Nashville, Tennessee",
     background:
-      "Former telegraph operator. Funny, keeps the men laughing. Carries 30 pounds of radio without complaining.",
+      "Ancien telegraphiste. Drole, fait rire les hommes. Porte 30 livres de radio sans se plaindre.",
     traits: ["loud_mouth", "lucky"],
   },
   {
@@ -82,7 +82,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     status: "active",
     age: 19,
     hometown: "Boise, Idaho",
-    background: "Farm kid, youngest in the platoon. Eager, scared, trying to prove himself.",
+    background: "Fils de fermier, le plus jeune du peloton. Avide, effraye, essaie de prouver sa valeur.",
     traits: ["green", "brave"],
   },
   {
@@ -94,7 +94,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     age: 21,
     hometown: "Atlanta, Georgia",
     background:
-      "Smooth talker, always has a cigarette. Looks lazy but has the best eyes in the platoon.",
+      "Bavard, a toujours une cigarette. A l'air paresseux mais a les meilleurs yeux du peloton.",
     traits: ["sharpshooter", "scrounger"],
   },
   {
@@ -107,7 +107,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     age: 20,
     hometown: "Philadelphia, Pennsylvania",
     background:
-      "Nervous, intellectual, reads books in his foxhole. Joined because he felt he had to.",
+      "Nerveux, intellectuel, lit des livres dans son trou. S'est engage parce qu'il sentait qu'il devait.",
     traits: ["green", "quiet"],
   },
   {
@@ -118,7 +118,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     status: "active",
     age: 22,
     hometown: "Chicago, Illinois",
-    background: "Street-smart, tough, grew up hard. Doesn't scare easy.",
+    background: "Debrouillard, dur, a grandi dans la difficulte. Ne s'effraie pas facilement.",
     traits: ["veteran", "resourceful"],
   },
   {
@@ -131,7 +131,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     age: 20,
     hometown: "Brooklyn, New York",
     background:
-      "Loud, brash, talks constantly. Drives the sergeants crazy but the privates love him.",
+      "Bruyant, fanfaron, parle sans arret. Rend les sergents fous mais les soldats l'adorent.",
     traits: ["loud_mouth", "brave"],
   },
   {
@@ -144,7 +144,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     age: 19,
     hometown: "Small-town Oklahoma",
     background:
-      "Quiet, polite, writes letters to his mother every day. Dead shot with a rifle.",
+      "Calme, poli, ecrit a sa mere chaque jour. Tireur d'elite au fusil.",
     traits: ["sharpshooter", "quiet"],
   },
   {
@@ -157,7 +157,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     age: 23,
     hometown: "Pittsburgh, Pennsylvania",
     background:
-      "6'4\", former steelworker. Carries ammunition for Kowalski. Simple, dependable, strong as an ox.",
+      "1m93, ancien siderurgiste. Porte les munitions pour Kowalski. Simple, fiable, fort comme un boeuf.",
     traits: ["loyal", "steady"],
   },
   {
@@ -170,7 +170,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     age: 20,
     hometown: "Worcester, Massachusetts",
     background:
-      "Irish-Catholic, prays before every mission. Superstitious but dependable.",
+      "Irlandais-catholique, prie avant chaque mission. Superstitieux mais fiable.",
     traits: ["steady", "lucky"],
   },
   {
@@ -183,7 +183,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     age: 21,
     hometown: "Milwaukee, Wisconsin",
     background:
-      "German-American, sensitive about it. Speaks some German, which could be useful.",
+      "Germano-Americain, sensible a ce sujet. Parle un peu allemand, ce qui pourrait servir.",
     traits: ["resourceful", "quiet"],
   },
   {
@@ -195,7 +195,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     age: 22,
     hometown: "Rural Mississippi",
     background:
-      "Former hunting guide. Knows the outdoors better than anyone. Excellent tracker.",
+      "Ancien guide de chasse. Connait la nature mieux que quiconque. Excellent pisteur.",
     traits: ["sharpshooter", "scrounger"],
   },
   {
@@ -207,7 +207,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     status: "active",
     age: 19,
     hometown: "Albuquerque, New Mexico",
-    background: "Fast runner, former track star. Skinny, wiry, never stops moving.",
+    background: "Coureur rapide, ancien star du sprint. Mince, nerveux, ne s'arrete jamais.",
     traits: ["brave", "green"],
   },
   {
@@ -220,7 +220,7 @@ export const PLATOON_ROSTER: Soldier[] = [
     age: 20,
     hometown: "Dayton, Ohio",
     background:
-      "The complainer. Bitches about everything. But when the bullets fly, he fights.",
+      "Le raleur. Se plaint de tout. Mais quand les balles sifflent, il se bat.",
     traits: ["coward", "unlucky"],
   },
 ];
@@ -238,56 +238,56 @@ export function getRallyOrder(): RallyEvent[] {
       ammoGain: 8,
       moraleGain: 8,
       narrative:
-        'You hear a cricket clicker — one click-clack. You respond with two. SSgt. Henderson emerges from the hedgerow. "Captain. Glad to see you, sir." The relief in his voice is obvious. Your platoon sergeant is alive.',
+        'Vous entendez un clicker cricket — un clic-clac. Vous repondez par deux. Le SSgt Henderson emerge de la haie. "Mon capitaine. Content de vous voir, monsieur." Le soulagement dans sa voix est evident. Votre sergent de peloton est vivant.',
     },
     {
       soldiers: [byId("malone"), byId("doyle")],
       ammoGain: 10,
       moraleGain: 5,
       narrative:
-        'Sgt. Malone appears with PFC Doyle in tow. The kid looks terrified but Malone has him moving. "Found this one tangled in his chute half a mile back," Malone says. "He\'ll be fine." Doyle nods, gripping his rifle with white knuckles.',
+        'Le Sgt Malone apparait avec le PFC Doyle a la remorque. Le gamin a l\'air terrifie mais Malone le fait avancer. "Trouve celui-la emmele dans son parachute a un demi-mille," dit Malone. "Il ira bien." Doyle hoche la tete, serrant son fusil a blanc.',
     },
     {
       soldiers: [byId("park"), byId("webb"), byId("ellis")],
       ammoGain: 12,
       moraleGain: 6,
       narrative:
-        "Sgt. Park has already organized a small group. Webb and Ellis were hiding behind a stone wall when Park found them. Park has them kitted up and ready. Webb even managed to scrounge extra clips from an abandoned equipment bundle.",
+        "Le Sgt Park a deja organise un petit groupe. Webb et Ellis se cachaient derriere un mur de pierre quand Park les a trouves. Park les a equipes et prets. Webb a meme reussi a recuperer des chargeurs supplementaires d'un paquet d'equipement abandonne.",
     },
     {
       soldiers: [byId("rivera"), byId("kowalski")],
       ammoGain: 15,
       moraleGain: 7,
       narrative:
-        'Doc Rivera and Kowalski come in together. Kowalski has the BAR slung across his back and two bandoliers across his chest. Rivera is already checking the men for injuries. "Anyone hurt? Let me see those hands." Having the BAR and a medic changes everything.',
+        'Doc Rivera et Kowalski arrivent ensemble. Kowalski a le BAR en bandouliere et deux bandoulieres sur la poitrine. Rivera examine deja les hommes pour les blessures. "Des blesses? Montrez-moi ces mains." Avoir le BAR et un medecin change tout.',
     },
     {
       soldiers: [byId("davis"), byId("caruso")],
       ammoGain: 8,
       moraleGain: 6,
       narrative:
-        "You hear Caruso before you see him — the man can't whisper to save his life. Davis is behind him, hunched under the weight of the SCR-300 radio. It survived the drop. You have comms.",
+        "Vous entendez Caruso avant de le voir — l'homme ne peut pas chuchoter pour sauver sa vie. Davis est derriere lui, courbe sous le poids de la radio SCR-300. Elle a survecu au saut. Vous avez les communications.",
     },
     {
       soldiers: [byId("washington"), byId("mitchell"), byId("sullivan")],
       ammoGain: 10,
       moraleGain: 5,
       narrative:
-        "Three men emerge from a drainage ditch. Washington has point — he's been leading Mitchell and Sullivan through the fields for an hour. Mitchell hasn't said a word. Sullivan crosses himself when he sees the group. \"Thank God,\" he whispers.",
+        "Trois hommes emergent d'un fosse de drainage. Washington est en tete — il mene Mitchell et Sullivan a travers les champs depuis une heure. Mitchell n'a pas dit un mot. Sullivan se signe en voyant le groupe. \"Merci mon Dieu,\" murmure-t-il.",
     },
     {
       soldiers: [byId("novak"), byId("bergman"), byId("jenkins")],
       ammoGain: 12,
       moraleGain: 5,
       narrative:
-        "Novak comes in carrying half the platoon's spare ammo on his back. Bergman found a supply bundle in a flooded field — Jenkins tracked it by the parachute silk caught in a tree. Between the three of them, they've got a small arsenal.",
+        "Novak arrive en portant la moitie des munitions de reserve du peloton sur son dos. Bergman a trouve un paquet de ravitaillement dans un champ inonde — Jenkins l'a suivi par la soie du parachute accrochee a un arbre. A eux trois, ils ont un petit arsenal.",
     },
     {
       soldiers: [byId("herrera"), byId("palmer")],
       ammoGain: 5,
       moraleGain: 3,
       narrative:
-        'Last to arrive: Herrera and Palmer. Herrera ran all the way from the next field over. Palmer looks pale and shaken. "We heard shooting," Palmer says. "Thought it was Germans." Herrera shakes his head. "That was us, genius." Not everyone is happy to be here, but everyone is here.',
+        'Derniers a arriver: Herrera et Palmer. Herrera a couru tout le chemin depuis le champ voisin. Palmer a l\'air pale et secoue. "On a entendu des tirs," dit Palmer. "On a cru que c\'etait les Allemands." Herrera secoue la tete. "C\'etait nous, genie." Tout le monde n\'est pas content d\'etre la, mais tout le monde est la.',
     },
   ];
 }

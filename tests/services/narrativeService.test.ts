@@ -10,19 +10,22 @@ function makeMinimalGameState(overrides: Partial<GameState> = {}): GameState {
 describe("NarrativeService", () => {
   describe("mode detection", () => {
     it("should use hardcoded mode when no API URL configured", () => {
-      const service = new NarrativeService({ apiUrl: "" });
+      const service = new NarrativeService({ apiUrl: "", accessCode: "" });
       expect(service.getMode()).toBe("hardcoded");
     });
 
-    it("should use llm mode when API URL is configured", () => {
-      const service = new NarrativeService({ apiUrl: "http://localhost:8787" });
+    it("should use llm mode when API URL and access code are configured", () => {
+      const service = new NarrativeService({
+        apiUrl: "http://localhost:8787",
+        accessCode: "test-code",
+      });
       expect(service.getMode()).toBe("llm");
     });
   });
 
   describe("generateOutcomeNarrative", () => {
     it("should return hardcoded text when in hardcoded mode", async () => {
-      const service = new NarrativeService({ apiUrl: "" });
+      const service = new NarrativeService({ apiUrl: "", accessCode: "" });
       const result = await service.generateOutcomeNarrative({
         outcomeText: "You succeed.",
         outcomeContext: "Ambush worked.",
@@ -36,7 +39,8 @@ describe("NarrativeService", () => {
 
     it("should return hardcoded text when no outcome context", async () => {
       const service = new NarrativeService({
-        apiUrl: "http://localhost:8787"
+        apiUrl: "http://localhost:8787",
+        accessCode: "test-code",
       });
       const result = await service.generateOutcomeNarrative({
         outcomeText: "You succeed.",
@@ -51,7 +55,8 @@ describe("NarrativeService", () => {
   describe("classifyPlayerAction", () => {
     it("should reject empty input", async () => {
       const service = new NarrativeService({
-        apiUrl: "http://localhost:8787"
+        apiUrl: "http://localhost:8787",
+        accessCode: "test-code",
       });
       const result = await service.classifyPlayerAction({
         sceneContext: "Bridge.", decisions: [], playerText: "",
@@ -62,7 +67,8 @@ describe("NarrativeService", () => {
 
     it("should reject short input", async () => {
       const service = new NarrativeService({
-        apiUrl: "http://localhost:8787"
+        apiUrl: "http://localhost:8787",
+        accessCode: "test-code",
       });
       const result = await service.classifyPlayerAction({
         sceneContext: "Bridge.", decisions: [], playerText: "hi",
@@ -72,7 +78,7 @@ describe("NarrativeService", () => {
     });
 
     it("should return null in hardcoded mode", async () => {
-      const service = new NarrativeService({ apiUrl: "" });
+      const service = new NarrativeService({ apiUrl: "", accessCode: "" });
       const result = await service.classifyPlayerAction({
         sceneContext: "Bridge.", decisions: [],
         playerText: "I throw a grenade",
@@ -84,7 +90,7 @@ describe("NarrativeService", () => {
 
   describe("generateEpilogue fallbacks", () => {
     it("should return default KIA epilogue in hardcoded mode", async () => {
-      const service = new NarrativeService({ apiUrl: "" });
+      const service = new NarrativeService({ apiUrl: "", accessCode: "" });
       const result = await service.generateEpilogue({
         soldier: {
           id: "doyle", name: "Doyle", rank: "PFC", role: "rifleman",
@@ -95,12 +101,12 @@ describe("NarrativeService", () => {
         relationships: [],
         allSoldierStatuses: [],
       });
-      expect(result).toContain("killed in action");
+      expect(result).toContain("mort au combat");
       expect(result).toContain("Doyle");
     });
 
     it("should return default active epilogue in hardcoded mode", async () => {
-      const service = new NarrativeService({ apiUrl: "" });
+      const service = new NarrativeService({ apiUrl: "", accessCode: "" });
       const result = await service.generateEpilogue({
         soldier: {
           id: "henderson", name: "Henderson", rank: "SSgt", role: "platoon_sergeant",
@@ -111,7 +117,7 @@ describe("NarrativeService", () => {
         relationships: [],
         allSoldierStatuses: [],
       });
-      expect(result).toContain("survived");
+      expect(result.toLowerCase()).toContain("surv");
       expect(result).toContain("Henderson");
     });
   });

@@ -7,49 +7,49 @@ export const scene07_the_road: Scenario = {
   combatScene: false,
   achievesMilestone: "rally_complete",
 
-  sceneContext: "Sunken lane between high hedgerows. Rally point less than 1km north — American small arms audible. Crossroads ahead has wire strung across it, fresh tire tracks. Germans have been here recently. Last stretch of Act 1.",
+  sceneContext: "Chemin creux entre hautes haies. Point de rassemblement a moins d'1 km au nord — armes legeres americaines audibles. Carrefour devant avec fil de fer tendu, traces de pneus fraiches. Les Allemands sont passes recemment. Dernier troncon de l'Acte 1.",
 
-  narrative: "A sunken lane between high hedgerows, the kind the Normans have been walking for a thousand years. The rally point should be less than a kilometer north — you can hear scattered small arms fire in that direction, Americans by the sound of it. But the lane opens onto a crossroads ahead, and someone has strung wire across it. Fresh tire tracks in the mud. The Germans have been here recently.",
+  narrative: "Un chemin creux entre de hautes haies, le genre que les Normands empruntent depuis mille ans. Le point de rassemblement devrait etre a moins d'un kilometre au nord — vous entendez des tirs d'armes legeres epars dans cette direction, Americains au son. Mais le chemin debouche sur un carrefour devant, et quelqu'un a tendu du fil de fer. Traces de pneus fraiches dans la boue. Les Allemands sont passes recemment.",
 
   narrativeAlt: {
-    "hasSecondInCommand": "A sunken lane heading north. Henderson studies the crossroads ahead through the hedge gap — wire strung across it, tire tracks fresh in the mud. 'Germans set this up in the last hour,' he whispers. 'Rally point's close, Captain. How do we get through?'",
-    "solo": "A sunken lane heading north. The rally point is close — you can hear American weapons in the distance. But the crossroads ahead has wire strung across it and fresh tire tracks. You're still alone, and this is the last stretch."
+    "hasSecondInCommand": "Un chemin creux vers le nord. Henderson etudie le carrefour devant a travers une trouee — fil de fer tendu, traces de pneus fraiches dans la boue. 'Les Allemands ont installe ca dans la derniere heure,' chuchote-t-il. 'Le point de rassemblement est proche, Capitaine. Comment on passe?'",
+    "solo": "Un chemin creux vers le nord. Le point de rassemblement est proche — vous entendez des armes americaines au loin. Mais le carrefour devant a du fil de fer tendu et des traces de pneus fraiches. Vous etes toujours seul, et c'est le dernier troncon."
   },
 
   secondInCommandComments: {
-    "road_scouts_forward": "Good call, sir. I'll keep the rest quiet until they signal.",
-    "road_hedgerow_route": "Slow but safe. I'll put Malone on rear security.",
-    "road_straight_through": "Captain, those tire tracks are fresh. I wouldn't walk into that.",
-    "road_open_field": "Sir, there's no cover out there. If there's a patrol..."
+    "road_scouts_forward": "Bon choix, mon capitaine. Je garde le reste au silence jusqu'a leur signal.",
+    "road_hedgerow_route": "Lent mais sur. Je mets Malone en securite arriere.",
+    "road_straight_through": "Capitaine, ces traces de pneus sont fraiches. Je ne marcherais pas la-dedans.",
+    "road_open_field": "Mon capitaine, il n'y a pas de couvert la-bas. S'il y a une patrouille..."
   },
 
   decisions: [
     {
       id: "road_scouts_forward",
-      text: "Send two men ahead to scout the crossroads before moving",
+      text: "Envoyer deux hommes en avant pour reconnaitre le carrefour avant de bouger",
       tier: "excellent",
       requiresPhase: "squad",
       requiresCapability: "canScout",
       outcome: {
         success: {
-          text: "Two men slip forward through the hedge. Five minutes of silence. Then one appears at the gap, thumbs up — the wire is unmanned, the patrol has moved on. You cross the road in pairs, fast and low. The rally point is two hundred meters ahead. You can see American paratroopers digging in.",
-          context: "Scouts confirmed crossroads clear — wire unmanned, patrol gone. Crossed in pairs. Reached rally point. Clean final approach.",
+          text: "Deux hommes se faufilent en avant a travers la haie. Cinq minutes de silence. Puis l'un apparait a la trouee, pouces leves — le fil est sans surveillance, la patrouille est partie. Vous traversez la route par paires, vite et bas. Le point de rassemblement est a deux cents metres. Vous voyez des parachutistes americains creuser.",
+          context: "Eclaireurs ont confirme carrefour libre — fil sans surveillance, patrouille partie. Traverse par paires. Point de rassemblement atteint. Approche finale propre.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 8,
           readinessChange: 0
         },
         partial: {
-          text: "The scouts reach the crossroads and signal — movement east, a German patrol moving away. You wait ten minutes until they're gone, then cross. Slow, tense, but clean. The rally point appears through the mist ahead.",
-          context: "Scouts spotted German patrol moving east. Waited 10 minutes for them to clear. Crossed clean. Rally point reached.",
+          text: "Les eclaireurs atteignent le carrefour et signalent — mouvement a l'est, une patrouille allemande qui s'eloigne. Vous attendez dix minutes qu'ils partent, puis traversez. Lent, tendu, mais propre. Le point de rassemblement apparait dans la brume devant.",
+          context: "Eclaireurs ont repere patrouille allemande se deplacer vers l'est. Attendu 10 minutes qu'ils partent. Traverse propre. Point de rassemblement atteint.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 5,
           readinessChange: 2
         },
         failure: {
-          text: "The scouts get spotted — a German sentry fires one shot before bolting east. Your men scatter, regroup, push through the crossroads at a run. Nobody hit, but the shot will bring attention. You reach the rally point breathing hard.",
-          context: "Scouts spotted by sentry. One shot fired — sentry fled east. Squad scattered, regrouped, rushed crossroads. Rally point reached under alert.",
+          text: "Les eclaireurs sont reperes — une sentinelle allemande tire un coup avant de foncer vers l'est. Vos hommes se dispersent, se regroupent, traversent le carrefour en courant. Personne touche, mais le coup attirera l'attention. Vous atteignez le point de rassemblement en haletant.",
+          context: "Eclaireurs reperes par sentinelle. Un coup tire — sentinelle en fuite vers l'est. Escouade dispersee, regroupee, a traverse le carrefour en courant. Point de rassemblement atteint en alerte.",
           menLost: 0,
           ammoSpent: -2,
           moraleChange: 2,
@@ -61,28 +61,28 @@ export const scene07_the_road: Scenario = {
     },
     {
       id: "road_hedgerow_route",
-      text: "Follow the hedgerow north — avoid the crossroads entirely",
+      text: "Suivre la haie vers le nord — eviter le carrefour entierement",
       tier: "sound",
       outcome: {
         success: {
-          text: "You push through the bocage parallel to the road, fighting branches and mud. Twenty minutes of crawling, but the crossroads stays behind you. The hedgerow opens onto a pasture and there they are — American paratroopers, foxholes, a radio antenna. The rally point.",
-          context: "Hedgerow bypass successful. 20 minutes through bocage, avoided crossroads entirely. Reached rally point from flank.",
+          text: "Vous poussez a travers le bocage parallele a la route, luttant contre branches et boue. Vingt minutes a ramper, mais le carrefour reste derriere vous. La haie debouche sur un pre et les voila — parachutistes americains, trous de tirailleurs, antenne radio. Le point de rassemblement.",
+          context: "Contournement par haie reussi. 20 minutes a travers le bocage, carrefour evite entierement. Point de rassemblement atteint par le flanc.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 5,
           readinessChange: 1
         },
         partial: {
-          text: "The hedgerow route is longer than it looks. Thick brambles, a drainage ditch waist-deep in cold water. Half an hour of miserable progress before you stumble into the rally point perimeter from the east. A sentry nearly shoots you before you get the password out.",
-          context: "Hedgerow route longer than expected. 30 minutes through brambles and drainage ditch. Nearly shot by rally point sentry. Arrived east side.",
+          text: "L'itineraire par la haie est plus long qu'il n'y parait. Ronces epaisses, un fosse de drainage avec de l'eau froide jusqu'a la taille. Une demi-heure de progression miserable avant de tomber sur le perimetre du point de rassemblement par l'est. Une sentinelle vous a failli tirer dessus avant que vous donniez le mot de passe.",
+          context: "Itineraire par haie plus long que prevu. 30 minutes a travers ronces et fosse de drainage. Presque tire par sentinelle du point de rassemblement. Arrive cote est.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 3,
           readinessChange: 2
         },
         failure: {
-          text: "You get turned around in the bocage. The hedgerows all look the same in the dark. Forty minutes wasted before you find the road again and have to cross the exposed intersection anyway. The rally point is there, but you've burned time you didn't have.",
-          context: "Got lost in bocage. 40 minutes wasted. Had to cross exposed intersection anyway. Rally point reached but significant time burned.",
+          text: "Vous vous perdez dans le bocage. Les haies se ressemblent toutes dans le noir. Quarante minutes gaspillees avant de retrouver la route et devoir traverser l'intersection exposee de toute facon. Le point de rassemblement est la, mais vous avez brule du temps que vous n'aviez pas.",
+          context: "Perdu dans le bocage. 40 minutes gaspillees. Oblige de traverser l'intersection exposee de toute facon. Point de rassemblement atteint, mais temps critique perdu.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 0,
@@ -94,28 +94,28 @@ export const scene07_the_road: Scenario = {
     },
     {
       id: "road_straight_through",
-      text: "Move straight through the crossroads — speed over caution",
+      text: "Traverser le carrefour directement — vitesse plutot que prudence",
       tier: "mediocre",
       outcome: {
         success: {
-          text: "You push through the wire and cross at a jog. The crossroads is empty — the patrol that set the wire is long gone. Quick and clean. The rally point materializes in the gray light ahead. You've made it.",
-          context: "Crossed directly through wire at jog. Crossroads empty — patrol gone. Quick transit. Rally point reached.",
+          text: "Vous poussez a travers le fil et traversez au trot. Le carrefour est vide — la patrouille qui a tendu le fil est partie depuis longtemps. Rapide et propre. Le point de rassemblement se materialise dans la lueur grise devant. Vous y etes arrive.",
+          context: "Traverse directement a travers le fil au trot. Carrefour vide — patrouille partie. Transit rapide. Point de rassemblement atteint.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 3,
           readinessChange: 3
         },
         partial: {
-          text: "Halfway across the intersection, headlights appear on the east road — a German vehicle, moving fast. You flatten into the ditch. It passes without stopping, but you're face-down in Norman mud with your heart in your throat. The rally point is close. You scramble the last hundred meters.",
-          context: "Crossed intersection. German vehicle appeared mid-crossing — hid in ditch. Vehicle passed. Scrambled last 100m to rally point.",
+          text: "A mi-chemin de l'intersection, des phares apparaissent sur la route est — un vehicule allemand lance a vive allure. Vous vous plaquez dans le fosse. Il passe sans s'arreter, mais vous etes face contre la boue normande, le coeur dans la gorge. Le point de rassemblement est proche. Vous avalez les cent derniers metres en courant.",
+          context: "Traverse l'intersection. Vehicule allemand apparu a mi-traversee — cache dans le fosse. Vehicule passe. Precipite les 100 derniers metres jusqu'au point de rassemblement.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 0,
           readinessChange: 5
         },
         failure: {
-          text: "The wire catches your lead man's boot. He goes down hard, canteen clattering on the road. A rifle shot from the tree line — a German sentry, hasty and wild, but close. You return fire and run. The rally point is there, but the Germans know exactly where you crossed.",
-          context: "Wire tripped lead man. Noise drew sentry fire. Returned fire and ran. Rally point reached but crossing point compromised.",
+          text: "Le fil accroche la botte de votre homme de tete. Il tombe lourdement, gourde qui claque sur la route. Un coup de fusil depuis la lisiere — une sentinelle allemande, precipitee et sauvage, mais proche. Vous ripostez et courez. Le point de rassemblement est la, mais les Allemands savent exactement ou vous avez traverse.",
+          context: "Fil a fait trebucher l'homme de tete. Bruit a attire les tirs de sentinelle. Riposte et course. Point de rassemblement atteint mais point de traversee compromis.",
           menLost: 0,
           ammoSpent: -3,
           moraleChange: -3,
@@ -127,28 +127,28 @@ export const scene07_the_road: Scenario = {
     },
     {
       id: "road_open_field",
-      text: "Cut through the open pasture to bypass everything",
+      text: "Couper a travers le pre decouvert pour tout contourner",
       tier: "reckless",
       outcome: {
         success: {
-          text: "You leave the lane and cross the pasture at a low run. Open ground, exposed, but fast. Nothing fires. The rally point sentries challenge you from the far tree line. 'Flash.' 'Thunder.' You're in. It worked, but Henderson gives you a look that says don't ever do that again.",
-          context: "Crossed open pasture at run. No fire received. Rally point sentries challenged — cleared. Arrived exposed but fast.",
+          text: "Vous quittez le chemin et traversez le pre en courant bas. Terrain decouvert, expose, mais rapide. Rien ne tire. Les sentinelles du point de rassemblement vous defient depuis la lisiere. 'Flash.' 'Thunder.' Vous etes entre. Ca a marche, mais Henderson vous lance un regard qui dit ne refaites jamais ca.",
+          context: "Traverse le pre decouvert en courant. Aucun tir recu. Sentinelles du point de rassemblement ont defie — autorise. Arrive expose mais vite.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: 1,
           readinessChange: 4
         },
         partial: {
-          text: "Halfway across the field, a flare goes up from somewhere east — the whole pasture lit up white. You drop flat, press your face into wet grass. The flare fades. Nobody fires. You belly-crawl the last two hundred meters. The rally point sentries find you covered in mud and shaking.",
-          context: "Crossed open field. German flare illuminated position mid-crossing. Dropped flat, belly-crawled 200m. Reached rally point, shaken.",
+          text: "A mi-chemin du champ, une fusee monte de quelque part a l'est — tout le pre eclaire en blanc. Vous vous jetez a plat, visage dans l'herbe mouillee. La fusee s'estompe. Personne ne tire. Vous rampez sur le ventre les deux cents derniers metres. Les sentinelles du point de rassemblement vous trouvent couvert de boue et tremblant.",
+          context: "Traverse le champ decouvert. Fusee allemande a illumine la position a mi-traversee. Jete a plat, rampe 200m sur le ventre. Point de rassemblement atteint, secoue.",
           menLost: 0,
           ammoSpent: 0,
           moraleChange: -3,
           readinessChange: 6
         },
         failure: {
-          text: "The pasture is mined. The first explosion throws dirt twenty feet into the air. Everyone scatters. The second blast catches someone's leg — they go down screaming. You drag him the last hundred meters into the rally point perimeter while the rest of the platoon provides covering fire at shadows.",
-          context: "Pasture mined. Two detonations — one friendly lost a leg. Dragged casualty to rally point under covering fire. One KIA.",
+          text: "Le pre est mine. La premiere explosion projette de la terre six metres en l'air. Tout le monde se disperse. La deuxieme explosion atteint la jambe de quelqu'un — il tombe en hurlant. Vous le trainez sur les cent derniers metres jusqu'au perimetre du point de rassemblement pendant que le reste du peloton assure un tir de couverture sur des ombres.",
+          context: "Pre mine. Deux detonations — un ami a perdu une jambe. Blesse traine jusqu'au point de rassemblement sous tir de couverture. Un tue.",
           menLost: 1,
           ammoSpent: -5,
           moraleChange: -8,

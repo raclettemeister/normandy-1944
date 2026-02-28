@@ -785,6 +785,47 @@ describe("processSceneTransition — skipRally", () => {
   });
 });
 
+describe("processSceneTransition — rallyOverride", () => {
+  it("should apply rallyOverride instead of scene rally", () => {
+    const rallyScene = makeMinimalScene({
+      rally: {
+        soldiers: [
+          makeSoldier({ id: "henderson", role: "platoon_sergeant" }),
+          makeSoldier({ id: "malone", role: "rifleman" }),
+        ],
+        ammoGain: 10,
+        moraleGain: 8,
+        narrative: "Full rally.",
+      },
+    });
+    const outcome: OutcomeNarrative = {
+      text: "Only Henderson finds you.",
+      menLost: 0,
+      ammoSpent: 0,
+      moraleChange: 0,
+      readinessChange: 0,
+      rallyOverride: {
+        soldiers: [makeSoldier({ id: "henderson", role: "platoon_sergeant" })],
+        ammoGain: 5,
+        moraleGain: 3,
+      },
+    };
+    const state = makeState({
+      men: 1,
+      ammo: 20,
+      morale: 40,
+      roster: [makeSoldier({ id: "r1", role: "rifleman" })],
+    });
+    const result = processSceneTransition(state, rallyScene, outcome, "middle");
+
+    expect(result.state.men).toBe(2);
+    expect(result.state.ammo).toBe(25);
+    expect(result.state.morale).toBe(43);
+    expect(result.state.roster.some((s) => s.id === "henderson")).toBe(true);
+    expect(result.state.roster.some((s) => s.id === "malone")).toBe(false);
+  });
+});
+
 // ─── calculateEffectiveScore — captain position ─────────────────────
 
 describe("calculateEffectiveScore — captain position", () => {

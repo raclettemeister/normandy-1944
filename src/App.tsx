@@ -1,6 +1,6 @@
 import './locales/i18n';
 import { useState, useCallback, useMemo } from "react";
-import type { GameState, Achievement, PlaythroughEvent, Difficulty } from "./types/index.ts";
+import type { GameState, Achievement, PlaythroughEvent, Difficulty, GameLanguage } from "./types/index.ts";
 import MainMenu from "./components/MainMenu";
 import GameScreen from "./components/GameScreen";
 import type { GameEndData } from "./components/GameScreen";
@@ -11,6 +11,7 @@ import { NarrativeService } from "./services/narrativeService.ts";
 import "./styles/game.css";
 
 const NARRATIVE_API_URL = import.meta.env.VITE_NARRATIVE_API_URL ?? "";
+const GAME_LANGUAGE: GameLanguage = "fr";
 
 type AppScreen = "menu" | "game" | "death" | "epilogue";
 
@@ -29,9 +30,15 @@ export default function App() {
   const [achievementQueue, setAchievementQueue] = useState<Achievement[]>([]);
   const [difficulty, setDifficulty] = useState<Difficulty>("easy");
 
+  const [accessCode, setAccessCode] = useState("");
   const narrativeService = useMemo(
-    () => new NarrativeService({ apiUrl: NARRATIVE_API_URL }),
-    []
+    () =>
+      new NarrativeService({
+        apiUrl: NARRATIVE_API_URL,
+        accessCode,
+        language: GAME_LANGUAGE,
+      }),
+    [accessCode]
   );
 
   const handleStartGame = useCallback((diff: Difficulty) => {
@@ -44,7 +51,7 @@ export default function App() {
     setEndState({
       finalState: data.finalState,
       captainSurvived: data.captainSurvived,
-      deathNarrative: data.deathNarrative ?? "You did not survive.",
+      deathNarrative: data.deathNarrative ?? "Vous n'avez pas survécu.",
       lastLesson: data.lastLesson ?? null,
       achievements: data.newAchievements,
       eventLog: data.eventLog,
