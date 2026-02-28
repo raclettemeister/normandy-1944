@@ -1,12 +1,15 @@
 import type { Scenario } from '../../../types';
 
 export const scene02_finding_north: Scenario = {
-  id: "act1_finding_north",
+  id: "act1_scene02_finding_north",
   act: 1,
   timeCost: 20,
   combatScene: false,
 
-  sceneContext: "Pays de bocage. Haies de six pieds, chaque champ une boite fermee. Ciel couvert, pas d'etoiles visibles. Besoin d'un cap vers la zone de saut pres de Sainte-Marie-du-Mont. Seul sur la terre ferme.",
+  sceneContext: "Bocage. Hedgerows six feet high, each field a closed box. Overcast, no stars. You need a bearing toward the drop zone near Sainte-Marie-du-Mont. Alone on solid ground.",
+
+  interlude: { type: "movement", beat: "You leave the flooded field. Next: find north.", context: "Solid ground. Still alone.", objectiveReminder: "Find your men. Rally at the nearest landmark." },
+  secondInCommandComments: { veteran: "You're still on your own. Pick a direction and move." },
 
   narrative:
     "Herbe mouillee sous les pieds, terre ferme. Pays de bocage — les haies s'elevent a six pieds, terre tassee et racines, chaque champ une boite dont on ne voit pas l'exterieur. Les cartes du briefing montraient la zone de saut pres de Sainte-Marie-du-Mont. Ca pourrait etre n'importe ou maintenant. Pas de boussole, pas d'etoiles a travers la couverture nuageuse. Il faut trouver le nord.",
@@ -21,6 +24,7 @@ export const scene02_finding_north: Scenario = {
       id: "north_compass_terrain",
       text: "Utiliser votre boussole et faire correspondre le terrain aux cartes du briefing",
       tier: "excellent",
+      minMen: 1,
       visibleIf: { hasIntel: "hasCompass" },
       outcome: {
         success: {
@@ -49,13 +53,14 @@ export const scene02_finding_north: Scenario = {
           readinessChange: 0,
         },
         wikiUnlocks: "dead_reckoning",
-        nextScene: "act1_first_contact",
+        nextScene: "act1_scene03_first_contact",
       },
     },
     {
       id: "north_stars",
       text: "Chercher l'Etoile polaire a travers les trouees dans les nuages",
       tier: "sound",
+      minMen: 1,
       outcome: {
         success: {
           text: "Une trouee dans les nuages — la Grande Ourse, les etoiles pointeuses menant a Polaris. Vous attendez une deuxieme trouee pour confirmer. Meme reponse. Vous avez un cap.",
@@ -82,7 +87,7 @@ export const scene02_finding_north: Scenario = {
           readinessChange: 1,
         },
         wikiUnlocks: "dead_reckoning",
-        nextScene: "act1_first_contact",
+        nextScene: "act1_scene03_first_contact",
       },
     },
     {
@@ -115,7 +120,7 @@ export const scene02_finding_north: Scenario = {
           readinessChange: 5,
         },
         wikiUnlocks: "dead_reckoning",
-        nextScene: "act1_first_contact",
+        nextScene: "act1_scene03_first_contact",
       },
     },
     {
@@ -148,7 +153,7 @@ export const scene02_finding_north: Scenario = {
           readinessChange: 5,
         },
         wikiUnlocks: "dead_reckoning",
-        nextScene: "act1_first_contact",
+        nextScene: "act1_scene03_first_contact",
       },
     },
     {
@@ -182,15 +187,8 @@ export const scene02_finding_north: Scenario = {
           readinessChange: 4,
         },
         wikiUnlocks: "supply_discipline",
-        nextScene: "act1_first_contact",
+        nextScene: "act1_scene03_first_contact",
       },
     },
   ],
-
-  interlude: {
-    type: "movement",
-    beat: "Vous pataugez a travers le champ inonde vers les hauteurs. L'eau s'amenuise, puis cede la place a la boue, puis a la terre ferme.",
-    context: "soulagement melange a la desorientation, seul dans le noir",
-    objectiveReminder: "Trouvez vos hommes. Rassemblez-vous au point de repere le plus proche.",
-  },
 };

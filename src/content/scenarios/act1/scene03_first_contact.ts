@@ -2,12 +2,15 @@ import type { Scenario } from '../../../types';
 
 // menGained: 1 represents gaining a stray paratrooper (+1 man)
 export const scene03_first_contact: Scenario = {
-  id: "act1_first_contact",
+  id: "act1_scene03_first_contact",
   act: 1,
   timeCost: 15,
   combatScene: false,
 
-  sceneContext: "Trouee dans la haie. Silhouette non identifiee a vingt metres, plus noire que la nuit. Pas d'uniforme ni d'arme visibles. Clicker disponible. Procedure de reconnaissance : un clic defi, deux clics reponse.",
+  sceneContext: "Gap in the hedgerow. Unidentified silhouette twenty meters away, blacker than the night. No uniform or weapon visible. Clicker in your pocket. Recognition procedure: one click challenge, two clicks response.",
+
+  interlude: { type: "transition", beat: "You move toward the sound. Something's there.", context: "Alone. One silhouette. Friend or enemy." },
+  secondInCommandComments: { veteran: "You're still alone. IFF before you move." },
 
   narrative: "Des pas devant — vingt metres. Une silhouette dans la trouee de la haie, plus noire que la nuit. Pas d'uniforme ni d'arme visibles. Une main sur votre pistolet, l'autre sur le clicker dans la poche de poitrine. Une procedure de reconnaissance etait prevue au briefing. Vous vous en souvenez.",
   decisions: [
@@ -15,6 +18,7 @@ export const scene03_first_contact: Scenario = {
       id: "contact_click_once",
       text: "Faire cliquer le clicker une fois et ecouter la reponse",
       tier: "excellent",
+      minMen: 1,
       outcome: {
         success: {
           text: "Un clic-clac. Silence — puis clic-clac, clic-clac depuis l'obscurite. La silhouette s'avance : un soldat de la 502e, tremblant mais arme, tombe a des kilometres de sa zone de saut. 'Bon Dieu, content de voir quelqu'un,' chuchote-t-il.",
@@ -41,7 +45,7 @@ export const scene03_first_contact: Scenario = {
           readinessChange: 2
         },
         wikiUnlocks: "recognition_signals",
-        nextScene: "act1_the_sergeant"
+        nextScene: "act1_scene04_straggler"
       }
     },
     {
@@ -74,7 +78,7 @@ export const scene03_first_contact: Scenario = {
           readinessChange: 6
         },
         wikiUnlocks: "recognition_signals",
-        nextScene: "act1_the_sergeant"
+        nextScene: "act1_scene04_straggler"
       }
     },
     {
@@ -108,13 +112,14 @@ export const scene03_first_contact: Scenario = {
         },
         fatal: true,
         wikiUnlocks: "recognition_signals",
-        nextScene: "act1_the_sergeant"
+        nextScene: "act1_scene04_straggler"
       }
     },
     {
       id: "contact_flash",
       text: "Chuchoter 'Flash' dans le noir et attendre",
       tier: "sound",
+      minMen: 1,
       outcome: {
         success: {
           text: "'Flash.' Un temps. 'Thunder.' Le soulagement vous fait presque plier les genoux. Un soldat de la 506e — votre propre regiment — sort de derriere un mur de pierre. Il est a vous maintenant.",
@@ -141,7 +146,7 @@ export const scene03_first_contact: Scenario = {
           readinessChange: 4
         },
         wikiUnlocks: "recognition_signals",
-        nextScene: "act1_the_sergeant"
+        nextScene: "act1_scene04_straggler"
       }
     },
     {
@@ -174,7 +179,7 @@ export const scene03_first_contact: Scenario = {
           readinessChange: 3
         },
         wikiUnlocks: "recognition_signals",
-        nextScene: "act1_the_sergeant"
+        nextScene: "act1_scene04_straggler"
       }
     },
     {
@@ -207,7 +212,7 @@ export const scene03_first_contact: Scenario = {
           readinessChange: 12
         },
         wikiUnlocks: "recognition_signals",
-        nextScene: "act1_the_sergeant"
+        nextScene: "act1_scene04_straggler"
       }
     },
     {
@@ -241,7 +246,7 @@ export const scene03_first_contact: Scenario = {
         },
         fatal: true,
         wikiUnlocks: "identify_before_engaging",
-        nextScene: "act1_the_sergeant"
+        nextScene: "act1_scene04_straggler"
       }
     },
     {
@@ -274,7 +279,7 @@ export const scene03_first_contact: Scenario = {
           readinessChange: 1
         },
         wikiUnlocks: "recognition_signals",
-        nextScene: "act1_the_sergeant"
+        nextScene: "act1_scene04_straggler"
       }
     },
     {
@@ -307,7 +312,7 @@ export const scene03_first_contact: Scenario = {
           readinessChange: 2
         },
         wikiUnlocks: "recognition_signals",
-        nextScene: "act1_the_sergeant"
+        nextScene: "act1_scene04_straggler"
       }
     }
   ]

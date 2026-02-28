@@ -19,8 +19,8 @@ const byId = (id: string) => {
 //   The Scenario.timeCost field only supports a single value; the engine
 //   would need per-decision overrides or narrative-only time references.
 
-export const scene04_the_sergeant: Scenario = {
-  id: "act1_the_sergeant",
+export const scene05_the_sergeant: Scenario = {
+  id: "act1_scene05_sergeant",
   act: 1,
   timeCost: 15,
   combatScene: false,
@@ -28,6 +28,8 @@ export const scene04_the_sergeant: Scenario = {
   sceneContext: "Mur de pierre, 30 metres de 2-3 voix. La cadence sonne americaine mais pourrait etre Ost-Bataillon ou Fallschirmjager avec equipement capture. Clicker disponible. Rassemblement potentiel avec Henderson, Malone, Doyle.",
 
   narrative: "Des voix de l'autre cote d'un mur de pierre. Trente metres, peut-etre moins. Deux, trois personnes — une qui donne des ordres, calme mais ferme. La cadence sonne americaine. Mais le briefing avertissait sur les troupes Ost-Bataillon avec anglais approximatif, Fallschirmjager avec equipement capture. Votre main trouve le clicker.",
+
+  secondInCommandComments: { veteran: "We're in one piece. Give me a direction and I'll get us there.", green: "Doyle's green. Keep him off point." },
 
   narrativeAlt: {
     low_morale: "Des voix de l'autre cote d'un mur de pierre. Proches. Vous vous mettez a genoux. La cadence pourrait etre de l'anglais — ou vous en auriez besoin. Vous etes trop epuise pour faire confiance a vos propres oreilles. Le clicker est dans votre poche de poitrine. Vos doigts sont lents a le trouver."
@@ -45,6 +47,7 @@ export const scene04_the_sergeant: Scenario = {
       id: "sergeant_clicker",
       text: "Utiliser le clicker depuis derriere le mur",
       tier: "excellent",
+      minMen: 1,
       outcome: {
         success: {
           text: "Un clic-clac. Silence — puis clic-clac, clic-clac depuis l'obscurite. Vous franchissez le mur. Henderson est la, carabine basse, regard stable. 'Capitaine,' dit-il. 'Content de vous voir, mon capitaine.'",
@@ -71,13 +74,14 @@ export const scene04_the_sergeant: Scenario = {
           readinessChange: 1
         },
         wikiUnlocks: "rally_procedures",
-        nextScene: "act1_the_patrol"
+        nextScene: "act1_scene06_patrol"
       }
     },
     {
       id: "sergeant_flash",
       text: "Crier 'Flash' depuis derriere le mur de pierre",
       tier: "sound",
+      minMen: 2,
       outcome: {
         success: {
           text: "'Flash.' Instantane : 'Thunder. Identifiez-vous.' La voix de Henderson — vous la reconnaitriez partout. 'Capitaine, 2e peloton.' 'Entrez, mon capitaine.' Henderson, Malone, Doyle. Vos hommes.",
@@ -104,7 +108,7 @@ export const scene04_the_sergeant: Scenario = {
           readinessChange: 5
         },
         wikiUnlocks: "rally_procedures",
-        nextScene: "act1_the_patrol"
+        nextScene: "act1_scene06_patrol"
       }
     },
     {
@@ -138,7 +142,7 @@ export const scene04_the_sergeant: Scenario = {
           readinessChange: 8
         },
         wikiUnlocks: "rally_procedures",
-        nextScene: "act1_the_patrol"
+        nextScene: "act1_scene06_patrol"
       }
     },
     {
@@ -175,7 +179,7 @@ export const scene04_the_sergeant: Scenario = {
           readinessChange: 5
         },
         wikiUnlocks: "rally_procedures",
-        nextScene: "act1_the_patrol"
+        nextScene: "act1_scene06_patrol"
       }
     },
     {
@@ -222,7 +226,7 @@ export const scene04_the_sergeant: Scenario = {
           skipRally: true,
         },
         wikiUnlocks: "rally_procedures",
-        nextScene: "act1_the_patrol"
+        nextScene: "act1_scene06_patrol"
       }
     },
     {
@@ -259,7 +263,7 @@ export const scene04_the_sergeant: Scenario = {
           readinessChange: 4
         },
         wikiUnlocks: "rally_procedures",
-        nextScene: "act1_the_patrol"
+        nextScene: "act1_scene06_patrol"
       }
     },
     {
@@ -295,7 +299,7 @@ export const scene04_the_sergeant: Scenario = {
           skipRally: true,
         },
         wikiUnlocks: "rally_procedures",
-        nextScene: "act1_the_patrol"
+        nextScene: "act1_scene06_patrol"
       }
     },
     {
@@ -332,7 +336,7 @@ export const scene04_the_sergeant: Scenario = {
           readinessChange: 2
         },
         wikiUnlocks: "rally_procedures",
-        nextScene: "act1_the_patrol"
+        nextScene: "act1_scene06_patrol"
       }
     }
   ],

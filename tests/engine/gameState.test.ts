@@ -44,7 +44,7 @@ describe("createInitialState", () => {
     expect(state.time).toEqual({ hour: 1, minute: 15 });
     expect(state.phase).toBe("solo");
     expect(state.act).toBe(1);
-    expect(state.currentScene).toBe("act1_landing");
+    expect(state.currentScene).toBe("act1_scene01_landing");
   });
 
   it("starts with empty roster and no 2IC", () => {

@@ -801,3 +801,53 @@ describe("placeholder: validators importable and callable", () => {
     expect(Array.isArray(result)).toBe(true);
   });
 });
+
+// ─── Act 1 structural verification (Gate 1) ───────────────────────
+describe("Act 1 scenarios (registered)", () => {
+  it("all Act 1 scenarios pass validation (structure, reachability)", async () => {
+    const { loadScenarios } = await import("../../src/engine/scenarioLoader.ts");
+    await import("../../src/content/scenarios/act1/index.ts");
+    const act1 = loadScenarios(1);
+    expect(act1.length).toBe(10);
+    const allIds = new Set(act1.map((s) => s.id));
+    allIds.add("act2_scene01"); // Act 1 finale transitions to Act 2
+    const errors: ValidationError[] = [];
+    for (const scenario of act1) {
+      errors.push(...validateScenario(scenario, allIds));
+    }
+    errors.push(...validateReachability(act1, "act1_scene01_landing"));
+    expect(errors).toEqual([]);
+  });
+
+  it("every decision outcome nextScene is valid (playthrough graph for bots)", async () => {
+    const { loadScenarios } = await import("../../src/engine/scenarioLoader.ts");
+    await import("../../src/content/scenarios/act1/index.ts");
+    const act1 = loadScenarios(1);
+    const validTargets = new Set(act1.map((s) => s.id));
+    validTargets.add("act2_scene01");
+
+    const invalid: Array<{ sceneId: string; decisionId: string; nextScene: string }> = [];
+    let totalOutcomes = 0;
+
+    for (const scenario of act1) {
+      for (const decision of scenario.decisions) {
+        const next = decision.outcome.nextScene;
+        if (!validTargets.has(next)) {
+          invalid.push({ sceneId: scenario.id, decisionId: decision.id, nextScene: next });
+        }
+        totalOutcomes++;
+        const onFail = decision.outcome.nextSceneOnFailure;
+        if (onFail && !validTargets.has(onFail)) {
+          invalid.push({
+            sceneId: scenario.id,
+            decisionId: decision.id,
+            nextScene: `nextSceneOnFailure: ${onFail}`,
+          });
+        }
+      }
+    }
+
+    expect(invalid).toEqual([]);
+    expect(totalOutcomes).toBeGreaterThan(0);
+  });
+});

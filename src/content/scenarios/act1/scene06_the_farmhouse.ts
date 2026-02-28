@@ -5,12 +5,14 @@ const rivera = PLATOON_ROSTER.find(s => s.id === 'rivera')!;
 const kowalski = PLATOON_ROSTER.find(s => s.id === 'kowalski')!;
 
 export const scene06_the_farmhouse: Scenario = {
-  id: "act1_the_farmhouse",
+  id: "act1_scene07_farmhouse",
   act: 1,
   timeCost: 15,
   combatScene: false,
 
-  sceneContext: "Ferme en pierre, deux etages, grange attenante. Equipement parachutiste 506e sur le porche — musette, casque as de pique. Porte fermee, fenetres sombres, planchers qui craquent a l'interieur. Amis possibles : Rivera (medecin) et Kowalski (tireur BAR).",
+  sceneContext: "Stone farmhouse, two stories, barn attached. 506th parachute gear on the porch — musette bag, ace-of-spades helmet. Door closed, windows dark, floorboards creaking inside. Possible friendlies: Rivera (medic) and Kowalski (BAR).",
+
+  interlude: { type: "transition", beat: "Stone building. 506th gear on the porch. Someone's inside.", context: "Clear it by the numbers. Medic doesn't go first." },
 
   narrative: "Une ferme en pierre au bord d'un pre. Deux etages, toit d'ardoise, grange attenante. Equipement parachutiste sur le porche — musette, casque as de pique. C'est la 506e. La porte est fermee et les fenetres sont sombres, mais vous entendez les planchers craquer a l'interieur. Quelqu'un est la.",
 
@@ -94,7 +96,7 @@ export const scene06_the_farmhouse: Scenario = {
           readinessChange: 5
         },
         wikiUnlocks: "positive_identification",
-        nextScene: "act1_scene07"
+        nextScene: "act1_scene08_crossroad"
       }
     },
     {
@@ -129,7 +131,7 @@ export const scene06_the_farmhouse: Scenario = {
           readinessChange: 5
         },
         wikiUnlocks: "positive_identification",
-        nextScene: "act1_scene07"
+        nextScene: "act1_scene08_crossroad"
       }
     },
     {
@@ -162,7 +164,7 @@ export const scene06_the_farmhouse: Scenario = {
           readinessChange: 8
         },
         wikiUnlocks: "positive_identification",
-        nextScene: "act1_scene07"
+        nextScene: "act1_scene08_crossroad"
       }
     },
     {
@@ -195,7 +197,7 @@ export const scene06_the_farmhouse: Scenario = {
           readinessChange: 10
         },
         wikiUnlocks: "positive_identification",
-        nextScene: "act1_scene07"
+        nextScene: "act1_scene08_crossroad"
       }
     },
     {
@@ -228,7 +230,7 @@ export const scene06_the_farmhouse: Scenario = {
           readinessChange: 3
         },
         wikiUnlocks: "positive_identification",
-        nextScene: "act1_scene07"
+        nextScene: "act1_scene08_crossroad"
       }
     },
     {
@@ -261,7 +263,7 @@ export const scene06_the_farmhouse: Scenario = {
           readinessChange: 3
         },
         wikiUnlocks: "positive_identification",
-        nextScene: "act1_scene07"
+        nextScene: "act1_scene08_crossroad"
       }
     },
     {
@@ -294,15 +296,8 @@ export const scene06_the_farmhouse: Scenario = {
           readinessChange: 0
         },
         wikiUnlocks: "positive_identification",
-        nextScene: "act1_scene07"
+        nextScene: "act1_scene08_crossroad"
       }
     }
   ],
-
-  interlude: {
-    type: "transition",
-    beat: "La ferme se tient sombre et silencieuse au bord du champ. Murs de pierre, fenetres voletees. Pourrait etre vide. Pourrait etre n'importe quoi.",
-    context: "tension montante, approche d'une structure inconnue",
-    objectiveReminder: "Nettoyer la ferme et continuer vers le carrefour.",
-  },
 };

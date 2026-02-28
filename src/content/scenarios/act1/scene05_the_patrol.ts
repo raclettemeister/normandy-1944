@@ -1,12 +1,14 @@
 import type { Scenario } from '../../../types';
 
 export const scene05_the_patrol: Scenario = {
-  id: "act1_the_patrol",
+  id: "act1_scene06_patrol",
   act: 1,
   timeCost: 20,
   combatScene: true,
 
-  sceneContext: "Pont de pierre sur canal de drainage. Quatre Allemands : Feldwebel lisant des papiers a la lampe torche, un gardant un civil francais mains liees. Les papiers contiennent les emplacements des zones de saut — renseignement critique. Patrouille prete a partir.",
+  sceneContext: "Stone bridge over drainage canal. Four Germans: Feldwebel reading papers by flashlight, one guarding a tied-up French civilian. The papers hold drop zone locations — critical intel. Patrol about to move out.",
+
+  interlude: { type: "transition", beat: "You spot them before they spot you. The bridge. The papers. The choice.", context: "First real tactical decision with a team." },
 
   narrative:
     "Vous les reperez avant qu'ils ne vous reperent. Quatre Allemands sur un pont de pierre au-dessus d'un canal de drainage. " +
@@ -107,7 +109,7 @@ export const scene05_the_patrol: Scenario = {
           readinessChange: 12
         },
         wikiUnlocks: "ambush_doctrine",
-        nextScene: "act1_the_farmhouse"
+        nextScene: "act1_scene07_farmhouse"
       }
     },
 
@@ -152,7 +154,7 @@ export const scene05_the_patrol: Scenario = {
           readinessChange: 12
         },
         wikiUnlocks: "ambush_doctrine",
-        nextScene: "act1_the_farmhouse"
+        nextScene: "act1_scene07_farmhouse"
       }
     },
 
@@ -195,7 +197,7 @@ export const scene05_the_patrol: Scenario = {
           readinessChange: 12
         },
         wikiUnlocks: "ambush_doctrine",
-        nextScene: "act1_the_farmhouse"
+        nextScene: "act1_scene07_farmhouse"
       }
     },
 
@@ -236,7 +238,7 @@ export const scene05_the_patrol: Scenario = {
           readinessChange: 12
         },
         wikiUnlocks: "ambush_doctrine",
-        nextScene: "act1_the_farmhouse"
+        nextScene: "act1_scene07_farmhouse"
       }
     },
 
@@ -280,7 +282,7 @@ export const scene05_the_patrol: Scenario = {
         },
         fatal: true,
         wikiUnlocks: "ambush_doctrine",
-        nextScene: "act1_the_farmhouse"
+        nextScene: "act1_scene07_farmhouse"
       }
     },
 
@@ -322,7 +324,7 @@ export const scene05_the_patrol: Scenario = {
           readinessChange: 12
         },
         wikiUnlocks: "ambush_doctrine",
-        nextScene: "act1_the_farmhouse"
+        nextScene: "act1_scene07_farmhouse"
       }
     },
 
@@ -364,7 +366,7 @@ export const scene05_the_patrol: Scenario = {
           readinessChange: 12
         },
         wikiUnlocks: "ambush_doctrine",
-        nextScene: "act1_the_farmhouse"
+        nextScene: "act1_scene07_farmhouse"
       }
     },
 
@@ -407,7 +409,7 @@ export const scene05_the_patrol: Scenario = {
           readinessChange: 18
         },
         wikiUnlocks: "tactical_patience",
-        nextScene: "act1_the_farmhouse"
+        nextScene: "act1_scene07_farmhouse"
       }
     },
 
@@ -453,7 +455,7 @@ export const scene05_the_patrol: Scenario = {
           readinessChange: 10
         },
         wikiUnlocks: "stealth_operations",
-        nextScene: "act1_the_farmhouse"
+        nextScene: "act1_scene07_farmhouse"
       }
     },
 
@@ -499,7 +501,7 @@ export const scene05_the_patrol: Scenario = {
           readinessChange: 12
         },
         wikiUnlocks: "ambush_doctrine",
-        nextScene: "act1_the_farmhouse"
+        nextScene: "act1_scene07_farmhouse"
       }
     }
   ]

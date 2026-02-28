@@ -153,7 +153,7 @@ export function createInitialState(): GameState {
     milestones: createDefaultMilestones(),
     wikiUnlocked: loadMeta().unlockedWikiEntries,
     scenesVisited: [],
-    currentScene: "act1_landing",
+    currentScene: "act1_scene01_landing",
     phase: "solo",
     act: 1,
     difficulty: "easy" as Difficulty,

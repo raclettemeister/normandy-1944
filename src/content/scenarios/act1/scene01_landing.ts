@@ -1,12 +1,15 @@
 import type { Scenario } from '../../../types';
 
 export const scene01_landing: Scenario = {
-  id: "act1_landing",
+  id: "act1_scene01_landing",
   act: 1,
   timeCost: 15,
   combatScene: false,
 
-  sceneContext: "Nuit. Champ inonde pres de la zone de saut. De l'eau jusqu'a la taille, parachute enchevetre dans les cordes. Fusil perdu sous l'eau, pistolet a la hanche. Tir antiaerien a l'horizon. Seul en France occupee.",
+  sceneContext: "Night. Flooded field near the drop zone. Water up to your waist, chute tangled in the lines. Rifle lost under the surface, pistol on your hip. Flak on the horizon. You're alone in occupied France.",
+
+  interlude: { type: "transition", beat: "Out of the water. Into the dark.", context: "You've left the flooded field. Next: find a direction." },
+  secondInCommandComments: { veteran: "You're on your own until you find the platoon." },
 
   narrative:
     "Vous avez de l'eau jusqu'a la taille. Le parachute vous traine derriere, les cordes enchevetrees autour de vos jambes. Pas de lune, pas d'etoiles — juste le pouls lointain du tir antiaerien a l'horizon. Votre fusil est quelque part sous la surface. Le pistolet est toujours a votre hanche. Vous etes seul en France occupee.",
@@ -21,6 +24,7 @@ export const scene01_landing: Scenario = {
       id: "landing_check_gear",
       text: "Verifier votre equipement — fouiller chaque poche, verifier chaque sangle",
       tier: "excellent",
+      minMen: 1,
       outcome: {
         success: {
           text: "Vous fouillez vos poches methodiquement. Pistolet, deux grenades, clicker — tout est la. Vos doigts se referment sur la boussole dans la poche de votre pantalon. Le cadran lumineux brille d'un vert pale.",
@@ -48,13 +52,14 @@ export const scene01_landing: Scenario = {
           readinessChange: 0,
         },
         wikiUnlocks: "assess_before_acting",
-        nextScene: "act1_finding_north",
+        nextScene: "act1_scene02_finding_north",
       },
     },
     {
       id: "landing_assess",
       text: "Reperer les alentours — ecouter, chercher une lumiere ou un point de repere",
       tier: "sound",
+      minMen: 1,
       outcome: {
         success: {
           text: "Vous vous forcez a respirer et a ecouter. Des coups de feu au loin — au nord, peut-etre au nord-est. Puis vous le voyez : un clocher d'eglise, a peine visible contre les nuages. Les cartes du briefing mentionnaient un clocher pres de la zone de saut.",
@@ -81,7 +86,7 @@ export const scene01_landing: Scenario = {
           readinessChange: 0,
         },
         wikiUnlocks: "assess_before_acting",
-        nextScene: "act1_finding_north",
+        nextScene: "act1_scene02_finding_north",
       },
     },
     {
@@ -114,7 +119,7 @@ export const scene01_landing: Scenario = {
           readinessChange: 3,
         },
         wikiUnlocks: "assess_before_acting",
-        nextScene: "act1_finding_north",
+        nextScene: "act1_scene02_finding_north",
       },
     },
     {
@@ -147,7 +152,7 @@ export const scene01_landing: Scenario = {
           readinessChange: 2,
         },
         wikiUnlocks: "assess_before_acting",
-        nextScene: "act1_finding_north",
+        nextScene: "act1_scene02_finding_north",
       },
     },
   ],

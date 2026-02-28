@@ -1,0 +1,130 @@
+import type { Scenario } from "../../../types/index.ts";
+
+export const scene04_the_straggler: Scenario = {
+  id: "act1_scene04_straggler",
+  act: 1,
+  timeCost: 15,
+  combatScene: false,
+
+  sceneContext: "A scared private from another unit — first follower. You need to calm him and give him a role. One more set of eyes, or a liability.",
+
+  narrative:
+    "The silhouette turned out to be American — a private from the 502nd, shaking, miles from his drop zone. He's got a rifle and a clicker and not much else. He's looking at you like you're the only thing between him and the dark. You need him steady.",
+
+  interlude: { type: "transition", beat: "First contact. First follower.", context: "You're not alone anymore. What you do next sets the tone." },
+  secondInCommandComments: { veteran: "Calm him. Give him one clear job. He'll follow." },
+
+  decisions: [
+    {
+      id: "straggler_calm_task",
+      text: "Calm him down, then give him one clear task — stay close, stay quiet, watch the rear",
+      tier: "excellent",
+      minMen: 1,
+      outcome: {
+        success: {
+          text: "You keep your voice low. 'You're with me. Watch our six. Say nothing unless you see movement.' He nods, grips his rifle. He's still scared but he's got a job. One more set of eyes.",
+          context: "Calmed the straggler. Gave clear task: watch the rear. He follows.",
+          menLost: 0,
+          ammoSpent: 0,
+          moraleChange: 5,
+          readinessChange: 0,
+          menGained: 1,
+        },
+        partial: {
+          text: "You talk him down. He stops shaking. 'Stay with me. Watch the rear.' He nods but his eyes keep darting. He'll follow. You hope he doesn't freeze when it matters.",
+          context: "Straggler calmed. Task given. He's still jumpy.",
+          menLost: 0,
+          ammoSpent: 0,
+          moraleChange: 3,
+          readinessChange: 0,
+          menGained: 1,
+        },
+        failure: {
+          text: "You try to give him a task. He nods, then nothing. When you move he's still standing there. You have to go back and take his elbow. 'With me. Now.' He comes. It cost you time.",
+          context: "Straggler slow to respond. Had to physically lead him. Time lost.",
+          menLost: 0,
+          ammoSpent: 0,
+          moraleChange: 0,
+          readinessChange: 2,
+          menGained: 1,
+        },
+        wikiUnlocks: "first_follower",
+        nextScene: "act1_scene05_sergeant",
+      },
+    },
+    {
+      id: "straggler_brief_reassure",
+      text: "Brief reassurance — 'We're finding the rest. You're not alone.' — then move",
+      tier: "sound",
+      requiresPhase: "solo",
+      outcome: {
+        success: {
+          text: "'We're finding the rest. You're not alone.' He breathes. You move. He stays a step behind. Not ideal but he's with you.",
+          context: "Reassured straggler. He follows.",
+          menLost: 0,
+          ammoSpent: 0,
+          moraleChange: 4,
+          readinessChange: 0,
+          menGained: 1,
+        },
+        partial: {
+          text: "You tell him you're finding the platoon. He nods. You move. He follows but keeps looking back. Every shadow gets a flinch.",
+          context: "Straggler reassured. Follows but nervous.",
+          menLost: 0,
+          ammoSpent: 0,
+          moraleChange: 2,
+          readinessChange: 1,
+          menGained: 1,
+        },
+        failure: {
+          text: "'We're finding the rest.' He doesn't look convinced. You move. He follows — eventually. You had to wait for him to get his legs under him.",
+          context: "Straggler hesitant. Delayed movement.",
+          menLost: 0,
+          ammoSpent: 0,
+          moraleChange: -1,
+          readinessChange: 2,
+          menGained: 1,
+        },
+        wikiUnlocks: "first_follower",
+        nextScene: "act1_scene05_sergeant",
+      },
+    },
+    {
+      id: "straggler_ignore_move",
+      text: "Don't waste time — 'Come on.' Move out and let him keep up",
+      tier: "mediocre",
+      minMen: 1,
+      outcome: {
+        success: {
+          text: "'Come on.' You move. He scrambles after you. He keeps up. He didn't need a speech — just someone moving.",
+          context: "Minimal leadership. Straggler followed.",
+          menLost: 0,
+          ammoSpent: 0,
+          moraleChange: 1,
+          readinessChange: 1,
+          menGained: 1,
+        },
+        partial: {
+          text: "You move. He follows, panting. You have to slow down twice so he doesn't get lost. No one's calm. No one's sure.",
+          context: "Straggler followed but you had to slow. No real leadership.",
+          menLost: 0,
+          ammoSpent: 0,
+          moraleChange: -1,
+          readinessChange: 2,
+          menGained: 1,
+        },
+        failure: {
+          text: "'Come on.' You move. He doesn't. You're twenty meters away when you realize. You go back. He's sitting against the hedge. 'I can't.' You drag him up. Time and morale gone.",
+          context: "Straggler froze. Had to return and force him to move.",
+          menLost: 0,
+          ammoSpent: 0,
+          moraleChange: -4,
+          readinessChange: 3,
+          menGained: 1,
+        },
+        wikiUnlocks: "first_follower",
+        nextScene: "act1_scene05_sergeant",
+      },
+    },
+  ],
+};
