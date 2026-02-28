@@ -126,7 +126,7 @@ describe("DMLayer", () => {
     expect(result).toBeNull();
   });
 
-  it("validates tier is a valid TacticalTier", async () => {
+  it("downgrades invalid tier values to a safe fallback tier", async () => {
     const mockCallLLM = vi.fn().mockResolvedValue(JSON.stringify({
       tier: "godlike",
       reasoning: "test",
@@ -147,7 +147,8 @@ describe("DMLayer", () => {
       recentEvents: [],
       wikiUnlocked: [],
     });
-    expect(result).toBeNull();
+    expect(result).not.toBeNull();
+    expect(result!.tier).toBe("mediocre");
   });
 
   it("rejects gibberish input client-side", async () => {
