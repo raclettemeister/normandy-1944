@@ -49,7 +49,17 @@ export interface EpiloguePromptInput {
   allSoldierStatuses: { id: string; status: string }[];
 }
 
-const TONE_GUIDE = `Terse, military, present tense, second person. No melodrama, no purple prose. Write like a combat memoir — Ambrose, not Tolkien. Concrete military language. Never use "strategic" or "tactical." Maximum specificity: name weapons, terrain, distances. Reference soldiers by name when they act.`;
+const TONE_GUIDE = `Write like you're telling a friend what happened. Keep it vivid and direct.
+
+DO: Short sentences. Concrete details. You can feel the cold, hear the gunfire, sense the fear. Use "your guys" not "your men." Use "about two football fields" not "approximately 200 meters." Military terms are used naturally — if a term appears, context explains it.
+
+DON'T: No flowery language. No metaphors. No inner monologue. No melodrama. No "the weight of command settled on his shoulders." No Hemingway impression. No trying to be literary.
+
+VOICE: Second person, present tense. "You're crouched behind the wall. Henderson taps your shoulder."
+
+DEATH: Clinical, respectful. "The burst catches Rivera in the chest. He goes down." Not graphic, not glorified.
+
+HUMOR: Soldiers' humor — dark, understated, human.`;
 
 function languageDirective(language: GameLanguage): string {
   if (language === "fr") {
@@ -328,6 +338,13 @@ ${input.sceneContext}
 
 ${anchors}${recentSection}${lessonsSection}
 
+[PERSONNEL EVALUATION]
+Evaluate WHO the player assigned to WHAT. Assign personnelScore 0-100:
+- Role fitness: Is the right role doing the right job? (e.g. medic on aid, NCO coordinating)
+- Trait fitness: Do traits help or hurt? (green on point = risk; veteran = good)
+- Relationship awareness: Does the plan put rivals together or protect bonds?
+Vague orders with no assignees → personnelScore 20-40. Specific named soldiers with good fit → 60-80+.
+
 [OUTPUT FORMAT — JSON only, no markdown]
 {
   "tier": "<suicidal|reckless|mediocre|sound|excellent|masterful>",
@@ -335,6 +352,15 @@ ${anchors}${recentSection}${lessonsSection}
   "narrative": "<3-5 sentences narrating the execution and outcome. Reference specific soldiers. Use the player's plan language.>",
   "fatal": false,
   "intelGained": null,
+  "tacticalReasoning": "<one sentence on tactical quality>",
+  "personnelScore": 50,
+  "assignments": [{"soldierId": "<id>", "assignedTask": "<task>", "fitScore": 0-100, "reasoning": "<brief>"}],
+  "assignmentIssues": ["<any problems with who did what>"],
+  "assignmentBonuses": ["<any strengths>"],
+  "vulnerablePersonnel": ["<soldier ids at risk>"],
+  "capabilityRisks": ["<e.g. medic at point>"],
+  "matchedDecisionId": "<id of closest decision or null>",
+  "matchConfidence": 0.0-1.0,
   "planSummary": "<one sentence summary of the player's plan for the event log>",
   "secondInCommandReaction": "<${sicName}'s in-character reaction to the plan — calibrated to tier and ${sicCompetence} competence>",
   "soldierReactions": [
