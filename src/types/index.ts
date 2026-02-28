@@ -173,6 +173,85 @@ export interface SoldierReaction {
   text: string;
 }
 
+// ─── Enhanced DM Evaluation (v2 design) ───────────────────────────
+
+export interface PersonnelAssignment {
+  soldierId: string;
+  assignedTask: string;
+  fitScore: number;
+  reasoning: string;
+}
+
+export interface EnhancedDMEvaluation {
+  tier: TacticalTier;
+  reasoning: string;
+  narrative: string;
+  fatal?: boolean;
+  intelGained?: keyof IntelFlags;
+  tacticalReasoning: string;
+  personnelScore: number;
+  assignments: PersonnelAssignment[];
+  assignmentIssues: string[];
+  assignmentBonuses: string[];
+  matchedDecisionId: string;
+  matchConfidence: number;
+  soldierReactions: SoldierReaction[];
+  secondInCommandReaction: string;
+  vulnerablePersonnel: string[];
+  capabilityRisks: string[];
+  planSummary: string;
+}
+
+// ─── Game Events (v2 narrative thread) ────────────────────────────
+
+export type GameEvent =
+  | { type: "scene_complete"; sceneId: string; summary: string; timeCost: number; timestamp: string }
+  | { type: "decision_made"; sceneId: string; prompt: string; tier: TacticalTier; personnelScore: number; timestamp: string }
+  | { type: "casualty"; sceneId: string; soldierId: string; name: string; cause: string; status: "KIA" | "wounded"; timestamp: string }
+  | { type: "rally"; sceneId: string; soldiers: string[]; description: string; timestamp: string }
+  | { type: "capability_change"; sceneId: string; capability: string; gained: boolean; reason: string; timestamp: string }
+  | { type: "intel_gained"; sceneId: string; flag: string; source: string; timestamp: string }
+  | { type: "trait_triggered"; sceneId: string; soldierId: string; trait: string; effect: string; timestamp: string }
+  | { type: "relationship_moment"; sceneId: string; soldiers: string[]; momentType: string; description: string; timestamp: string }
+  | { type: "assignment_consequence"; sceneId: string; soldierId: string; task: string; outcome: string; timestamp: string }
+  | { type: "resource_snapshot"; sceneId: string; men: number; ammo: number; morale: number; readiness: number; time: string; timestamp: string };
+
+// ─── Platoon Audit ────────────────────────────────────────────────
+
+export interface PlatoonAudit {
+  currentCapabilities: PlatoonCapabilities;
+  criticalRisks: string[];
+  personnelGaps: string[];
+  relationshipStatus: string[];
+  effectiveStrength: number;
+}
+
+// ─── Preparation Phase (Act 3) ────────────────────────────────────
+
+export interface PrepEffects {
+  casualtyReduction?: number;
+  earlyWarning?: boolean;
+  ammoRedistributed?: boolean;
+  medicalReady?: boolean;
+  moraleBonus?: number;
+  additionalMen?: number;
+}
+
+export interface PrepScene {
+  id: string;
+  label: string;
+  description: string;
+  timeCost: number;
+  effect: PrepEffects;
+}
+
+export interface PreparationPhase {
+  availablePreps: PrepScene[];
+  completedPreps: string[];
+  counterattackTriggered: boolean;
+  totalTimePreparing: number;
+}
+
 // ─── Prep Actions ──────────────────────────────────────────────────
 
 export interface PrepAction {
