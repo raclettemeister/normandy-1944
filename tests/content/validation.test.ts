@@ -251,6 +251,101 @@ function validateKeyReferences(scenarios: Scenario[]): ValidationError[] {
   return errors;
 }
 
+// ─── Rule 8: Personnel hooks (v2) ──────────────────────────────────
+
+function hasPersonnelHook(d: Scenario["decisions"][0]): boolean {
+  return (
+    d.requiresCapability !== undefined ||
+    d.benefitsFromIntel !== undefined ||
+    d.requiresPhase !== undefined ||
+    d.minMen !== undefined
+  );
+}
+
+function validatePersonnelHooks(scenarios: Scenario[]): ValidationError[] {
+  const errors: ValidationError[] = [];
+  for (const scene of scenarios) {
+    const count = scene.decisions.filter(hasPersonnelHook).length;
+    if (count < 2) {
+      errors.push({
+        rule: 8,
+        sceneId: scene.id,
+        message: `Scene must have at least 2 decisions where personnel assignment matters (requiresCapability, benefitsFromIntel, requiresPhase, or minMen); found ${count}`,
+      });
+    }
+  }
+  return errors;
+}
+
+// ─── Rule 9: Interlude presence (v2) ──────────────────────────────
+
+function validateInterludePresence(scenarios: Scenario[]): ValidationError[] {
+  const errors: ValidationError[] = [];
+  for (const scene of scenarios) {
+    if (scene.interlude === undefined || scene.interlude === null) {
+      errors.push({
+        rule: 9,
+        sceneId: scene.id,
+        message: "Scene must have an interlude field",
+      });
+    }
+  }
+  return errors;
+}
+
+// ─── Rule 10: 2IC coverage (v2) ────────────────────────────────────
+
+function validateSecondInCommandCoverage(
+  scenarios: Scenario[]
+): ValidationError[] {
+  const errors: ValidationError[] = [];
+  for (const scene of scenarios) {
+    const comments = scene.secondInCommandComments;
+    if (
+      comments === undefined ||
+      comments === null ||
+      Object.keys(comments).length === 0
+    ) {
+      errors.push({
+        rule: 10,
+        sceneId: scene.id,
+        message:
+          "Scene must have secondInCommandComments with at least one entry",
+      });
+    }
+  }
+  return errors;
+}
+
+// ─── Rule 11: Tone compliance (v2) ─────────────────────────────────
+
+const BANNED_TONE_PATTERNS = [
+  { pattern: /\bhe was\b/i, label: 'past tense "he was"' },
+  { pattern: /\bshe was\b/i, label: 'past tense "she was"' },
+  { pattern: /\bthe weight of .* (settled|rested)\b/i, label: "melodramatic metaphor" },
+  { pattern: /\bglorious\b/i, label: "flowery adjective" },
+  { pattern: /\bmagnificent\b/i, label: "flowery adjective" },
+];
+
+function validateToneCompliance(scenarios: Scenario[]): ValidationError[] {
+  const errors: ValidationError[] = [];
+  for (const scene of scenarios) {
+    const text = [scene.narrative, scene.sceneContext].filter(Boolean).join(" ");
+    if (!text) continue;
+    for (const { pattern, label } of BANNED_TONE_PATTERNS) {
+      if (pattern.test(text)) {
+        errors.push({
+          rule: 11,
+          sceneId: scene.id,
+          message: `Narrative or sceneContext contains banned pattern: ${label}`,
+        });
+        break;
+      }
+    }
+  }
+  return errors;
+}
+
 // ─── Public API ───────────────────────────────────────────────────
 
 export function validateScenario(
@@ -264,6 +359,10 @@ export function validateScenario(
     ...validateCasualtyLimits([scenario]),
     ...validatePhaseConsistency([scenario]),
     ...validateKeyReferences([scenario]),
+    ...validatePersonnelHooks([scenario]),
+    ...validateInterludePresence([scenario]),
+    ...validateSecondInCommandCoverage([scenario]),
+    ...validateToneCompliance([scenario]),
     ...(validLessonIds
       ? validateLessonReferences([scenario], validLessonIds)
       : []),
@@ -300,11 +399,45 @@ function makeMinimalScenario(
     act: 1,
     timeCost: 15,
     narrative: "Test narrative",
+    interlude: { type: "transition", beat: "Test beat" },
+    secondInCommandComments: { veteran: "Good plan." },
     decisions: [
       {
         id: `${overrides.id}_d1`,
         text: "Do something",
         tier: "sound",
+        minMen: 1,
+        outcome: {
+          success: {
+            text: "Ok",
+            menLost: 0,
+            ammoSpent: 0,
+            moraleChange: 0,
+            readinessChange: 0,
+          },
+          partial: {
+            text: "Meh",
+            menLost: 0,
+            ammoSpent: 0,
+            moraleChange: 0,
+            readinessChange: 0,
+          },
+          failure: {
+            text: "Bad",
+            menLost: 0,
+            ammoSpent: 0,
+            moraleChange: 0,
+            readinessChange: 0,
+          },
+          wikiUnlocks: "test_lesson",
+          nextScene: overrides.id,
+        },
+      },
+      {
+        id: `${overrides.id}_d2`,
+        text: "Other option",
+        tier: "sound",
+        requiresCapability: "canSuppress",
         outcome: {
           success: {
             text: "Ok",
@@ -337,75 +470,45 @@ function makeMinimalScenario(
 }
 
 function makeLinkedScenarios(): Scenario[] {
+  const decisionToB = {
+    id: "d1",
+    text: "Go to B",
+    tier: "sound",
+    minMen: 1,
+    outcome: {
+      success: { text: "Ok", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
+      partial: { text: "Meh", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
+      failure: { text: "Bad", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
+      wikiUnlocks: "test_lesson",
+      nextScene: "scene_b",
+    },
+  };
+  const decisionToA = {
+    id: "d2",
+    text: "Go to A",
+    tier: "sound",
+    requiresCapability: "canScout",
+    outcome: {
+      success: { text: "Ok", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
+      partial: { text: "Meh", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
+      failure: { text: "Bad", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
+      wikiUnlocks: "test_lesson",
+      nextScene: "scene_a",
+    },
+  };
   return [
     makeMinimalScenario({
       id: "scene_a",
       decisions: [
-        {
-          id: "d1",
-          text: "Go to B",
-          tier: "sound",
-          outcome: {
-            success: {
-              text: "Ok",
-              menLost: 0,
-              ammoSpent: 0,
-              moraleChange: 0,
-              readinessChange: 0,
-            },
-            partial: {
-              text: "Meh",
-              menLost: 0,
-              ammoSpent: 0,
-              moraleChange: 0,
-              readinessChange: 0,
-            },
-            failure: {
-              text: "Bad",
-              menLost: 0,
-              ammoSpent: 0,
-              moraleChange: 0,
-              readinessChange: 0,
-            },
-            wikiUnlocks: "test_lesson",
-            nextScene: "scene_b",
-          },
-        },
+        decisionToB,
+        { ...decisionToB, id: "d1b", requiresPhase: "squad", outcome: { ...decisionToB.outcome, nextScene: "scene_a" } },
       ],
     }),
     makeMinimalScenario({
       id: "scene_b",
       decisions: [
-        {
-          id: "d2",
-          text: "Go to A",
-          tier: "sound",
-          outcome: {
-            success: {
-              text: "Ok",
-              menLost: 0,
-              ammoSpent: 0,
-              moraleChange: 0,
-              readinessChange: 0,
-            },
-            partial: {
-              text: "Meh",
-              menLost: 0,
-              ammoSpent: 0,
-              moraleChange: 0,
-              readinessChange: 0,
-            },
-            failure: {
-              text: "Bad",
-              menLost: 0,
-              ammoSpent: 0,
-              moraleChange: 0,
-              readinessChange: 0,
-            },
-            wikiUnlocks: "test_lesson",
-            nextScene: "scene_a",
-          },
-        },
+        decisionToA,
+        { ...decisionToA, id: "d2b", benefitsFromIntel: "hasMap", outcome: { ...decisionToA.outcome, nextScene: "scene_b" } },
       ],
     }),
   ];
@@ -519,7 +622,7 @@ describe("validateScenario", () => {
 
     it("passes when lesson IDs are valid", () => {
       const scenario = makeMinimalScenario({ id: "scene_a" });
-      scenario.decisions[0].outcome.wikiUnlocks = "real_lesson";
+      scenario.decisions.forEach((d) => (d.outcome.wikiUnlocks = "real_lesson"));
       const errors = validateScenario(
         scenario,
         new Set(["scene_a"]),
@@ -533,6 +636,79 @@ describe("validateScenario", () => {
       scenario.decisions[0].outcome.wikiUnlocks = "anything";
       const errors = validateScenario(scenario, new Set(["scene_a"]));
       expect(errors.filter((e) => e.rule === 4)).toEqual([]);
+    });
+  });
+
+  describe("Rule 8: personnel hooks (v2)", () => {
+    it("flags scene with fewer than 2 decisions with personnel hooks", () => {
+      const scenario = makeMinimalScenario({ id: "scene_a" });
+      scenario.decisions = [
+        {
+          id: "d1",
+          text: "Do",
+          tier: "sound",
+          outcome: {
+            success: { text: "Ok", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
+            partial: { text: "Meh", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
+            failure: { text: "Bad", menLost: 0, ammoSpent: 0, moraleChange: 0, readinessChange: 0 },
+            wikiUnlocks: "test_lesson",
+            nextScene: "scene_a",
+          },
+        },
+      ];
+      const errors = validateScenario(scenario, new Set(["scene_a"]));
+      expect(errors.some((e) => e.rule === 8)).toBe(true);
+    });
+
+    it("passes when scene has 2+ decisions with personnel hooks", () => {
+      const scenario = makeMinimalScenario({ id: "scene_a" });
+      const errors = validateScenario(scenario, new Set(["scene_a"]));
+      expect(errors.filter((e) => e.rule === 8)).toEqual([]);
+    });
+  });
+
+  describe("Rule 9: interlude presence (v2)", () => {
+    it("flags scene missing interlude", () => {
+      const scenario = makeMinimalScenario({ id: "scene_a" });
+      delete (scenario as Partial<Scenario>).interlude;
+      const errors = validateScenario(scenario, new Set(["scene_a"]));
+      expect(errors.some((e) => e.rule === 9)).toBe(true);
+    });
+
+    it("passes when scene has interlude", () => {
+      const scenario = makeMinimalScenario({ id: "scene_a" });
+      const errors = validateScenario(scenario, new Set(["scene_a"]));
+      expect(errors.filter((e) => e.rule === 9)).toEqual([]);
+    });
+  });
+
+  describe("Rule 10: 2IC coverage (v2)", () => {
+    it("flags scene with empty secondInCommandComments", () => {
+      const scenario = makeMinimalScenario({ id: "scene_a" });
+      scenario.secondInCommandComments = {};
+      const errors = validateScenario(scenario, new Set(["scene_a"]));
+      expect(errors.some((e) => e.rule === 10)).toBe(true);
+    });
+
+    it("passes when scene has at least one 2IC comment", () => {
+      const scenario = makeMinimalScenario({ id: "scene_a" });
+      const errors = validateScenario(scenario, new Set(["scene_a"]));
+      expect(errors.filter((e) => e.rule === 10)).toEqual([]);
+    });
+  });
+
+  describe("Rule 11: tone compliance (v2)", () => {
+    it("flags narrative containing banned pattern 'he was'", () => {
+      const scenario = makeMinimalScenario({ id: "scene_a" });
+      scenario.narrative = "The captain walked. He was tired.";
+      const errors = validateScenario(scenario, new Set(["scene_a"]));
+      expect(errors.some((e) => e.rule === 11)).toBe(true);
+    });
+
+    it("passes when narrative has no banned patterns", () => {
+      const scenario = makeMinimalScenario({ id: "scene_a" });
+      const errors = validateScenario(scenario, new Set(["scene_a"]));
+      expect(errors.filter((e) => e.rule === 11)).toEqual([]);
     });
   });
 });
