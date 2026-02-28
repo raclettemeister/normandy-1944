@@ -50,7 +50,7 @@ describe("buildNarrationPrompt", () => {
       relationships: [],
     });
     expect(prompt.system).toContain("Night landing");
-    expect(prompt.system).toContain("Terse");
+    expect(prompt.system).toContain("vivid");
     expect(prompt.system).toContain("French");
   });
 
@@ -117,6 +117,19 @@ describe("buildNarrationPrompt", () => {
     expect(prompt.system).toContain("Hommes: 8/18");
     expect(prompt.system).toContain("Munitions: 45%");
     expect(prompt.system).toContain("Moral: 62");
+  });
+
+  it("TONE_GUIDE uses v2 conversational style, not Ambrose", () => {
+    const minimalInput = {
+      sceneContext: "Bridge.",
+      gameState: makeMinimalGameState(),
+      roster: [],
+      relationships: [],
+    };
+    const prompt = buildNarrationPrompt(minimalInput, "en");
+    expect(prompt.system).not.toContain("Ambrose");
+    expect(prompt.system).toContain("telling a friend what happened");
+    expect(prompt.system).toContain("vivid and direct");
   });
 });
 
