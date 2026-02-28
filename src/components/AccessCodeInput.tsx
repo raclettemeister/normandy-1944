@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface AccessCodeInputProps {
   onValidated: (code: string) => void;
@@ -9,6 +10,7 @@ export default function AccessCodeInput({
   onValidated,
   apiUrl,
 }: AccessCodeInputProps) {
+  const { t } = useTranslation("ui");
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,11 +33,12 @@ export default function AccessCodeInput({
       const result = (await response.json()) as { valid: boolean };
       if (result.valid) {
         onValidated(trimmed);
+        setCode("");
       } else {
-        setError("Code d'acces invalide.");
+        setError(t("accessCodeInvalid"));
       }
     } catch {
-      setError("Serveur injoignable. Mode hors ligne active.");
+      setError(t("accessCodeOffline"));
     } finally {
       setLoading(false);
     }
@@ -44,7 +47,7 @@ export default function AccessCodeInput({
   return (
     <form className="access-code-form" onSubmit={handleSubmit} data-testid="access-code-form">
       <label className="access-code-form__label" htmlFor="access-code">
-        Code d'acces <span className="access-code-form__optional">(optionnel — active la narration IA)</span>
+        {t("accessCodeLabel")}
       </label>
       <div className="access-code-form__row">
         <input
@@ -53,7 +56,7 @@ export default function AccessCodeInput({
           type="text"
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          placeholder="Entrez le code d'acces"
+          placeholder={t("accessCodePlaceholder")}
           disabled={loading}
           data-testid="access-code-input"
           autoComplete="off"
@@ -64,7 +67,7 @@ export default function AccessCodeInput({
           disabled={loading || !code.trim()}
           data-testid="access-code-submit"
         >
-          {loading ? "Validation..." : "Activer"}
+          {loading ? t("validating") : t("activate")}
         </button>
       </div>
       {error && (

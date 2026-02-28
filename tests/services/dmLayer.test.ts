@@ -58,7 +58,7 @@ describe("DMLayer", () => {
     expect(result!.soldierReactions).toHaveLength(1);
   });
 
-  it("returns null on malformed LLM response", async () => {
+  it("uses fallback evaluation on malformed LLM response", async () => {
     const mockCallLLM = vi.fn().mockResolvedValue("not json");
     const dm = new DMLayer(mockCallLLM);
     const result = await dm.evaluatePrompt({
@@ -71,7 +71,43 @@ describe("DMLayer", () => {
       recentEvents: [],
       wikiUnlocked: [],
     });
-    expect(result).toBeNull();
+    expect(result).not.toBeNull();
+    expect(result!.tier).toBe("mediocre");
+    expect(result!.narrative.length).toBeGreaterThan(0);
+  });
+
+  it("parses JSON wrapped in prose/code fences", async () => {
+    const wrapped = [
+      "Quick assessment follows:",
+      "```json",
+      JSON.stringify({
+        tier: "sound",
+        reasoning: "Coherent but cautious",
+        narrative: "Vous avancez avec prudence et gardez la cohesion.",
+        planSummary: "Progression prudente en equipe",
+        secondInCommandReaction: "Bien recu, mon capitaine.",
+        soldierReactions: [{ soldierId: "henderson", text: "On y va." }],
+      }),
+      "```",
+      "End of report.",
+    ].join("\n");
+
+    const mockCallLLM = vi.fn().mockResolvedValue(wrapped);
+    const dm = new DMLayer(mockCallLLM);
+    const result = await dm.evaluatePrompt({
+      playerText: "avance prudente et couverture mutuelle",
+      sceneContext: "Bridge.",
+      decisions: [makeDecision({ id: "d1" })],
+      gameState: makeMinimalGameState(),
+      roster: [makeSoldier({ id: "henderson" })],
+      relationships: [],
+      recentEvents: [],
+      wikiUnlocked: [],
+    });
+
+    expect(result).not.toBeNull();
+    expect(result!.tier).toBe("sound");
+    expect(result!.secondInCommandReaction).toContain("capitaine");
   });
 
   it("returns null on LLM error", async () => {

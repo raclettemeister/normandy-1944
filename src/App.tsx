@@ -30,7 +30,7 @@ export default function App() {
   const [achievementQueue, setAchievementQueue] = useState<Achievement[]>([]);
   const [difficulty, setDifficulty] = useState<Difficulty>("easy");
 
-  const [accessCode, _setAccessCode] = useState("");
+  const [accessCode, setAccessCode] = useState("");
   const narrativeService = useMemo(
     () =>
       new NarrativeService({
@@ -96,6 +96,9 @@ export default function App() {
       {screen === "menu" && (
         <MainMenu
           onStartGame={handleStartGame}
+          onAccessCodeValidated={setAccessCode}
+          narrativeApiUrl={NARRATIVE_API_URL}
+          aiNarrationEnabled={narrativeService.getMode() === "llm"}
         />
       )}
 

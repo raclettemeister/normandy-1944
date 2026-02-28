@@ -3,13 +3,20 @@ import { loadAchievements } from "../engine/achievementTracker.ts";
 import { loadMeta, resetMeta } from "../engine/metaProgress.ts";
 import type { Difficulty } from "../types/index.ts";
 import LanguageSelector from "./LanguageSelector";
+import AccessCodeInput from "./AccessCodeInput.tsx";
 
 interface MainMenuProps {
   onStartGame: (difficulty: Difficulty) => void;
+  onAccessCodeValidated: (code: string) => void;
+  narrativeApiUrl: string;
+  aiNarrationEnabled: boolean;
 }
 
 export default function MainMenu({
   onStartGame,
+  onAccessCodeValidated,
+  narrativeApiUrl,
+  aiNarrationEnabled,
 }: MainMenuProps) {
   const { t } = useTranslation("ui");
   const achievements = loadAchievements();
@@ -72,6 +79,22 @@ export default function MainMenu({
           </button>
         )}
       </div>
+
+      {narrativeApiUrl && (
+        <AccessCodeInput
+          apiUrl={narrativeApiUrl}
+          onValidated={onAccessCodeValidated}
+        />
+      )}
+
+      {aiNarrationEnabled && (
+        <div
+          data-testid="ai-narration-active"
+          style={{ marginTop: "0.75rem", fontSize: "0.75rem", color: "var(--text-muted)" }}
+        >
+          {t("aiNarrationActive")}
+        </div>
+      )}
 
       {achievements.length > 0 && (
         <div data-testid="achievement-gallery" style={{ marginTop: "1rem" }}>
